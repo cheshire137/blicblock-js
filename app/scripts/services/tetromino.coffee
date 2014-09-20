@@ -21,6 +21,7 @@ angular.module('blicblockApp')
         for block in @blocks
           @check_for_straight_tetromino block
           @check_for_l_tetromino block
+          @check_for_t_tetromino block
 
       remove_blocks: (to_remove) ->
         ids_to_remove = to_remove.map((b) -> b.id)
@@ -89,22 +90,22 @@ angular.module('blicblockApp')
           block4 = @lookup(x + 2, y - 1, color)
           if block4 # A
             @remove_blocks [block1, block2, block3, block4]
-          else
+          else # C
             block4 = @lookup(x, y + 1, color)
-            if block4 # C
-              @remove_blocks [block1, block2, block3, block4]
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
         else # B or D
           block3 = @lookup(x + 1, y + 1, color)
           if block3 # B
             block4 = @lookup(x + 1, y + 2, color)
-            if block4
-              @remove_blocks [block1, block2, block3, block4]
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
           else # D
             block3 = @lookup(x, y - 1, color)
-            if block3
-              block4 = @lookup(x, y - 2, color)
-              if block4
-                @remove_blocks [block1, block2, block3, block4]
+            return unless block3
+            block4 = @lookup(x, y - 2, color)
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
 
       # 1        *1
       # *     1   *  1**
@@ -121,22 +122,54 @@ angular.module('blicblockApp')
           block4 = @lookup(x + 2, y + 1, color)
           if block4 # A
             @remove_blocks [block1, block2, block3, block4]
-          else
+          else # C
             block4 = @lookup(x, y - 1, color)
-            if block4 # C
-              @remove_blocks [block1, block2, block3, block4]
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
         else # B or D
           block3 = @lookup(x + 1, y - 1, color)
           if block3 # B
             block4 = @lookup(x + 1, y - 2, color)
-            if block4
-              @remove_blocks [block1, block2, block3, block4]
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
           else # D
             block3 = @lookup(x, y + 1, color)
-            if block3
-              block4 = @lookup(x, y + 2, color)
-              if block4
-                @remove_blocks [block1, block2, block3, block4]
+            return unless block3
+            block4 = @lookup(x, y + 2, color)
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
+
+      # 1    1
+      # **  **   1   *1*
+      # *    *  ***   *
+      # A    B   C    D
+      check_for_t_tetromino: (block1) ->
+        x = block1.x
+        y = block1.y
+        color = block1.color
+        block2 = @lookup(x + 1, y, color)
+        return unless block2
+        block3 = @lookup(x + 2, y, color)
+        if block3 # A or B
+          block4 = @lookup(x + 1, y + 1, color)
+          if block4 # A
+            @remove_blocks [block1, block2, block3, block4]
+          else # B
+            block4 = @lookup(x + 1, y - 1, color)
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
+        else # C or D
+          block3 = @lookup(x + 1, y - 1, color)
+          if block3 # C
+            block4 = @lookup(x + 1, y + 1, color)
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
+          else # D
+            block3 = @lookup(x, y - 1, color)
+            return unless block3
+            block4 = @lookup(x, y + 1, color)
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
 
     new Tetromino()
   ]
