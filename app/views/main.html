@@ -4,7 +4,7 @@
   </div>
   <div class="tetromino-count"></div>
   <div class="board">
-    <div ng-repeat="block in blocks" ng-id="{{block.id}}" class="block {{block.color}} pos-{{block.x}}{{block.y}}"></div>
+    <div ng-repeat="block in blocks" ng-id="{{block.id}}" class="animate block {{block.color}} pos-{{block.x}}{{block.y}}"></div>
   </div>
   <div class="block-preview">
     <div ng-repeat="block in upcoming" class="block {{block.color}}"></div>

@@ -16,13 +16,57 @@ angular.module('blicblockApp')
           cols: 5
           rows: 7
           score_value: 1000
+          checking: false
+
+      get_active_block: ->
+        @blocks.filter((b) -> b.active)[0]
 
       check_for_tetrominos: ->
+        return if @info.checking
+        @info.checking = true
         for block in @blocks
+          continue unless block
           @check_for_straight_tetromino block
           @check_for_square_tetromino block
           @check_for_l_tetromino block
+          @check_for_z_tetromino block
           @check_for_t_tetromino block
+        @info.checking = false
+
+      get_closest_block_below: (x, y) ->
+        blocks_below = @blocks.filter((b) -> b.x > x && b.y == y)
+        blocks_below.sort (a, b) ->
+          return -1 if a.x < b.x
+          return 1 if a.x > b.x
+          0
+        blocks_below[0]
+
+      is_block_directly_below: (x, y) ->
+        @blocks.filter((b) -> b.x == x + 1 && b.y == y)[0]
+
+      drop_blocks: ->
+        for block in @blocks
+          if block.x == @info.rows - 1
+            block.locked = true
+            block.active = false
+            @on_block_land block
+          if @is_block_directly_below(block.x, block.y)
+            block.locked = true
+            block.active = false
+            @on_block_land block
+          else if block.locked && !block.active && block.x < @info.rows - 1
+            # A match was made that removed blocks under this one, so drop
+            # this one as far as it will go immediately.
+            block_below = @get_closest_block_below(block.x, block.y)
+            if block_below
+              block.x = block_below.x - 1
+            else
+              block.x = @info.rows - 1
+          continue if block.locked
+          block.x++
+
+      on_block_land: (block) ->
+        @check_for_tetrominos()
 
       remove_blocks: (to_remove) ->
         ids_to_remove = to_remove.map((b) -> b.id)
@@ -32,6 +76,7 @@ angular.module('blicblockApp')
             @blocks.splice(idx, 1)
           idx--
         $rootScope.$broadcast 'increment_score', {amount: @info.score_value}
+        @drop_blocks()
         @check_for_tetrominos()
 
       lookup: (x, y, color) ->
@@ -153,6 +198,40 @@ angular.module('blicblockApp')
             block4 = @lookup(x, y + 2, color)
             return unless block4
             @remove_blocks [block1, block2, block3, block4]
+
+      #           1    1
+      # *1    1*  **  **
+      #  **  **    *  *
+      #  A   B    C   D
+      check_for_z_tetromino: (block1) ->
+        x = block1.x
+        y = block1.y
+        color = block1.color
+        block2 = @lookup(x + 1, y, color)
+        return unless block2
+        block3 = @lookup(x, y - 1, color)
+        if block3 # A
+          block4 = @lookup(x + 1, y + 1, color)
+          return unless block4
+          @remove_blocks [block1, block2, block3, block4]
+        else # B, C, or D
+          block3 = @lookup(x, y + 1, color)
+          if block3 # B
+            block4 = @lookup(x + 1, y - 1, color)
+            return unless block4
+            @remove_blocks [block1, block2, block3, block4]
+          else # C or D
+            block3 = @lookup(x + 1, y + 1, color)
+            if block3 # C
+              block4 = @lookup(x + 2, y + 1, color)
+              return unless block4
+              @remove_blocks [block1, block2, block3, block4]
+            else # D
+              block3 = @lookup(x + 1, y - 1, color)
+              return unless block3
+              block4 = @lookup(x + 2, y - 1, color)
+              return unless block4
+              @remove_blocks [block1, block2, block3, block4]
 
       # 1    1
       # **  **   1   *1*

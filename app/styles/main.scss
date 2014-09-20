@@ -63,6 +63,16 @@ a[ng-click], a[clip-click] {
   &.blue {
     background-color: #439CAE;
   }
+
+  &.animate.ng-enter {
+    -webkit-animation: fadeIn 0.25s;
+    animation: fadeIn 0.25s;
+  }
+
+  &.animate.ng-leave {
+    -webkit-animation: fadeOut 0.25s;
+    animation: fadeOut 0.25s;
+  }
 }
 
 .block-preview {
