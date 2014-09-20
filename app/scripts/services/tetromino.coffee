@@ -46,6 +46,7 @@ angular.module('blicblockApp')
 
       drop_blocks: ->
         for block in @blocks
+          continue unless block
           if block.x == @info.rows - 1
             block.locked = true
             block.active = false

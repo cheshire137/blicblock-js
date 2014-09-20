@@ -1,6 +1,7 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 @import "bootstrap";
 @import "simlish";
+@import "compass";
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
@@ -8,6 +9,12 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $block-width: 70px;
 $block-height: $block-width;
+$block-magenta: #AF197C;
+$block-yellow: #B7A45D;
+$block-green: #6EAB34;
+$block-blue: #439CAE;
+$block-stripe-count: 4.5;
+$block-stripe-darken-pct: 5%;
 $rows: 7;
 $columns: 5;
 $board-background-color: #111;
@@ -49,19 +56,27 @@ a[ng-click], a[clip-click] {
   border-radius: 2px;
 
   &.magenta {
-    background-color: #AF197C;
+    background-color: $block-magenta;
+    @include background-image(linear-gradient(to bottom, $block-magenta, $block-magenta 50%, darken($block-magenta, $block-stripe-darken-pct) 50%, darken($block-magenta, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
   }
 
   &.yellow {
-    background-color: #B7A45D;
+    background-color: $block-yellow;
+    @include background-image(linear-gradient(to bottom, $block-yellow, $block-yellow 50%, darken($block-yellow, $block-stripe-darken-pct) 50%, darken($block-yellow, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
   }
 
   &.green {
-    background-color: #6EAB34;
+    background-color: $block-green;
+    @include background-image(linear-gradient(to bottom, $block-green, $block-green 50%, darken($block-green, $block-stripe-darken-pct) 50%, darken($block-green, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
   }
 
   &.blue {
-    background-color: #439CAE;
+    background-color: $block-blue;
+    @include background-image(linear-gradient(to bottom, $block-blue, $block-blue 50%, darken($block-blue, $block-stripe-darken-pct) 50%, darken($block-blue, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
   }
 
   &.animate.ng-enter {
