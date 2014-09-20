@@ -20,6 +20,7 @@ $block-stripe-count: 4.5;
 $block-stripe-darken-pct: 5%;
 $rows: 7;
 $columns: 5;
+$screenshot-bg: #222;
 $board-background-color: #111;
 $board-border-width: 4px;
 $board-border-color: #3A335D;
@@ -193,8 +194,10 @@ body {
   padding: 0.2em 0;
 }
 
-.simlish {
-  font-family: 'handwrittensimlishfontmedium', sans-serif;
+.content-area {
+  background-color: $board-background-color;
+  padding: 20px;
+  border-radius: 4px;
 }
 
 .game-message {
@@ -234,6 +237,28 @@ body {
   font-size: $board-score-height / 2;
   font-family: "Ocr A Extended", monospace;
   text-align: center;
+}
+
+.screenshot {
+  margin-bottom: $line-height-computed;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: $screenshot-bg;
+
+  .caption {
+    font-size: $font-size-small;
+    margin-top: $line-height-computed / 2;
+  }
+
+  img {
+    border-radius: 4px;
+    max-width: 100%;
+    border: 1px solid darken($screenshot-bg, 10%);
+  }
+}
+
+.simlish {
+  font-family: 'handwrittensimlishfontmedium', sans-serif;
 }
 
 #site-footer {

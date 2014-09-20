@@ -32,7 +32,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Blicblock</a>
+          <a class="navbar-brand" href="/">BlicblockJS</a>
         </div>
         <div id="site-navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -70,12 +70,15 @@
                   <p>The game ends when there is no more room for blocks to fall.</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" ng-click="cancel()">
+                  <button type="button" class="btn btn-primary" ng-click="cancel()">
                     Got it!
                   </button>
                 </div>
               </script>
               <a href="#" ng-click="open()">How to Play</a>
+            </li>
+            <li>
+              <a href="#/about">About</a>
             </li>
           </ul>
         </div>
@@ -83,24 +86,7 @@
     </nav>
 
     <div ng-view=""></div>
-
-    <footer id="site-footer">
-      <ul class="list-inline">
-        <li>
-          <a href="https://github.com/moneypenny/blicblock-js">
-            View source on Github
-          </a>
-        </li>
-        <li>Thanks:</li>
-        <li>
-          <a href="http://2ttf.com/TMGzvARw">
-            Handwritten Simlish Font by Alleliua
-          </a>
-        </li>
-      </ul>
-    </footer>
   </div>
-
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
   <script>
@@ -165,6 +151,7 @@
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/how_to_play_modal.js"></script>
   <script src="scripts/controllers/how_to_play_modal_instance.js"></script>
+  <script src="scripts/controllers/about.js"></script>
   <!-- endbuild -->
 </body>
 
