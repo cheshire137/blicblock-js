@@ -1,5 +1,6 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 @import "bootstrap";
+@import "simlish";
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
@@ -19,6 +20,7 @@ $board-block-preview-padding: 0.4 * $block-width;
 $board-block-preview-width: $block-width + ($board-block-preview-padding * 2);
 $board-width: $columns * $block-width + ($board-border-width * 2);
 $board-height: $rows * $block-height + ($board-border-width * 2);
+$board-container-height: $board-height + $board-score-height - $board-border-width;
 
 .block {
   display: block;
@@ -71,7 +73,7 @@ $board-height: $rows * $block-height + ($board-border-width * 2);
   position: relative;
   margin: 0 auto;
   width: $board-width + $board-counter-width + $board-block-preview-width - ($board-border-width * 2);
-  height: $board-height + $board-score-height - $board-border-width;
+  height: $board-container-height;
 }
 
 .board {
@@ -109,6 +111,26 @@ body {
   background: -ms-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* IE10+ */
   background: linear-gradient(to bottom,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#090313', endColorstr='#1b1b1b',GradientType=0 ); /* IE6-9 */
+}
+
+.game-over {
+  display: none;
+
+  &.active {
+    text-align: center;
+    font-size: 700%;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    line-height: $board-container-height;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-family: 'handwrittensimlishfontmedium', sans-serif;
+  }
 }
 
 .score {
