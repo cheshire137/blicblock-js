@@ -15,3 +15,11 @@ it would be fun to recreate the game. Our Sims shouldn't have all the fun!
 ![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblock-screenshot-1.png)
 
 ![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblock-screenshot-2.png)
+
+## How to Run
+
+1. `npm install`
+1. `npm install -g bower`
+1. `bower install`
+1. `npm install -g grunt-cli`
+1. `grunt serve` to watch for file changes.
