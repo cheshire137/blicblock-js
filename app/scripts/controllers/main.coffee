@@ -8,68 +8,24 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$interval', ($scope, $interval) ->
-    $scope.blocks = []
+  .controller 'MainCtrl', ['$scope', '$interval', 'Tetromino', ($scope, $interval, Tetromino) ->
+    $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_state =
       in_progress: true
       score: 0
+      checking: false
+    $scope.game_info = Tetromino.info
 
     game_interval = null
 
     colors = ['magenta', 'yellow', 'blue', 'green']
-    rows = 7
-    cols = 5
-    tick_length = 1200 # ms
-    block_score_value = 1000
-
-    increment_score = (amount) ->
-      $scope.game_state.score += amount
-
-    remove_blocks = (blocks) ->
-      $scope.blocks = $scope.blocks.filter (block) ->
-        blocks.filter((b) -> b.x == block.x && b.y == block.y).length < 1
-      increment_score blocks.length * block_score_value
-
-    lookup = (x, y, color) ->
-      $scope.blocks.filter((b) -> b.x == x && b.y == y && b.color == color)[0]
-
-    check_for_straight_hor_tetromino = (start_block) ->
-      y = start_block.y
-      return if y >= cols - 3
-      x = start_block.x
-      color = start_block.color
-      block2 = lookup(x, y + 1, color)
-      return unless block2
-      block3 = lookup(x, y + 2, color)
-      return unless block3
-      block4 = lookup(x, y + 3, color)
-      return unless block4
-      remove_blocks [start_block, block2, block3, block4]
-
-    check_for_straight_ver_tetromino = (start_block) ->
-      x = start_block.x
-      return if x >= rows - 3
-      y = start_block.y
-      color = start_block.color
-      block2 = lookup(x + 1, y, color)
-      return unless block2
-      block3 = lookup(x + 2, y, color)
-      return unless block3
-      block4 = lookup(x + 3, y, color)
-      return unless block4
-      remove_blocks [start_block, block2, block3, block4]
-
-    check_for_straight_tetromino = (start_block) ->
-      check_for_straight_hor_tetromino start_block
-      check_for_straight_ver_tetromino start_block
-
-    check_for_tetrominos = ->
-      for block in $scope.blocks
-        check_for_straight_tetromino block
+    tick_length = 1150 # ms
 
     on_block_land = (block) ->
-      check_for_tetrominos()
+      $scope.game_state.checking = true
+      Tetromino.check_for_tetrominos()
+      $scope.game_state.checking = false
 
     get_active_block = ->
       $scope.blocks.filter((b) -> b.active)[0]
@@ -94,7 +50,7 @@ angular.module('blicblockApp')
 
     drop_unlocked_blocks = ->
       for block in $scope.blocks
-        if block.x == rows - 1
+        if block.x == $scope.game_info.rows - 1
           block.locked = true
           block.active = false
           on_block_land block
@@ -110,6 +66,7 @@ angular.module('blicblockApp')
         color: get_color()
 
     drop_queued_block = ->
+      return if $scope.game_state.checking
       top_blocks = $scope.blocks.filter (b) ->
         b.x == 0 && b.y == 2
       if top_blocks.length > 0
@@ -147,20 +104,22 @@ angular.module('blicblockApp')
     $scope.$on 'move_right', (event) ->
       block = get_active_block()
       return unless block
-      return if block.y == cols - 1
+      return if block.y == $scope.game_info.cols - 1
       block.y++
 
     $scope.$on 'move_down', (event) ->
       block = get_active_block()
       return unless block
-      return if block.x == rows - 1
+      return if block.x == $scope.game_info.rows - 1
       block_below = get_closest_block_below(block.x, block.y)
       if block_below
         block.x = block_below.x - 1
       else
-        block.x = rows - 1
+        block.x = $scope.game_info.rows - 1
       block.locked = true
       block.active = false
       on_block_land block
-      game_loop()
+
+    $scope.$on 'increment_score', (event, args) ->
+      $scope.game_state.score += args.amount
   ]
