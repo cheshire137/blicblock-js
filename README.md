@@ -11,3 +11,7 @@ it would be fun to recreate the game. Our Sims shouldn't have all the fun!
 - Colors: magenta, yellow, green, blue
 - Five blocks across, seven tall
 - Preview of next two blocks shown
+
+![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblock-screenshot-1.png)
+
+![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblock-screenshot-2.png)
