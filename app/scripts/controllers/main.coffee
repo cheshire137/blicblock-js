@@ -21,6 +21,50 @@ angular.module('blicblockApp')
     cols = 5
     tick_length = 1200 # ms
 
+    remove_blocks = (blocks) ->
+      $scope.blocks = $scope.blocks.filter (block) ->
+        blocks.filter((b) -> b.x == block.x && b.y == block.y).length < 1
+
+    lookup = (x, y, color) ->
+      $scope.blocks.filter((b) -> b.x == x && b.y == y && b.color == color)[0]
+
+    check_for_straight_hor_tetromino = (start_block) ->
+      y = start_block.y
+      return if y >= cols - 3
+      x = start_block.x
+      color = start_block.color
+      block2 = lookup(x, y + 1, color)
+      return unless block2
+      block3 = lookup(x, y + 2, color)
+      return unless block3
+      block4 = lookup(x, y + 3, color)
+      return unless block4
+      remove_blocks [start_block, block2, block3, block4]
+
+    check_for_straight_ver_tetromino = (start_block) ->
+      x = start_block.x
+      return if x >= rows - 3
+      y = start_block.y
+      color = start_block.color
+      block2 = lookup(x + 1, y, color)
+      return unless block2
+      block3 = lookup(x + 2, y, color)
+      return unless block3
+      block4 = lookup(x + 3, y, color)
+      return unless block4
+      remove_blocks [start_block, block2, block3, block4]
+
+    check_for_straight_tetromino = (start_block) ->
+      check_for_straight_hor_tetromino start_block
+      check_for_straight_ver_tetromino start_block
+
+    check_for_tetrominos = ->
+      for block in $scope.blocks
+        check_for_straight_tetromino block
+
+    on_block_land = (block) ->
+      check_for_tetrominos()
+
     get_active_block = ->
       $scope.blocks.filter((b) -> b.active)[0]
 
@@ -47,9 +91,11 @@ angular.module('blicblockApp')
         if block.x == rows - 1
           block.locked = true
           block.active = false
+          on_block_land block
         if is_block_directly_below(block.x, block.y)
           block.locked = true
           block.active = false
+          on_block_land block
         continue if block.locked
         block.x++
 
@@ -109,5 +155,6 @@ angular.module('blicblockApp')
         block.x = rows - 1
       block.locked = true
       block.active = false
+      on_block_land block
       game_loop()
   ]
