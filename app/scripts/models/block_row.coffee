@@ -1,6 +1,7 @@
 class BlockRow
-  constructor: ->
+  constructor: (index) ->
     @blocks = []
+    @index = index
 
   append: (block) ->
     @blocks.push block
