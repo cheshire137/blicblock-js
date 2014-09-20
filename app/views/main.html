@@ -1,5 +1,7 @@
 <div class="board-container">
-  <div class="score"></div>
+  <div class="score">
+    {{game_state.score}}
+  </div>
   <div class="tetromino-count"></div>
   <div class="board">
     <div ng-repeat="block in blocks" class="block {{block.color}} pos-{{block.x}}{{block.y}}"></div>

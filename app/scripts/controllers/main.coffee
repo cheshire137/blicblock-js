@@ -13,6 +13,7 @@ angular.module('blicblockApp')
     $scope.upcoming = []
     $scope.game_state =
       in_progress: true
+      score: 0
 
     game_interval = null
 
@@ -20,10 +21,15 @@ angular.module('blicblockApp')
     rows = 7
     cols = 5
     tick_length = 1200 # ms
+    block_score_value = 1000
+
+    increment_score = (amount) ->
+      $scope.game_state.score += amount
 
     remove_blocks = (blocks) ->
       $scope.blocks = $scope.blocks.filter (block) ->
         blocks.filter((b) -> b.x == block.x && b.y == block.y).length < 1
+      increment_score blocks.length * block_score_value
 
     lookup = (x, y, color) ->
       $scope.blocks.filter((b) -> b.x == x && b.y == y && b.color == color)[0]

@@ -177,6 +177,9 @@ body {
   height: $board-score-height;
   line-height: $board-score-height;
   background-color: $board-background-color;
+  font-size: $board-score-height / 2;
+  font-family: "Ocr A Extended", monospace;
+  text-align: center;
 }
 
 #site-footer {
