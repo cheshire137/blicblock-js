@@ -1,12 +1,24 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-// bower:scss
-@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
-// endbower
+@import "bootstrap";
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
 
 $block-width: 60px;
 $block-height: $block-width;
 $blocks-per-row: 5;
 $blocks-per-column: 7;
+$board-background-color: #111;
+$board-border-width: 4px;
+$board-border-color: #3A335D;
+$board-border-radius: 20px;
+$board-score-height: 80px;
+$board-counter-width: 120px;
+$board-block-preview-padding: 0.4 * $block-width;
+$board-block-preview-width: $block-width + ($board-block-preview-padding * 2);
+$board-width: $blocks-per-row * $block-width + ($board-border-width * 2);
+$board-height: $blocks-per-column * $block-height + ($board-border-width * 2);
 
 .block {
   display: block;
@@ -30,14 +42,39 @@ $blocks-per-column: 7;
   }
 }
 
-.board {
+.block-preview {
+  position: absolute;
+  top: $board-score-height - $board-border-width;
+  right: 0;
+  width: $board-block-preview-width;
+  height: ($board-block-preview-padding * 3) + ($block-height * 2) + ($board-border-width * 2);
+  border: $board-border-width solid $board-border-color;
+  -webkit-border-top-right-radius: $board-border-radius;
+  -webkit-border-bottom-right-radius: $board-border-radius;
+  -moz-border-radius-topright: $board-border-radius;
+  -moz-border-radius-bottomright: $board-border-radius;
+  border-top-right-radius: $board-border-radius;
+  border-bottom-right-radius: $board-border-radius;
+  background-color: $board-background-color;
+}
+
+.board-container {
+  position: relative;
   margin: 0 auto;
-  background-color: #333;
+  width: $board-width + $board-counter-width + $board-block-preview-width - ($board-border-width * 2);
+  height: $board-height + $board-score-height - $board-border-width;
+}
+
+.board {
+  background-color: $board-background-color;
   color: #fff;
-  width: $blocks-per-row * $block-width;
-  height: $blocks-per-column * $block-height;
+  width: $board-width;
+  height: $board-height;
   display: block;
   position: relative;
+  left: $board-counter-width - $board-border-width;
+  top: $board-score-height - $board-border-width;
+  border: $board-border-width solid $board-border-color;
 
   .block {
     position: absolute;
@@ -51,4 +88,47 @@ $blocks-per-column: 7;
       }
     }
   }
+}
+
+body {
+  background: #090313; /* Old browsers */
+  background: -moz-linear-gradient(top,  #090313 0%, #0d0d0d 46%, #2b245c 50%, #0a0a0a 53%, #1f194f 76%, #130b36 87%, #1b1b1b 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#090313), color-stop(46%,#0d0d0d), color-stop(50%,#2b245c), color-stop(53%,#0a0a0a), color-stop(76%,#1f194f), color-stop(87%,#130b36), color-stop(100%,#1b1b1b)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#090313', endColorstr='#1b1b1b',GradientType=0 ); /* IE6-9 */
+}
+
+.score {
+  position: absolute;
+  left: $board-counter-width - $board-border-width;
+  border: $board-border-width solid $board-border-color;
+  -webkit-border-top-left-radius: $board-border-radius;
+  -webkit-border-top-right-radius: $board-border-radius;
+  -moz-border-radius-topleft: $board-border-radius;
+  -moz-border-radius-topright: $board-border-radius;
+  border-top-left-radius: $board-border-radius;
+  border-top-right-radius: $board-border-radius;
+  width: $board-width;
+  height: $board-score-height;
+  line-height: $board-score-height;
+  background-color: $board-background-color;
+}
+
+.tetromino-count {
+  background-color: $board-background-color;
+  border: $board-border-width solid $board-border-color;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: $board-counter-width;
+  height: $board-counter-width;
+  -webkit-border-top-left-radius: $board-border-radius;
+  -webkit-border-bottom-left-radius: $board-border-radius;
+  -moz-border-radius-topleft: $board-border-radius;
+  -moz-border-radius-bottomleft: $board-border-radius;
+  border-top-left-radius: $board-border-radius;
+  border-bottom-left-radius: $board-border-radius;
 }
