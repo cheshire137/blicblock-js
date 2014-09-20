@@ -26,6 +26,7 @@ $board-height: $rows * $block-height + ($board-border-width * 2);
   height: $block-height;
   text-align: center;
   line-height: $block-height;
+  border-radius: 2px;
 
   &.magenta {
     background-color: #AF197C;
@@ -48,6 +49,7 @@ $board-height: $rows * $block-height + ($board-border-width * 2);
   position: absolute;
   top: $board-score-height - $board-border-width;
   right: 0;
+  text-align: center;
   width: $board-block-preview-width;
   height: ($board-block-preview-padding * 3) + ($block-height * 2) + ($board-border-width * 2);
   border: $board-border-width solid $board-border-color;
@@ -58,6 +60,11 @@ $board-height: $rows * $block-height + ($board-border-width * 2);
   border-top-right-radius: $board-border-radius;
   border-bottom-right-radius: $board-border-radius;
   background-color: $board-background-color;
+
+  .block {
+    margin: $board-block-preview-padding auto 0 auto;
+    position: relative;
+  }
 }
 
 .board-container {

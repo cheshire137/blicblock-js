@@ -6,5 +6,8 @@
       {{block.x}}, {{block.y}}
     </div>
   </div>
-  <div class="block-preview"></div>
+  <div class="block-preview">
+    <div ng-repeat="block in upcoming" class="block {{block.color}}">
+    </div>
+  </div>
 </div>
