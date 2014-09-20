@@ -3,17 +3,52 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-.board {
-  border: 1px solid #000;
-  background-color: #333;
-  color: #fff;
-  width: 100%;
-  min-height: 400px;
+$block-width: 60px;
+$block-height: $block-width;
+$blocks-per-row: 5;
+$blocks-per-column: 7;
+
+.block {
   display: block;
-  padding: 20px;
+  width: $block-width;
+  height: $block-height;
+
+  &.magenta {
+    background-color: #AF197C;
+  }
+
+  &.yellow {
+    background-color: #B7A45D;
+  }
+
+  &.green {
+    background-color: #6EAB34;
+  }
+
+  &.blue {
+    background-color: #439CAE;
+  }
 }
 
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+.board {
+  margin: 0 auto;
+  background-color: #333;
+  color: #fff;
+  width: $blocks-per-row * $block-width;
+  height: $blocks-per-column * $block-height;
+  display: block;
+  position: relative;
+
+  .block {
+    position: absolute;
+
+    @for $x from 0 through $blocks-per-row {
+      @for $y from 0 through $blocks-per-column {
+        &.pos-#{$x}#{$y} {
+          left: $block-width * $x;
+          top: $block-height * $y;
+        }
+      }
+    }
+  }
 }
