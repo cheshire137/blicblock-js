@@ -22,6 +22,24 @@ $board-width: $columns * $block-width + ($board-border-width * 2);
 $board-height: $rows * $block-height + ($board-border-width * 2);
 $board-container-height: $board-height + $board-score-height - $board-border-width;
 
+a, .btn {
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+a {
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
+a[ng-click], a[clip-click] {
+  cursor: pointer;
+}
+
 .block {
   display: block;
   width: $block-width;
@@ -90,6 +108,11 @@ $board-container-height: $board-height + $board-score-height - $board-border-wid
   .block {
     position: absolute;
     border: 1px solid $board-background-color;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -ms-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
 
     @for $x from 0 through $rows {
       @for $y from 0 through $columns {
@@ -111,6 +134,13 @@ body {
   background: -ms-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* IE10+ */
   background: linear-gradient(to bottom,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#090313', endColorstr='#1b1b1b',GradientType=0 ); /* IE6-9 */
+}
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
 
 .game-over {
