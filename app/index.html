@@ -16,7 +16,7 @@
   <!-- endbuild -->
 </head>
 
-<body ng-app="blicblockApp">
+<body ng-app="blicblockApp" ng-left="$broadcast('move_left')" ng-right="$broadcast('move_right')">
   <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -96,6 +96,8 @@
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/models/block.js"></script>
   <script src="scripts/models/block_row.js"></script>
+  <script src="scripts/directives/ngleft.js"></script>
+  <script src="scripts/directives/ngright.js"></script>
   <!-- endbuild -->
 </body>
 

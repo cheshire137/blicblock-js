@@ -73,4 +73,10 @@ angular.module('blicblockApp')
       color: get_color()
 
     game_interval = $interval(game_loop, tick_length)
+
+    $scope.$on 'move_left', (event) ->
+      console.log 'move left'
+
+    $scope.$on 'move_right', (event) ->
+      console.log 'move right'
   ]
