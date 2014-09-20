@@ -17,11 +17,15 @@ angular.module('blicblockApp')
           rows: 7
           score_value: 1000
           checking: false
+          in_progress: true
+          game_over: false
+          current_score: 0
 
       get_active_block: ->
         @blocks.filter((b) -> b.active)[0]
 
       check_for_tetrominos: ->
+        return unless @info.in_progress
         return if @info.checking
         @info.checking = true
         for block in @blocks
@@ -45,6 +49,7 @@ angular.module('blicblockApp')
         @blocks.filter((b) -> b.x == x + 1 && b.y == y)[0]
 
       drop_blocks: ->
+        return unless @info.in_progress
         for block in @blocks
           continue unless block
           if block.x == @info.rows - 1
@@ -70,6 +75,7 @@ angular.module('blicblockApp')
         @check_for_tetrominos()
 
       remove_blocks: (to_remove) ->
+        return unless @info.in_progress
         ids_to_remove = to_remove.map((b) -> b.id)
         idx = @blocks.length - 1
         while idx >= 0

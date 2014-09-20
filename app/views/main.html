@@ -1,6 +1,6 @@
 <div class="board-container">
   <div class="score">
-    {{game_state.score}}
+    {{game_info.current_score}}
   </div>
   <div class="tetromino-count"></div>
   <div class="board">
@@ -9,7 +9,10 @@
   <div class="block-preview">
     <div ng-repeat="block in upcoming" class="block {{block.color}}"></div>
   </div>
-  <div class="game-over" ng-class="{active: !game_state.in_progress}">
+  <div class="game-message game-over simlish" ng-class="{active: !game_info.in_progress &amp;&amp; game_info.game_over}">
     game over
+  </div>
+  <div class="game-message paused simlish" ng-class="{active: !game_info.in_progress &amp;&amp; !game_info.game_over}">
+    paused
   </div>
 </div>

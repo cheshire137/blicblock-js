@@ -11,9 +11,6 @@ angular.module('blicblockApp')
   .controller 'MainCtrl', ['$scope', '$interval', 'Tetromino', ($scope, $interval, Tetromino) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
-    $scope.game_state =
-      in_progress: true
-      score: 0
     $scope.game_info = Tetromino.info
 
     game_interval = null
@@ -25,7 +22,8 @@ angular.module('blicblockApp')
       colors[Math.floor(Math.random() * colors.length)]
 
     game_over = ->
-      $scope.game_state.in_progress = false
+      $scope.game_info.in_progress = false
+      $scope.game_info.game_over = true
       $interval.cancel game_interval
 
     queue_block = ->
@@ -52,6 +50,7 @@ angular.module('blicblockApp')
       drop_queued_block()
 
     game_loop = ->
+      return unless $scope.game_info.in_progress
       Tetromino.drop_blocks()
       drop_queued_block_if_no_active()
 
@@ -61,6 +60,14 @@ angular.module('blicblockApp')
       color: get_color()
 
     game_interval = $interval(game_loop, tick_length)
+
+    $scope.$on 'pause', (event) ->
+      $scope.game_info.in_progress = false
+      $interval.cancel game_interval
+
+    $scope.$on 'resume', (event) ->
+      $scope.game_info.in_progress = true
+      game_interval = $interval(game_loop, tick_length)
 
     $scope.$on 'move_left', (event) ->
       block = Tetromino.get_active_block()
@@ -88,5 +95,5 @@ angular.module('blicblockApp')
       Tetromino.on_block_land block
 
     $scope.$on 'increment_score', (event, args) ->
-      $scope.game_state.score += args.amount
+      $scope.game_info.current_score += args.amount
   ]

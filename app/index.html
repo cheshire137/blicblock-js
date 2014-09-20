@@ -23,9 +23,64 @@
   <![endif]-->
 
   <div class="container">
-    <div class="header">
-      <h3 class="text-muted">blicblock</h3>
-    </div>
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Blicblock</a>
+        </div>
+        <div id="site-navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li ng-controller="HowToPlayModalCtrl">
+              <script type="text/ng-template" id="how-to-play-modal-content.html">
+                <div class="modal-header">
+                  <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <h4 class="modal-title">How to Play Blicblock</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Create tetrominos to score points!</p>
+                  <div class="tetromino-previews">
+                    <div class="tetromino-preview tetromino-straight-hor">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                  </div>
+                  <p>
+                    Blocks in four different colors
+                    &mdash;<span class="magenta">pink</span>,
+                    <span class="green">green</span>,
+                    <span class="blue">blue</span>,
+                    and <span class="yellow">yellow</span>&mdash;will
+                    fall from the top.
+                  </p>
+                  <p>
+                    Use &#8592; and &#8594;, or <code>a</code> and <code>d</code>,
+                    to position a block as it falls.
+                  </p>
+                  <p>
+                    Use &#8595; or <code>s</code> to drop a block immediately.
+                  </p>
+                  <p>The game ends when there is no more room for blocks to fall.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" ng-click="cancel()">
+                    Got it!
+                  </button>
+                </div>
+              </script>
+              <a href="#" ng-click="open()">How to Play</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <div ng-view=""></div>
 
@@ -95,18 +150,21 @@
   <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-touch/angular-touch.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="scripts/app.js"></script>
-  <script src="scripts/controllers/main.js"></script>
   <script src="scripts/models/block.js"></script>
   <script src="scripts/models/block_row.js"></script>
   <script src="scripts/directives/ngleft.js"></script>
   <script src="scripts/directives/ngright.js"></script>
   <script src="scripts/directives/ngdown.js"></script>
   <script src="scripts/services/tetromino.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/how_to_play_modal.js"></script>
+  <script src="scripts/controllers/how_to_play_modal_instance.js"></script>
   <!-- endbuild -->
 </body>
 

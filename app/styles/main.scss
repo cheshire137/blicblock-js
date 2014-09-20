@@ -7,12 +7,15 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   display: none !important;
 }
 
-$block-width: 70px;
+$block-width: 65px;
 $block-height: $block-width;
+$preview-block-width: 25px;
+$preview-block-height: $preview-block-width;
 $block-magenta: #AF197C;
 $block-yellow: #B7A45D;
 $block-green: #6EAB34;
 $block-blue: #439CAE;
+$block-white: $gray-lighter;
 $block-stripe-count: 4.5;
 $block-stripe-darken-pct: 5%;
 $rows: 7;
@@ -47,6 +50,22 @@ a[ng-click], a[clip-click] {
   cursor: pointer;
 }
 
+span.magenta {
+  color: $block-magenta;
+}
+
+span.blue {
+  color: $block-blue;
+}
+
+span.green {
+  color: $block-green;
+}
+
+span.yellow {
+  color: $block-yellow;
+}
+
 .block {
   display: block;
   width: $block-width;
@@ -76,6 +95,13 @@ a[ng-click], a[clip-click] {
   &.blue {
     background-color: $block-blue;
     @include background-image(linear-gradient(to bottom, $block-blue, $block-blue 50%, darken($block-blue, $block-stripe-darken-pct) 50%, darken($block-blue, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
+  }
+
+  &.white {
+    border: 1px solid darken($block-white, $block-stripe-darken-pct + 2);
+    background-color: $block-white;
+    @include background-image(linear-gradient(to bottom, $block-white, $block-white 50%, darken($block-white, $block-stripe-darken-pct) 50%, darken($block-white, $block-stripe-darken-pct)));
     @include background-size(100% ($block-height/$block-stripe-count));
   }
 
@@ -151,7 +177,6 @@ a[ng-click], a[clip-click] {
 }
 
 body {
-  background: #090313; /* Old browsers */
   background: -moz-linear-gradient(top,  #090313 0%, #0d0d0d 46%, #2b245c 50%, #0a0a0a 53%, #1f194f 76%, #130b36 87%, #1b1b1b 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#090313), color-stop(46%,#0d0d0d), color-stop(50%,#2b245c), color-stop(53%,#0a0a0a), color-stop(76%,#1f194f), color-stop(87%,#130b36), color-stop(100%,#1b1b1b)); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* Chrome10+,Safari5.1+ */
@@ -168,7 +193,11 @@ body {
   padding: 0.2em 0;
 }
 
-.game-over {
+.simlish {
+  font-family: 'handwrittensimlishfontmedium', sans-serif;
+}
+
+.game-message {
   display: none;
 
   &.active {
@@ -184,7 +213,7 @@ body {
     line-height: $board-container-height;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    font-family: 'handwrittensimlishfontmedium', sans-serif;
+    letter-spacing: 0.05em;
   }
 }
 
@@ -227,4 +256,43 @@ body {
   -moz-border-radius-bottomleft: $board-border-radius;
   border-top-left-radius: $board-border-radius;
   border-bottom-left-radius: $board-border-radius;
+}
+
+.tetromino-previews {
+  margin-bottom: $line-height-computed / 2;
+
+  .tetromino-preview {
+    position: relative;
+
+    .block {
+      position: absolute;
+      width: $preview-block-width;
+      height: $preview-block-height;
+    }
+
+    &.tetromino-straight-hor {
+      width: ($preview-block-width * 4) + 3;
+      height: $preview-block-height;
+
+      .block {
+        top: 0;
+
+        &.block-1 {
+          left: 0;
+        }
+
+        &.block-2 {
+          left: $preview-block-width + 1;
+        }
+
+        &.block-3 {
+          left: ($preview-block-width * 2) + 2;
+        }
+
+        &.block-4 {
+          left: ($preview-block-width * 3) + 3;
+        }
+      }
+    }
+  }
 }
