@@ -12,9 +12,9 @@ it would be fun to recreate the game. Our Sims shouldn't have all the fun!
 - Five blocks across, seven tall
 - Preview of next two blocks shown
 
-![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblock-screenshot-1.png)
+![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-1.png)
 
-![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblock-screenshot-2.png)
+![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-2.png)
 
 ## How to Run
 
