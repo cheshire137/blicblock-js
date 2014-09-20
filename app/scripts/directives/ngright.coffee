@@ -10,7 +10,8 @@ angular.module('blicblockApp')
   .directive('ngRight', ->
     (scope, element, attrs) ->
       element.bind 'keydown keypress', (event) ->
-        if event.which == 39
+        return unless event.which
+        if event.which == 39 || String.fromCharCode(event.which) == 'd'
           scope.$apply ->
             scope.$eval attrs.ngRight
           event.preventDefault()
