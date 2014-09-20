@@ -20,6 +20,7 @@ angular.module('blicblockApp')
       check_for_tetrominos: ->
         for block in @blocks
           @check_for_straight_tetromino block
+          @check_for_square_tetromino block
           @check_for_l_tetromino block
           @check_for_t_tetromino block
 
@@ -34,6 +35,8 @@ angular.module('blicblockApp')
         @check_for_tetrominos()
 
       lookup: (x, y, color) ->
+        return if x >= @info.rows
+        return if y >= @info.cols
         @blocks.filter((b) -> b.x == x && b.y == y && b.color == color)[0]
 
       check_for_straight_tetromino: (block1) ->
@@ -43,7 +46,6 @@ angular.module('blicblockApp')
       # 1***
       check_for_straight_hor_tetromino: (block1) ->
         y = block1.y
-        return if y >= @info.cols - 3
         x = block1.x
         color = block1.color
         block2 = @lookup(x, y + 1, color)
@@ -60,7 +62,6 @@ angular.module('blicblockApp')
       # *
       check_for_straight_ver_tetromino: (block1) ->
         x = block1.x
-        return if x >= @info.rows - 3
         y = block1.y
         color = block1.color
         block2 = @lookup(x + 1, y, color)
@@ -68,6 +69,20 @@ angular.module('blicblockApp')
         block3 = @lookup(x + 2, y, color)
         return unless block3
         block4 = @lookup(x + 3, y, color)
+        return unless block4
+        @remove_blocks [block1, block2, block3, block4]
+
+      # 1*
+      # **
+      check_for_square_tetromino: (block1) ->
+        x = block1.x
+        y = block1.y
+        color = block1.color
+        block2 = @lookup(x, y + 1, color)
+        return unless block2
+        block3 = @lookup(x + 1, y, color)
+        return unless block3
+        block4 = @lookup(x + 1, y + 1, color)
         return unless block4
         @remove_blocks [block1, block2, block3, block4]
 
