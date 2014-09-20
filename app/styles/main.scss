@@ -5,10 +5,10 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   display: none !important;
 }
 
-$block-width: 60px;
+$block-width: 70px;
 $block-height: $block-width;
-$blocks-per-row: 5;
-$blocks-per-column: 7;
+$rows: 7;
+$columns: 5;
 $board-background-color: #111;
 $board-border-width: 4px;
 $board-border-color: #3A335D;
@@ -17,13 +17,15 @@ $board-score-height: 80px;
 $board-counter-width: 120px;
 $board-block-preview-padding: 0.4 * $block-width;
 $board-block-preview-width: $block-width + ($board-block-preview-padding * 2);
-$board-width: $blocks-per-row * $block-width + ($board-border-width * 2);
-$board-height: $blocks-per-column * $block-height + ($board-border-width * 2);
+$board-width: $columns * $block-width + ($board-border-width * 2);
+$board-height: $rows * $block-height + ($board-border-width * 2);
 
 .block {
   display: block;
   width: $block-width;
   height: $block-height;
+  text-align: center;
+  line-height: $block-height;
 
   &.magenta {
     background-color: #AF197C;
@@ -78,12 +80,13 @@ $board-height: $blocks-per-column * $block-height + ($board-border-width * 2);
 
   .block {
     position: absolute;
+    border: 1px solid $board-background-color;
 
-    @for $x from 0 through $blocks-per-row {
-      @for $y from 0 through $blocks-per-column {
+    @for $x from 0 through $rows {
+      @for $y from 0 through $columns {
         &.pos-#{$x}#{$y} {
-          left: $block-width * $x;
-          top: $block-height * $y;
+          left: $block-width * $y;
+          top: $block-height * $x;
         }
       }
     }
@@ -115,6 +118,12 @@ body {
   height: $board-score-height;
   line-height: $board-score-height;
   background-color: $board-background-color;
+}
+
+#site-footer {
+  font-size: $font-size-small;
+  margin-top: 20px;
+  padding: 20px 0;
 }
 
 .tetromino-count {

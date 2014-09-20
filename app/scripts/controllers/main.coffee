@@ -10,23 +10,15 @@
 angular.module('blicblockApp')
   .controller 'MainCtrl', ($scope) ->
     $scope.blocks = []
-    $scope.blocks.push new Block
-      color: 'magenta'
-      x: 0
-      y: 0
-    $scope.blocks.push new Block
-      color: 'yellow'
-      x: 1
-      y: 0
-    $scope.blocks.push new Block
-      color: 'green'
-      x: 2
-      y: 0
-    $scope.blocks.push new Block
-      color: 'blue'
-      x: 3
-      y: 0
-    $scope.blocks.push new Block
-      color: 'magenta'
-      x: 4
-      y: 0
+    colors = ['magenta', 'yellow', 'blue', 'green']
+    rows = 7
+    cols = 5
+    for row in [0...rows]
+      for col in [0...cols]
+        idx = Math.floor(Math.random() * colors.length)
+        console.log row, col, colors[idx]
+        $scope.blocks.push new Block
+          color: colors[idx]
+          x: row
+          y: col
+
