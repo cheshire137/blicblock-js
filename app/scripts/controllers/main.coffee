@@ -25,6 +25,10 @@ angular.module('blicblockApp')
         if block.x == rows - 1
           block.locked = true
           block.active = false
+        block_below = $scope.blocks.filter((b) -> b.x == block.x + 1 && b.y == block.y)[0]
+        if block_below
+          block.locked = true
+          block.active = false
         continue if block.locked
         block.x++
 
