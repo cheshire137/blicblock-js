@@ -9,7 +9,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $block-width: 65px;
 $block-height: $block-width;
-$preview-block-width: 25px;
+$preview-block-width: 22px;
 $preview-block-height: $preview-block-width;
 $block-magenta: #AF197C;
 $block-yellow: #B7A45D;
@@ -245,6 +245,12 @@ body {
 
 html {
   height: 100%;
+}
+
+.modal {
+  hr {
+    border-top-color: #e5e5e5;
+  }
 }
 
 .score {
