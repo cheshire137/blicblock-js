@@ -12,16 +12,21 @@ angular.module('blicblockApp')
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_info = Tetromino.info
-    game_interval = null
+    game_interval = undefined
     colors = ['magenta', 'yellow', 'blue', 'green', 'white', 'orange']
 
     get_color = ->
       colors[Math.floor(Math.random() * colors.length)]
 
+    cancel_game_interval = ->
+      if angular.isDefined(game_interval)
+        $interval.cancel game_interval
+        game_interval = undefined
+
     game_over = ->
       $scope.game_info.in_progress = false
       $scope.game_info.game_over = true
-      $interval.cancel game_interval
+      cancel_game_interval()
 
     queue_block = ->
       $scope.upcoming[1] = new Block
@@ -51,6 +56,10 @@ angular.module('blicblockApp')
       Tetromino.drop_blocks()
       drop_queued_block_if_no_active()
 
+    start_game_interval = ->
+      return if angular.isDefined(game_interval)
+      game_interval = $interval(game_loop, $scope.game_info.tick_length)
+
     $scope.upcoming.push new Block
       color: get_color()
     $scope.upcoming.push new Block
@@ -58,11 +67,11 @@ angular.module('blicblockApp')
 
     $scope.$on 'pause', (event) ->
       $scope.game_info.in_progress = false
-      $interval.cancel game_interval
+      cancel_game_interval()
 
     $scope.$on 'resume', (event) ->
       $scope.game_info.in_progress = true
-      game_interval = $interval(game_loop, $scope.game_info.tick_length)
+      start_game_interval()
 
     $scope.$on 'move_left', (event) ->
       block = Tetromino.get_active_block()
@@ -100,17 +109,17 @@ angular.module('blicblockApp')
       block.locked = true
       block.active = false
       Tetromino.on_block_land block
-      $interval.cancel game_interval
+      cancel_game_interval()
       drop_queued_block()
-      game_interval = $interval(game_loop, $scope.game_info.tick_length)
+      start_game_interval()
 
     $scope.$watch 'game_info.level', ->
       if $scope.game_info.level > 1
         $scope.game_info.tick_length -=
             $scope.game_info.tick_length *
             $scope.game_info.tick_length_decrement_pct
-        $interval.cancel game_interval
-      game_interval = $interval(game_loop, $scope.game_info.tick_length)
+        cancel_game_interval()
+      start_game_interval()
 
     $scope.new_game = ->
       $window.location.reload();
