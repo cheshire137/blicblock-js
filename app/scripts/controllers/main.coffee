@@ -73,6 +73,12 @@ angular.module('blicblockApp')
       $scope.game_info.in_progress = true
       start_game_interval()
 
+    $scope.$on 'toggle_pause', (event) ->
+      if $scope.game_info.in_progress
+        $scope.$emit('pause')
+      else if !$scope.game_info.game_over
+        $scope.$emit('resume')
+
     $scope.$on 'move_left', (event) ->
       block = Tetromino.get_active_block()
       return unless block

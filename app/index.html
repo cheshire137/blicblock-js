@@ -17,7 +17,7 @@
   <!-- endbuild -->
 </head>
 
-<body ng-app="blicblockApp" ng-left="$broadcast('move_left')" ng-right="$broadcast('move_right')" ng-down="$broadcast('move_down')">
+<body ng-app="blicblockApp" ng-left="$broadcast('move_left')" ng-right="$broadcast('move_right')" ng-down="$broadcast('move_down')" ng-space="$broadcast('toggle_pause')">
   <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -55,11 +55,14 @@
                     fall from the top.
                   </p>
                   <p>
-                    Use &#8592; and &#8594;, or <code>a</code> and <code>d</code>,
-                    to position a block as it falls.
+                    Use &#8592; and &#8594;, or <code>a</code> and
+                    <code>d</code>, to position a block as it falls.
                   </p>
                   <p>
                     Use &#8595; or <code>s</code> to drop a block immediately.
+                  </p>
+                  <p>
+                    Hit the spacebar to pause and resume the game.
                   </p>
                   <p>
                     The game ends when there is no more room for blocks to fall.
@@ -266,6 +269,7 @@
   <script src="scripts/controllers/how_to_play_modal.js"></script>
   <script src="scripts/controllers/how_to_play_modal_instance.js"></script>
   <script src="scripts/controllers/about.js"></script>
+  <script src="scripts/directives/ngspace.js"></script>
   <!-- endbuild -->
 </body>
 
