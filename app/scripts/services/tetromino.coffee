@@ -37,6 +37,22 @@ angular.module('blicblockApp')
           @check_for_t_tetromino block
         @info.checking = false
 
+      get_closest_block_to_left: (x, y) ->
+        blocks_to_left = @blocks.filter((b) -> b.x == x && b.y < y)
+        blocks_to_left.sort (a, b) ->
+          return -1 if a.y < b.y
+          return 1 if a.y > b.y
+          0
+        blocks_to_left[blocks_to_left.length - 1]
+
+      get_closest_block_to_right: (x, y) ->
+        blocks_to_right = @blocks.filter((b) -> b.x == x && b.y > y)
+        blocks_to_right.sort (a, b) ->
+          return -1 if a.y < b.y
+          return 1 if a.y > b.y
+          0
+        blocks_to_right[0]
+
       get_closest_block_below: (x, y) ->
         blocks_below = @blocks.filter((b) -> b.x > x && b.y == y)
         blocks_below.sort (a, b) ->

@@ -73,13 +73,21 @@ angular.module('blicblockApp')
       block = Tetromino.get_active_block()
       return unless block
       return if block.y == 0
-      block.y--
+      block_to_left = Tetromino.get_closest_block_to_left(block.x, block.y)
+      if block_to_left
+        block.y = block_to_left.y + 1
+      else
+        block.y--
 
     $scope.$on 'move_right', (event) ->
       block = Tetromino.get_active_block()
       return unless block
       return if block.y == $scope.game_info.cols - 1
-      block.y++
+      block_to_right = Tetromino.get_closest_block_to_right(block.x, block.y)
+      if block_to_right
+        block.y = block_to_right.y - 1
+      else
+        block.y++
 
     $scope.$on 'move_down', (event) ->
       block = Tetromino.get_active_block()
