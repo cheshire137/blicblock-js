@@ -36,3 +36,4 @@ Create a new Heroku app in your browser.
 1. `git remote add heroku git@heroku.com:yourherokuapp.git`
 1. `git push heroku master`
 1. `heroku ps:scale web=1`
+1. `heroku config:add NODE_ENV=production`
