@@ -19,5 +19,8 @@
   </div>
   <div class="game-message paused simlish" ng-class="{active: !game_info.in_progress &amp;&amp; !game_info.game_over}">
     paused
+    <button type="button" class="resume-game-button btn btn-primary" ng-click="$emit('resume')">
+      Resume Game
+    </button>
   </div>
 </div>

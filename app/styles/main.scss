@@ -241,17 +241,27 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
     letter-spacing: 0.05em;
-  }
-}
 
-.game-over {
-  .new-game-button {
-    font-family: $font-family-sans-serif;
-    position: absolute;
-    bottom: 50px;
-    width: 7em;
-    left: 50%;
-    margin-left: -3.5em;
+    .btn {
+      font-family: $font-family-sans-serif;
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+    }
+
+    &.game-over {
+      .new-game-button {
+        width: 7em;
+        margin-left: -3.5em;
+      }
+    }
+
+    &.paused {
+      .resume-game-button {
+        width: 9em;
+        margin-left: -4.5em;
+      }
+    }
   }
 }
 

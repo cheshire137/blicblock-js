@@ -114,4 +114,7 @@ angular.module('blicblockApp')
 
     $scope.new_game = ->
       $window.location.reload();
+
+    $scope.$on '$locationChangeStart', (event) ->
+      $scope.$emit('pause')
   ]
