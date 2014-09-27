@@ -71,11 +71,12 @@ angular.module('blicblockApp')
         return unless @info.in_progress
         for block in @blocks
           continue unless block && !block.sliding
-          if block.x == @info.rows - 1
+          active_or_not_locked = block.active || !block.locked
+          if block.x == @info.rows - 1 && active_or_not_locked
             block.locked = true
             block.active = false
             @on_block_land block
-          if @is_block_directly_below(block.x, block.y)
+          if @is_block_directly_below(block.x, block.y) && active_or_not_locked
             block.locked = true
             block.active = false
             @on_block_land block
@@ -84,10 +85,12 @@ angular.module('blicblockApp')
             # this one as far as it will go immediately.
             block_below = @get_closest_block_below(block.x, block.y)
             if block_below
-              block.x = block_below.x - 1
+              new_x = block_below.x - 1
             else
-              block.x = @info.rows - 1
-            @on_block_land block
+              new_x = @info.rows - 1
+            unless new_x == block.x
+              block.x = new_x
+              @on_block_land(block)
           continue if block.locked
           block.x++
 
