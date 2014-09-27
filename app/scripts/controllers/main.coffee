@@ -8,7 +8,7 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$window', '$interval', 'Tetromino', ($scope, $window, $interval, Tetromino) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$interval', 'localStorageService', 'Tetromino', ($scope, $window, $interval, localStorageService, Tetromino) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_info = Tetromino.info
@@ -23,10 +23,21 @@ angular.module('blicblockApp')
         $interval.cancel game_interval
         game_interval = undefined
 
+    save_high_score = ->
+      storage_key = 'high_score'
+      high_score = localStorageService.get(storage_key)
+      current_score = $scope.game_info.current_score
+      if high_score && high_score.value < current_score || !high_score
+        high_score =
+          value: current_score
+          date: new Date()
+        localStorageService.set(storage_key, high_score)
+
     game_over = ->
       $scope.game_info.in_progress = false
       $scope.game_info.game_over = true
       cancel_game_interval()
+      save_high_score()
 
     queue_block = ->
       $scope.upcoming[1] = new Block

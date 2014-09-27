@@ -19,7 +19,8 @@ angular
     'ui.bootstrap',
     'LocalStorageModule'
   ])
-  .config ($routeProvider) ->
+  .config ['$routeProvider', 'localStorageServiceProvider', ($routeProvider, localStorageServiceProvider) ->
+    localStorageServiceProvider.setPrefix('blicblockJS')
     $routeProvider
       .when '/',
         templateUrl: 'views/main.html'
@@ -29,4 +30,4 @@ angular
         controller: 'AboutCtrl'
       .otherwise
         redirectTo: '/'
-
+  ]
