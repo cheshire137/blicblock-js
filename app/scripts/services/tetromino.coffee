@@ -70,7 +70,7 @@ angular.module('blicblockApp')
       drop_blocks: ->
         return unless @info.in_progress
         for block in @blocks
-          continue unless block
+          continue unless block && !block.sliding
           if block.x == @info.rows - 1
             block.locked = true
             block.active = false

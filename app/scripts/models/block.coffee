@@ -5,6 +5,7 @@ class Block
     @y = attribs.y
     @locked = false
     @active = true
+    @sliding = false
     @id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace /[xy]/g, (c) ->
       r = Math.random()*16|0
       v = if c == 'x' then r else (r&0x3|0x8)
