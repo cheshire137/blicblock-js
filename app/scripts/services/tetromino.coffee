@@ -20,6 +20,9 @@ angular.module('blicblockApp')
           in_progress: true
           game_over: false
           current_score: 0
+          tick_length_increment: 100 # ms
+          tick_length: 1200 # ms
+          level: 1
 
       get_active_block: ->
         @blocks.filter((b) -> b.active)[0]
@@ -90,6 +93,10 @@ angular.module('blicblockApp')
       on_block_land: (block) ->
         @check_for_tetrominos()
 
+      increment_level_if_necessary: ->
+        if @info.current_score % 4000 == 0
+          @info.level++
+
       remove_blocks: (to_remove) ->
         return unless @info.in_progress
         ids_to_remove = to_remove.map((b) -> b.id)
@@ -98,7 +105,8 @@ angular.module('blicblockApp')
           if ids_to_remove.indexOf(@blocks[idx].id) > -1
             @blocks.splice(idx, 1)
           idx--
-        $rootScope.$broadcast 'increment_score', {amount: @info.score_value}
+        @info.current_score += @info.score_value
+        @increment_level_if_necessary()
         @drop_blocks()
         @check_for_tetrominos()
 

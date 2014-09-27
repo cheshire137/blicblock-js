@@ -16,7 +16,6 @@ angular.module('blicblockApp')
     game_interval = null
 
     colors = ['magenta', 'yellow', 'blue', 'green', 'white', 'orange']
-    tick_length = 1150 # ms
 
     get_color = ->
       colors[Math.floor(Math.random() * colors.length)]
@@ -59,15 +58,13 @@ angular.module('blicblockApp')
     $scope.upcoming.push new Block
       color: get_color()
 
-    game_interval = $interval(game_loop, tick_length)
-
     $scope.$on 'pause', (event) ->
       $scope.game_info.in_progress = false
       $interval.cancel game_interval
 
     $scope.$on 'resume', (event) ->
       $scope.game_info.in_progress = true
-      game_interval = $interval(game_loop, tick_length)
+      game_interval = $interval(game_loop, $scope.game_info.tick_length)
 
     $scope.$on 'move_left', (event) ->
       block = Tetromino.get_active_block()
@@ -102,6 +99,10 @@ angular.module('blicblockApp')
       block.active = false
       Tetromino.on_block_land block
 
-    $scope.$on 'increment_score', (event, args) ->
-      $scope.game_info.current_score += args.amount
+    $scope.$watch 'game_info.level', ->
+      console.log 'level just changed to', $scope.game_info.level
+      $scope.game_info.tick_length -= $scope.game_info.tick_length_increment
+      console.log 'tick length is now', $scope.game_info.tick_length
+      $interval.cancel game_interval
+      game_interval = $interval(game_loop, $scope.game_info.tick_length)
   ]

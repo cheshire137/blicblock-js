@@ -28,6 +28,7 @@ $board-border-color: #3A335D;
 $board-border-radius: 20px;
 $board-score-height: 80px;
 $board-counter-width: 120px;
+$board-counter-height: $board-counter-width;
 $board-block-preview-padding: 0.4 * $block-width;
 $board-block-preview-width: $block-width + ($board-block-preview-padding * 2);
 $board-width: $columns * $block-width + ($board-border-width * 2);
@@ -247,6 +248,26 @@ html {
   height: 100%;
 }
 
+.level {
+  background-color: $board-background-color;
+  border: $board-border-width solid $board-border-color;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: $board-counter-width;
+  height: $board-counter-height;
+  -webkit-border-top-left-radius: $board-border-radius;
+  -webkit-border-bottom-left-radius: $board-border-radius;
+  -moz-border-radius-topleft: $board-border-radius;
+  -moz-border-radius-bottomleft: $board-border-radius;
+  border-top-left-radius: $board-border-radius;
+  border-bottom-left-radius: $board-border-radius;
+  font-size: $board-counter-height / 4;
+  line-height: $board-counter-height;
+  font-family: "Ocr A Extended", monospace;
+  text-align: center;
+}
+
 .modal {
   hr {
     border-top-color: #e5e5e5;
@@ -298,22 +319,6 @@ html {
   font-size: $font-size-small;
   margin-top: 20px;
   padding: 20px 0;
-}
-
-.tetromino-count {
-  background-color: $board-background-color;
-  border: $board-border-width solid $board-border-color;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: $board-counter-width;
-  height: $board-counter-width;
-  -webkit-border-top-left-radius: $board-border-radius;
-  -webkit-border-bottom-left-radius: $board-border-radius;
-  -moz-border-radius-topleft: $board-border-radius;
-  -moz-border-radius-bottomleft: $board-border-radius;
-  border-top-left-radius: $board-border-radius;
-  border-bottom-left-radius: $board-border-radius;
 }
 
 .tetromino-previews {
