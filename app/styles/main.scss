@@ -244,6 +244,17 @@ body {
   }
 }
 
+.game-over {
+  .new-game-button {
+    font-family: $font-family-sans-serif;
+    position: absolute;
+    bottom: 50px;
+    width: 7em;
+    left: 50%;
+    margin-left: -3.5em;
+  }
+}
+
 html {
   height: 100%;
 }

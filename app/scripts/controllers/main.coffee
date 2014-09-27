@@ -8,13 +8,11 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$interval', 'Tetromino', ($scope, $interval, Tetromino) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$interval', 'Tetromino', ($scope, $window, $interval, Tetromino) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_info = Tetromino.info
-
     game_interval = null
-
     colors = ['magenta', 'yellow', 'blue', 'green', 'white', 'orange']
 
     get_color = ->
@@ -105,4 +103,7 @@ angular.module('blicblockApp')
       console.log 'tick length is now', $scope.game_info.tick_length
       $interval.cancel game_interval
       game_interval = $interval(game_loop, $scope.game_info.tick_length)
+
+    $scope.new_game = ->
+      $window.location.reload();
   ]
