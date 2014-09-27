@@ -100,6 +100,7 @@ angular.module('blicblockApp')
         $scope.$emit('resume')
 
     $scope.$on 'move_left', (event) ->
+      return unless $scope.game_info.in_progress
       block = Tetromino.get_active_block()
       return unless block
       return if block.y == 0
@@ -112,6 +113,7 @@ angular.module('blicblockApp')
       block.sliding = false
 
     $scope.$on 'move_right', (event) ->
+      return unless $scope.game_info.in_progress
       block = Tetromino.get_active_block()
       return unless block
       return if block.y == $scope.game_info.cols - 1
@@ -124,6 +126,7 @@ angular.module('blicblockApp')
       block.sliding = false
 
     $scope.$on 'move_down', (event) ->
+      return unless $scope.game_info.in_progress
       block = Tetromino.get_active_block()
       return unless block
       return if block.x == $scope.game_info.rows - 1
