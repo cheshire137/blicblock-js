@@ -15,7 +15,7 @@ angular.module('blicblockApp')
 
     game_interval = null
 
-    colors = ['magenta', 'yellow', 'blue', 'green']
+    colors = ['magenta', 'yellow', 'blue', 'green', 'white', 'orange']
     tick_length = 1150 # ms
 
     get_color = ->

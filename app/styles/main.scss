@@ -16,6 +16,7 @@ $block-yellow: #B7A45D;
 $block-green: #6EAB34;
 $block-blue: #439CAE;
 $block-white: $gray-lighter;
+$block-orange: #AF6D19;
 $block-stripe-count: 4.5;
 $block-stripe-darken-pct: 5%;
 $rows: 7;
@@ -67,6 +68,14 @@ span.yellow {
   color: $block-yellow;
 }
 
+span.white {
+  color: darken($block-white, 10%);
+}
+
+span.orange {
+  color: $block-orange;
+}
+
 .block {
   display: block;
   width: $block-width;
@@ -103,6 +112,13 @@ span.yellow {
     border: 1px solid darken($block-white, $block-stripe-darken-pct + 2);
     background-color: $block-white;
     @include background-image(linear-gradient(to bottom, $block-white, $block-white 50%, darken($block-white, $block-stripe-darken-pct) 50%, darken($block-white, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
+  }
+
+  &.orange {
+    border: 1px solid darken($block-orange, $block-stripe-darken-pct + 2);
+    background-color: $block-orange;
+    @include background-image(linear-gradient(to bottom, $block-orange, $block-orange 50%, darken($block-orange, $block-stripe-darken-pct) 50%, darken($block-orange, $block-stripe-darken-pct)));
     @include background-size(100% ($block-height/$block-stripe-count));
   }
 
@@ -293,11 +309,144 @@ html {
 
   .tetromino-preview {
     position: relative;
+    display: inline-block;
+    margin: 5px;
 
     .block {
       position: absolute;
       width: $preview-block-width;
       height: $preview-block-height;
+    }
+
+    &.tetromino-l-a {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          right: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          right: 0;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          left: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-l-b {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          left: $preview-block-width + 1;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-l-c {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-l-d {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          right: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          right: $preview-block-width + 1;
+          top: 0;
+        }
+
+        &.block-4 {
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-square {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1, &.block-2 {
+          top: 0;
+        }
+
+        &.block-1, &.block-3 {
+          left: 0;
+        }
+
+        &.block-2, &.block-4 {
+          right: 0;
+        }
+
+        &.block-3, &.block-4 {
+          bottom: 0;
+        }
+      }
     }
 
     &.tetromino-straight-hor {
@@ -321,6 +470,31 @@ html {
 
         &.block-4 {
           left: ($preview-block-width * 3) + 3;
+        }
+      }
+    }
+
+    &.tetromino-straight-ver {
+      width: $preview-block-width;
+      height: ($preview-block-height * 4) + 3;
+
+      .block {
+        left: 0;
+
+        &.block-1 {
+          top: 0;
+        }
+
+        &.block-2 {
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          top: ($preview-block-height * 2) + 2;
+        }
+
+        &.block-4 {
+          top: ($preview-block-height * 3) + 3;
         }
       }
     }
