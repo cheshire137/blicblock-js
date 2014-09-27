@@ -12,8 +12,17 @@ angular.module('blicblockApp')
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_info = Tetromino.info
+    $scope.new_high_score = {}
     game_interval = undefined
     colors = ['magenta', 'yellow', 'blue', 'green', 'white', 'orange']
+    high_score_storage_key = 'high_score'
+
+    get_existing_high_score = ->
+      high_score = localStorageService.get(high_score_storage_key)
+      return high_score if high_score
+      {}
+
+    $scope.existing_high_score = get_existing_high_score()
 
     get_color = ->
       colors[Math.floor(Math.random() * colors.length)]
@@ -24,14 +33,14 @@ angular.module('blicblockApp')
         game_interval = undefined
 
     save_high_score = ->
-      storage_key = 'high_score'
-      high_score = localStorageService.get(storage_key)
+      high_score = localStorageService.get(high_score_storage_key)
       current_score = $scope.game_info.current_score
       if high_score && high_score.value < current_score || !high_score
         high_score =
           value: current_score
           date: new Date()
-        localStorageService.set(storage_key, high_score)
+        localStorageService.set(high_score_storage_key, high_score)
+        $scope.new_high_score.value = high_score.value
 
     game_over = ->
       $scope.game_info.in_progress = false
