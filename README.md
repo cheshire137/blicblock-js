@@ -14,10 +14,6 @@ BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 - Colors: magenta, yellow, green, blue. *Note:* since the game board is five blocks wide, to make the game have any challenge at all, there need to be >5 colors of blocks.
 - Preview of next two blocks shown
 
-![The Sims 4 Blicblock play](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-1.png)
-
-![The Sims 4 Blicblock game over](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-2.png)
-
 ## How to Run
 
 1. [Install Node.js](http://nodejs.org/download/).
@@ -36,6 +32,14 @@ BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 1. `git push heroku master`
 1. `heroku ps:scale web=1`
 1. `heroku config:add NODE_ENV=production`
+
+## Screenshots of Blicblock in The Sims 4
+
+![The Sims 4 Blicblock play](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-1.png)
+
+![The Sims 4 Blicblock game over](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-2.png)
+
+## Screenshots of BlicblockJS
 
 ![BlicblockJS gameplay](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblockjs-screenshot-1.png)
 
