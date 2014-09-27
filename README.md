@@ -1,15 +1,17 @@
-# blickblock-js
+# BlicblockJS
 
 Blicblock is a game your Sims in The Sims 4 can play on the computer. I thought
 it would be fun to recreate the game. Our Sims shouldn't have all the fun!
 
-## Notes about Blicblock:
+BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 
-- Looks like Tetris meets Bejeweled: colored blocks fall down. Combine them into Tetrominos and the Tetromino disappears.
-- Disappearing Tetrominos cause blocks on top of them to fall, which can cause cascades of disappearing blocks.
-- If screen fills up and no more blocks can fall, game over.
-- Colors: magenta, yellow, green, blue
+## Blicblock Notes from The Sims 4
+
+- Looks like Tetris meets Bejeweled: colored blocks fall down. Combine them into a tetromino and the tetromino disappears.
+- Disappearing tetrominos cause blocks on top of them to fall, which can cause cascades of disappearing tetrominos.
+- If the screen fills up and no more blocks can fall, game over.
 - Five blocks across, seven tall
+- Colors: magenta, yellow, green, blue. *Note:* since the game board is five blocks wide, to make the game have any challenge at all, there need to be >5 colors of blocks.
 - Preview of next two blocks shown
 
 ![](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-1.png)
@@ -18,6 +20,7 @@ it would be fun to recreate the game. Our Sims shouldn't have all the fun!
 
 ## How to Run
 
+1. [Install Node.js](http://nodejs.org/download/).
 1. `npm install`
 1. `npm install -g bower`
 1. `bower install`
@@ -26,12 +29,8 @@ it would be fun to recreate the game. Our Sims shouldn't have all the fun!
 
 ## How to Deploy to Heroku
 
-Create a new Heroku app in your browser.
-
-1. `npm install`
-1. `npm install -g bower`
-1. `bower install`
-1. `npm install -g grunt-cli`
+1. Follow the "How to Run" steps above to get npm, Grunt, Bower, and the necessary packages installed.
+1. Create a new Heroku app in your browser.
 1. `grunt build`
 1. `git remote add heroku git@heroku.com:yourherokuapp.git`
 1. `git push heroku master`
