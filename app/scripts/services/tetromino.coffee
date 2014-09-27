@@ -20,7 +20,7 @@ angular.module('blicblockApp')
           in_progress: true
           game_over: false
           current_score: 0
-          tick_length_increment: 100 # ms
+          tick_length_decrement_pct: 0.09
           tick_length: 1200 # ms
           level: 1
 
@@ -32,7 +32,7 @@ angular.module('blicblockApp')
         return if @info.checking
         @info.checking = true
         for block in @blocks
-          continue unless block
+          continue unless block && block.locked && !block.active
           @check_for_straight_tetromino block
           @check_for_square_tetromino block
           @check_for_l_tetromino block
@@ -87,6 +87,7 @@ angular.module('blicblockApp')
               block.x = block_below.x - 1
             else
               block.x = @info.rows - 1
+            @on_block_land block
           continue if block.locked
           block.x++
 

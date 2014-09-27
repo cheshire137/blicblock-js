@@ -98,10 +98,11 @@ angular.module('blicblockApp')
       Tetromino.on_block_land block
 
     $scope.$watch 'game_info.level', ->
-      console.log 'level just changed to', $scope.game_info.level
-      $scope.game_info.tick_length -= $scope.game_info.tick_length_increment
-      console.log 'tick length is now', $scope.game_info.tick_length
-      $interval.cancel game_interval
+      if $scope.game_info.level > 1
+        $scope.game_info.tick_length -=
+            $scope.game_info.tick_length *
+            $scope.game_info.tick_length_decrement_pct
+        $interval.cancel game_interval
       game_interval = $interval(game_loop, $scope.game_info.tick_length)
 
     $scope.new_game = ->

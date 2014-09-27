@@ -2,7 +2,9 @@
   <div class="score">
     {{game_info.current_score}}
   </div>
-  <div class="level">{{game_info.level}}</div>
+  <div class="level">
+    {{game_info.level}}
+  </div>
   <div class="board">
     <div ng-repeat="block in blocks" ng-id="{{block.id}}" class="animate block {{block.color}} pos-{{block.x}}{{block.y}}"></div>
   </div>
