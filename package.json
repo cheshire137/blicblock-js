@@ -5,7 +5,9 @@
     "url": "git://github.com/moneypenny/blicblock-js.git"
   },
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "http-server": "^0.7.1"
+  },
   "devDependencies": {
     "coffee-script": "^1.8.0",
     "grunt": "^0.4.1",

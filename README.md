@@ -23,3 +23,16 @@ it would be fun to recreate the game. Our Sims shouldn't have all the fun!
 1. `bower install`
 1. `npm install -g grunt-cli`
 1. `grunt serve` to watch for file changes.
+
+## How to Deploy to Heroku
+
+Create a new Heroku app in your browser.
+
+1. `npm install`
+1. `npm install -g bower`
+1. `bower install`
+1. `npm install -g grunt-cli`
+1. `grunt build`
+1. `git remote add heroku git@heroku.com:yourherokuapp.git`
+1. `git push heroku master`
+1. `heroku ps:scale web=1`
