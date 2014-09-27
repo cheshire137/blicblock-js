@@ -15,7 +15,7 @@ $block-magenta: #AF197C;
 $block-yellow: #B7A45D;
 $block-green: #6EAB34;
 $block-blue: #439CAE;
-$block-white: $gray-lighter;
+$block-white: #B0B0B0;
 $block-orange: #AF6D19;
 $block-stripe-count: 4.5;
 $block-stripe-darken-pct: 5%;
@@ -53,26 +53,32 @@ a[ng-click], a[clip-click] {
 }
 
 span.magenta {
+  font-weight: 700;
   color: $block-magenta;
 }
 
 span.blue {
+  font-weight: 700;
   color: $block-blue;
 }
 
 span.green {
+  font-weight: 700;
   color: $block-green;
 }
 
 span.yellow {
+  font-weight: 700;
   color: $block-yellow;
 }
 
 span.white {
-  color: darken($block-white, 15%);
+  font-weight: 700;
+  color: $block-white;
 }
 
 span.orange {
+  font-weight: 700;
   color: $block-orange;
 }
 
@@ -556,6 +562,87 @@ html {
 
         &.block-4 {
           right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-z-b {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          left: $preview-block-width + 1;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          left: $preview-block-width + 1;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-z-c {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-z-d {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          right: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-4 {
+          left: 0;
           bottom: 0;
         }
       }
