@@ -648,6 +648,114 @@ html {
       }
     }
 
+    &.tetromino-t-a {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          top: 0;
+          left: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-4 {
+          left: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-t-b {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          top: 0;
+          right: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-t-c {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          top: 0;
+          left: $preview-block-width + 1;
+        }
+
+        &.block-2 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          left: $preview-block-width + 1;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-t-d {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          top: 0;
+          left: $preview-block-width + 1;
+        }
+
+        &.block-2 {
+          bottom: 0;
+          left: $preview-block-width + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+
     &.tetromino-square {
       width: ($preview-block-width * 2) + 1;
       height: ($preview-block-height * 2) + 1;
