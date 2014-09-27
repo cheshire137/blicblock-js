@@ -11,8 +11,8 @@
   <div class="block-preview">
     <div ng-repeat="block in upcoming" class="block {{block.color}}"></div>
   </div>
-  <div class="game-message game-over simlish" ng-class="{active: !game_info.in_progress &amp;&amp; game_info.game_over}">
-    game over
+  <div class="game-message game-over" ng-class="{active: !game_info.in_progress &amp;&amp; game_info.game_over}">
+    <h2 class="simlish">game over</h2>
     <div class="final-score-message">
       Final score: <span class="value">{{game_info.current_score}}</span>
     </div>
@@ -30,8 +30,8 @@
       New Game
     </button>
   </div>
-  <div class="game-message paused simlish" ng-class="{active: !game_info.in_progress &amp;&amp; !game_info.game_over}">
-    paused
+  <div class="game-message paused" ng-class="{active: !game_info.in_progress &amp;&amp; !game_info.game_over}">
+    <h2 class="simlish">paused</h2>
     <button type="button" class="resume-game-button btn btn-primary" ng-click="$emit('resume')">
       Resume Game
     </button>
