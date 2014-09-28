@@ -83,6 +83,7 @@ angular.module('blicblockApp')
             @info.plumetting_block = false
             @on_block_land block
             on_land_callback() if on_land_callback
+        drop_single_block()
         drop_single_block_interval = $interval(drop_single_block, 25)
 
       # Returns an array of blocks anywhere over top of the given blocks
@@ -139,6 +140,7 @@ angular.module('blicblockApp')
         @info.current_score += @info.score_value
         @increment_level_if_necessary()
         on_top = @blocks_on_top(to_remove)
+        on_top = on_top.filter((b) -> !b.active)
         @plummet_blocks(on_top) if on_top.length > 0
         @check_for_tetrominos()
 
