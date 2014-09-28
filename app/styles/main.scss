@@ -361,12 +361,14 @@ html {
 }
 
 .tetromino-previews {
+  text-align: center;
   margin-bottom: $line-height-computed / 2;
 
   .tetromino-preview {
     position: relative;
     display: inline-block;
-    margin: 5px;
+    vertical-align: middle;
+    margin: 2px 4px;
 
     .block {
       position: absolute;
