@@ -8,7 +8,7 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$window', '$interval', 'localStorageService', 'Tetromino', ($scope, $window, $interval, localStorageService, Tetromino) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', 'localStorageService', 'Tetromino', ($scope, $window, $timeout, $interval, localStorageService, Tetromino) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_info = Tetromino.info
@@ -54,17 +54,23 @@ angular.module('blicblockApp')
 
     drop_queued_block = ->
       return if $scope.game_info.checking
-      top_blocks = $scope.blocks.filter (b) ->
-        b.x == 0 && b.y == 2
-      if top_blocks.length > 0
+      middle_col_idx = ($scope.game_info.cols - 1) / 2
+      middle_col_blocks = $scope.blocks.filter((b) -> b.y == middle_col_idx)
+      if middle_col_blocks.length < $scope.game_info.rows
+        x = 0 # At the top
+        y = middle_col_idx # Centered horizontally
+        top_mid_block = $scope.blocks.filter((b) -> b.x == x && b.y == y)[0]
+        if top_mid_block
+          # Currently dropping or sliding at the top
+          return
+        block = $scope.upcoming[0]
+        block.x = x
+        block.y = y
+        $scope.upcoming[0] = $scope.upcoming[1]
+        queue_block()
+        $scope.blocks.push block
+      else
         game_over()
-        return
-      block = $scope.upcoming[0]
-      block.x = 0 # At the top
-      block.y = 2 # Centered horizontally
-      $scope.upcoming[0] = $scope.upcoming[1]
-      queue_block()
-      $scope.blocks.push block
 
     drop_queued_block_if_no_active = ->
       active_block = Tetromino.get_active_block()
@@ -74,6 +80,7 @@ angular.module('blicblockApp')
     game_loop = ->
       return unless $scope.game_info.in_progress
       return if $scope.game_info.plumetting_block
+      return if $scope.game_info.sliding_block
       Tetromino.drop_blocks()
       drop_queued_block_if_no_active()
 
@@ -100,18 +107,23 @@ angular.module('blicblockApp')
       else if !$scope.game_info.game_over
         $scope.$emit('resume')
 
+    stop_sliding = (block) ->
+      block.sliding = false
+      $scope.game_info.sliding_block = false
+
     $scope.$on 'move_left', (event) ->
       return unless $scope.game_info.in_progress
       block = Tetromino.get_active_block()
       return unless block
       return if block.y == 0
       block.sliding = true
+      $scope.game_info.sliding_block = true
       block_to_left = Tetromino.get_closest_block_to_left(block.x, block.y)
       if block_to_left
         block.y = block_to_left.y + 1
       else
         block.y--
-      block.sliding = false
+      $timeout (-> stop_sliding(block)), 150
 
     $scope.$on 'move_right', (event) ->
       return unless $scope.game_info.in_progress
@@ -119,12 +131,13 @@ angular.module('blicblockApp')
       return unless block
       return if block.y == $scope.game_info.cols - 1
       block.sliding = true
+      $scope.game_info.sliding_block = true
       block_to_right = Tetromino.get_closest_block_to_right(block.x, block.y)
       if block_to_right
         block.y = block_to_right.y - 1
       else
         block.y++
-      block.sliding = false
+      $timeout (-> stop_sliding(block)), 150
 
     $scope.$on 'move_down', (event) ->
       return unless $scope.game_info.in_progress

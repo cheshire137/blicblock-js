@@ -19,6 +19,7 @@ angular.module('blicblockApp')
           checking: false
           in_progress: true
           plumetting_block: false
+          sliding_block: false
           game_over: false
           current_score: 0
           tick_length_decrement_pct: 0.09
@@ -101,7 +102,8 @@ angular.module('blicblockApp')
       drop_blocks: ->
         return unless @info.in_progress
         for block in @blocks
-          continue unless block && !block.sliding
+          continue unless block
+          continue if block.sliding
           active_or_not_locked = block.active || !block.locked
           if block.x == @info.rows - 1 && active_or_not_locked
             block.locked = true
