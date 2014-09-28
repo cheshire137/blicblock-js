@@ -18,6 +18,7 @@ angular.module('blicblockApp')
           score_value: 1000
           checking: false
           in_progress: true
+          plumetting_block: false
           game_over: false
           current_score: 0
           tick_length_decrement_pct: 0.09
