@@ -136,22 +136,10 @@ angular.module('blicblockApp')
         new_x = block_below.x - 1
       else
         new_x = $scope.game_info.rows - 1
-      drop_single_block_interval = undefined
-      drop_single_block = ->
-        $scope.game_info.plumetting_block = true
-        if block.x < new_x
-          block.x++
-        else if block.x == new_x
-          $interval.cancel drop_single_block_interval
-          drop_single_block_interval = undefined
-          block.locked = true
-          block.active = false
-          $scope.game_info.plumetting_block = false
-          Tetromino.on_block_land block
-          cancel_game_interval()
-          drop_queued_block()
-          start_game_interval()
-      drop_single_block_interval = $interval(drop_single_block, 25)
+      Tetromino.plummet_block block, new_x, ->
+        cancel_game_interval()
+        drop_queued_block()
+        start_game_interval()
 
     $scope.$watch 'game_info.level', ->
       if $scope.game_info.level > 1

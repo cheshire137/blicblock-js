@@ -8,7 +8,7 @@
  # Service in the blicblockApp.
 ###
 angular.module('blicblockApp')
-  .service 'Tetromino', ['$rootScope', ($rootScope) ->
+  .service 'Tetromino', ['$rootScope', '$interval', ($rootScope, $interval) ->
     class Tetromino
       constructor: ->
         @blocks = []
@@ -68,6 +68,35 @@ angular.module('blicblockApp')
       is_block_directly_below: (x, y) ->
         @blocks.filter((b) -> b.x == x + 1 && b.y == y)[0]
 
+      # Animate dropping the given block to the given x coordinate.
+      plummet_block: (block, x, on_land_callback) ->
+        drop_single_block_interval = undefined
+        drop_single_block = =>
+          @info.plumetting_block = true
+          if block.x < x
+            block.x++
+          else if block.x == x
+            $interval.cancel drop_single_block_interval
+            drop_single_block_interval = undefined
+            block.locked = true
+            block.active = false
+            @info.plumetting_block = false
+            @on_block_land block
+            on_land_callback() if on_land_callback
+        drop_single_block_interval = $interval(drop_single_block, 25)
+
+      # Returns an array of blocks anywhere over top of the given blocks
+      blocks_on_top: (blocks) ->
+        x_coords = (b.x for b in blocks)
+        y_coords = (b.y for b in blocks)
+        max_x = Math.max(x_coords...)
+        on_top = @blocks.filter (b) -> b.x < max_x && y_coords.indexOf(b.y) > -1
+        on_top.sort (a, b) -> # Closest to bottom first
+          return 1 if a.x < b.x
+          return -1 if a.x > b.x
+          0
+        on_top
+
       drop_blocks: ->
         return unless @info.in_progress
         for block in @blocks
@@ -81,17 +110,6 @@ angular.module('blicblockApp')
             block.locked = true
             block.active = false
             @on_block_land block
-          else if block.locked && !block.active && block.x < @info.rows - 1
-            # A match was made that removed blocks under this one, so drop
-            # this one as far as it will go immediately.
-            block_below = @get_closest_block_below(block.x, block.y)
-            if block_below
-              new_x = block_below.x - 1
-            else
-              new_x = @info.rows - 1
-            unless new_x == block.x
-              block.x = new_x
-              @on_block_land(block)
           continue if block.locked
           block.x++
 
@@ -101,6 +119,14 @@ angular.module('blicblockApp')
       increment_level_if_necessary: ->
         if @info.current_score % 4000 == 0
           @info.level++
+
+      plummet_blocks: (blocks, idx) ->
+        idx = 0 if typeof idx == 'undefined'
+        block = blocks[idx]
+        block_below = @get_closest_block_below(block.x, block.y)
+        new_x = if block_below then block_below.x - 1 else @info.rows - 1
+        @plummet_block block, new_x, =>
+          @plummet_blocks(blocks, idx + 1) if idx < blocks.length - 1
 
       remove_blocks: (to_remove) ->
         return unless @info.in_progress
@@ -112,7 +138,8 @@ angular.module('blicblockApp')
           idx--
         @info.current_score += @info.score_value
         @increment_level_if_necessary()
-        @drop_blocks()
+        on_top = @blocks_on_top(to_remove)
+        @plummet_blocks(on_top) if on_top.length > 0
         @check_for_tetrominos()
 
       lookup: (x, y, color) ->
