@@ -25,9 +25,13 @@ angular.module('blicblockApp')
           tick_length_decrement_pct: 0.09
           tick_length: 1200 # ms
           level: 1
+        @info.middle_col_idx = (@info.cols - 1) / 2
 
       get_active_block: ->
         @blocks.filter((b) -> b.active)[0]
+
+      get_middle_column_blocks: ->
+        @blocks.filter((b) => b.y == @info.middle_col_idx)
 
       check_for_tetrominos: ->
         return unless @info.in_progress

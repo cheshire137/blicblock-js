@@ -54,11 +54,10 @@ angular.module('blicblockApp')
 
     drop_queued_block = ->
       return if $scope.game_info.checking
-      middle_col_idx = ($scope.game_info.cols - 1) / 2
-      middle_col_blocks = $scope.blocks.filter((b) -> b.y == middle_col_idx)
+      middle_col_blocks = Tetromino.get_middle_column_blocks()
       if middle_col_blocks.length < $scope.game_info.rows
         x = 0 # At the top
-        y = middle_col_idx # Centered horizontally
+        y = $scope.game_info.middle_col_idx # Centered horizontally
         top_mid_block = $scope.blocks.filter((b) -> b.x == x && b.y == y)[0]
         if top_mid_block
           # Currently dropping or sliding at the top
@@ -151,7 +150,7 @@ angular.module('blicblockApp')
         new_x = $scope.game_info.rows - 1
       Tetromino.plummet_block block, new_x, ->
         cancel_game_interval()
-        drop_queued_block()
+        drop_queued_block_if_no_active()
         start_game_interval()
 
     $scope.$watch 'game_info.level', ->
