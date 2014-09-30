@@ -208,6 +208,21 @@
       </div>
     </nav>
 
+    <div class="notifications" ng-controller="NotificationsCtrl">
+      <p class="alert alert-danger clearfix ng-cloak" ng-repeat="error in errors">
+        <a class="pull-right alert-link" ng-click="remove('error', error.id)">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        {{error.message}}
+      </p>
+      <p class="alert alert-success clearfix ng-cloak" ng-repeat="notice in notices">
+        <a class="pull-right alert-link" ng-click="remove('notice', notice.id)">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        {{notice.message}}
+      </p>
+    </div>
+
     <div ng-view=""></div>
   </div>
 
@@ -267,6 +282,8 @@
   <script src="scripts/directives/ngspace.js"></script>
   <script src="scripts/services/tetromino.js"></script>
   <script src="scripts/services/score.js"></script>
+  <script src="scripts/services/notification.js"></script>
+  <script src="scripts/controllers/notifications.js"></script>
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/how_to_play_modal.js"></script>
   <script src="scripts/controllers/how_to_play_modal_instance.js"></script>

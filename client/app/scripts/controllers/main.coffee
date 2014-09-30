@@ -8,7 +8,7 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', 'localStorageService', 'Tetromino', ($scope, $window, $timeout, $interval, $routeParams, localStorageService, Tetromino) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', 'localStorageService', 'Tetromino', 'Score', 'Notification', ($scope, $window, $timeout, $interval, $routeParams, localStorageService, Tetromino, Score, Notification) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_info = Tetromino.info
@@ -54,12 +54,20 @@ angular.module('blicblockApp')
       return if $scope.game_info.test_mode
       high_score = localStorageService.get(high_score_storage_key)
       current_score = $scope.game_info.current_score
+      $scope.score_record = new Score
+        value: current_score
       if high_score && high_score.value < current_score || !high_score
         high_score =
           value: current_score
           date: new Date()
         localStorageService.set(high_score_storage_key, high_score)
         $scope.new_high_score.value = high_score.value
+
+    $scope.record_high_score = ->
+      return if $scope.game_info.test_mode
+      $scope.score_record.$save (data) ->
+        console.log data
+        Notification.notice 'Your score has been recorded!'
 
     game_over = ->
       $scope.game_info.in_progress = false

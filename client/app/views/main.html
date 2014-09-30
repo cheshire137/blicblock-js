@@ -16,14 +16,20 @@
     <div class="final-score-message">
       Final score: <span class="value">{{game_info.current_score}}</span>
     </div>
+    <form class="submit-score-form form-inline" ng-show="game_info.current_score &gt; 0 &amp;&amp; !game_info.test_mode" ng-submit="record_high_score()">
+      <input type="text" placeholder="Your initials" maxlength="3" ng-model="score_record.initials" class="form-control">
+      <button type="submit" class="btn btn-info">
+        Submit Score
+      </button>
+    </form>
     <div ng-show="game_info.test_mode" class="test-mode-message">
       Test mode, score is not saved.
     </div>
     <div class="new-high-score-message" ng-show="new_high_score.value">
-      New high score!
+      New personal high score!
     </div>
     <div class="existing-high-score-message" ng-hide="new_high_score.value">
-      High score:
+      Your high score:
       <span class="value">{{existing_high_score.value}}</span>
       <time class="date">
         {{existing_high_score.date | amDateFormat:'dddd, MMMM Do YYYY, h:mm a'}}

@@ -181,9 +181,9 @@ $btn-link-disabled-color:        $gray-light !default;
 //##
 
 //** `<input>` background color
-$input-bg:                       lighten($body-bg, 5%) !default;
+$input-bg:                       lighten($body-bg, 15%) !default;
 //** `<input disabled>` background color
-$input-bg-disabled:              lighten($body-bg, 7%) !default;
+$input-bg-disabled:              lighten($body-bg, 17%) !default;
 
 //** Text color for `<input>`s
 $input-color:                    lighten($text-color, 15%) !default;

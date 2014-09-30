@@ -238,10 +238,14 @@ body {
     height: $board-container-height;
     background-color: rgba(0, 0, 0, 0.7);
 
-    .btn {
+    & > .btn {
       position: absolute;
       bottom: 50px;
       left: 50%;
+    }
+
+    .submit-score-form {
+      margin: 0 40px;
     }
 
     h2 {
