@@ -251,6 +251,11 @@ body {
       font-size: 700%;
     }
 
+    .test-mode-message {
+      font-size: $font-size-large;
+      margin: 40px;
+    }
+
     &.game-over {
       .new-game-button {
         width: 7em;

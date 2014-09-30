@@ -16,6 +16,9 @@
     <div class="final-score-message">
       Final score: <span class="value">{{game_info.current_score}}</span>
     </div>
+    <div ng-show="game_info.test_mode" class="test-mode-message">
+      Test mode, score is not saved.
+    </div>
     <div class="new-high-score-message" ng-show="new_high_score.value">
       New high score!
     </div>
@@ -32,6 +35,9 @@
   </div>
   <div class="game-message paused" ng-class="{active: !game_info.in_progress &amp;&amp; !game_info.game_over}">
     <h2 class="simlish">paused</h2>
+    <div ng-show="game_info.test_mode" class="test-mode-message">
+      Test mode, score will not be saved.
+    </div>
     <button type="button" class="resume-game-button btn btn-primary" ng-click="$emit('resume')">
       Resume Game
     </button>

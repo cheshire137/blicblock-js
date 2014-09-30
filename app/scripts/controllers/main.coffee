@@ -8,19 +8,37 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', 'localStorageService', 'Tetromino', ($scope, $window, $timeout, $interval, localStorageService, Tetromino) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', 'localStorageService', 'Tetromino', ($scope, $window, $timeout, $interval, $routeParams, localStorageService, Tetromino) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_info = Tetromino.info
     $scope.new_high_score = {}
     game_interval = undefined
-    colors = ['magenta', 'yellow', 'blue', 'green', 'white', 'orange']
     high_score_storage_key = 'high_score'
 
+    $scope.new_game = ->
+      $window.location.reload()
+
+    all_colors = ['magenta', 'orange', 'yellow', 'green', 'blue', 'white']
+    if $routeParams.color_count
+      color_count = parseInt($routeParams.color_count, 10)
+      color_count = all_colors.length - 1 if color_count > all_colors.length
+      color_count = 1 if color_count < 1
+      colors = all_colors.slice(0, color_count)
+      $scope.game_info.test_mode = true
+    else
+      colors = all_colors
+      $scope.new_game() if $scope.game_info.test_mode
+      $scope.game_info.test_mode = false
+
     get_existing_high_score = ->
-      high_score = localStorageService.get(high_score_storage_key)
-      return high_score if high_score
-      {}
+      if $scope.game_info.test_mode
+        value: -1000000
+        date: new Date(1969, 0, 1)
+      else
+        high_score = localStorageService.get(high_score_storage_key)
+        return high_score if high_score
+        {}
 
     $scope.existing_high_score = get_existing_high_score()
 
@@ -33,6 +51,7 @@ angular.module('blicblockApp')
         game_interval = undefined
 
     save_high_score = ->
+      return if $scope.game_info.test_mode
       high_score = localStorageService.get(high_score_storage_key)
       current_score = $scope.game_info.current_score
       if high_score && high_score.value < current_score || !high_score
@@ -164,9 +183,6 @@ angular.module('blicblockApp')
             $scope.game_info.tick_length_decrement_pct
         cancel_game_interval()
       start_game_interval()
-
-    $scope.new_game = ->
-      $window.location.reload();
 
     $scope.$on '$locationChangeStart', (event) ->
       $scope.$emit('pause')
