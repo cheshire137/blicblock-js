@@ -40,9 +40,7 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 
 ## How to Deploy to Heroku
 
-1. Follow the "How to Run" steps above to get npm, Grunt, Bower, and the necessary packages installed.
 1. Create a new Heroku app in your browser.
-1. `grunt build`
 1. `git remote add heroku git@heroku.com:yourherokuapp.git`
 1. `git push heroku master`
 1. `heroku run rake db:migrate`
