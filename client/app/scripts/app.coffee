@@ -32,6 +32,9 @@ angular
       .when '/about',
         templateUrl: 'views/about.html'
         controller: 'AboutCtrl'
+      .when '/scores',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
       .otherwise
         redirectTo: '/'
   ]

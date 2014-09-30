@@ -91,7 +91,7 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
+          middleware: function (connect, options) {
             if (!Array.isArray(options.base)) {
               options.base = [options.base];
             }
@@ -108,7 +108,8 @@ module.exports = function (grunt) {
             ];
 
             // Make directory browse-able.
-            var directory = options.directory || options.base[options.base.length - 1];
+            var directory = options.directory ||
+                            options.base[options.base.length - 1];
             middlewares.push(connect.directory(directory));
 
             return middlewares;
@@ -154,6 +155,7 @@ module.exports = function (grunt) {
 
     // Empties folders to start fresh
     clean: {
+      options: {force: true},
       dist: {
         files: [{
           dot: true,

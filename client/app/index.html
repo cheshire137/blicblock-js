@@ -38,6 +38,9 @@
         </div>
         <div id="site-navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+            <li>
+              <a href="#/scores">High Scores</a>
+            </li>
             <li ng-controller="HowToPlayModalCtrl">
               <script type="text/ng-template" id="how-to-play-modal-content.html">
                 <div class="modal-header">
@@ -263,10 +266,12 @@
   <script src="scripts/directives/ngdown.js"></script>
   <script src="scripts/directives/ngspace.js"></script>
   <script src="scripts/services/tetromino.js"></script>
+  <script src="scripts/services/score.js"></script>
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/how_to_play_modal.js"></script>
   <script src="scripts/controllers/how_to_play_modal_instance.js"></script>
   <script src="scripts/controllers/about.js"></script>
+  <script src="scripts/controllers/scores.js"></script>
   <!-- endbuild -->
 </body>
 
