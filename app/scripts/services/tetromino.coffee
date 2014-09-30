@@ -77,6 +77,7 @@ angular.module('blicblockApp')
       plummet_block: (block, x, on_land_callback) ->
         drop_single_block_interval = undefined
         drop_single_block = =>
+          block.plumetting = true
           @info.plumetting_block = true
           if block.x < x
             block.x++
@@ -86,6 +87,7 @@ angular.module('blicblockApp')
             block.locked = true
             block.active = false
             @info.plumetting_block = false
+            block.plumetting = false
             @on_block_land block
             on_land_callback() if on_land_callback
         drop_single_block()
