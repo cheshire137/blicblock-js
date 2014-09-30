@@ -93,6 +93,7 @@ angular.module('blicblockApp')
       color: get_color()
 
     $scope.$on 'pause', (event) ->
+      return if $scope.game_info.plumetting_block
       $scope.game_info.in_progress = false
       cancel_game_interval()
 
