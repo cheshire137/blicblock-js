@@ -4,15 +4,19 @@
       <thead>
         <tr>
           <th>Rank</th>
-          <th class="text-center">Score</th>
-          <th class="text-right">Name</th>
+          <th>Score</th>
+          <th>Name</th>
+          <th>Date</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="score in scores">
           <td>{{score.rank}}</td>
-          <td class="text-center">{{score.value}}</td>
-          <td class="text-right">{{score.initials}}</td>
+          <td>{{score.value}}</td>
+          <td>{{score.initials}}</td>
+          <td>
+            <time am-time-ago="score.created_at"></time>
+          </td>
         </tr>
       </tbody>
     </table>

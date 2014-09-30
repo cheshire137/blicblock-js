@@ -8,11 +8,15 @@ class Score < ActiveRecord::Base
   validates :initials, exclusion: {in: BAD_WORDS}
   validates :initials, format: {with: /\A[a-zA-Z]{3}\z/}
 
+  scope :order_by_value, ->{
+    order('value DESC, created_at DESC, id DESC')
+  }
+
   before_save :capitalize_initials
 
   def rank
     # Add 1 because the index method returns a 0-based ranking.
-    self.class.order('value DESC').pluck(:id).index(id) + 1
+    self.class.order_by_value.pluck(:id).index(id) + 1
   end
 
   private
