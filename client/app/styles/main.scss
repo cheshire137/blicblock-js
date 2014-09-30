@@ -1,6 +1,6 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 @import "bootstrap";
-@import "simlish";
+@import "fonts";
 @import "compass";
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -336,8 +336,24 @@ html {
   line-height: $board-score-height;
   background-color: $board-background-color;
   font-size: $board-score-height / 2;
-  font-family: "Ocr A Extended", monospace;
+  font-family: "Ocr A Extended", $font-family-monospace;
   text-align: center;
+}
+
+.scores-table {
+  .row-1, .row-1 a {
+    color: #F121BE;
+  }
+
+  td, th {
+    font-size: 1.3em;
+    font-family: 'Press Start 2P', $font-family-monospace;
+    font-weight: 400;
+  }
+
+  thead th {
+    color: #777;
+  }
 }
 
 .screenshot {
@@ -888,6 +904,14 @@ html {
           top: ($preview-block-height * 3) + 3;
         }
       }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  .scores-table {
+    td, th {
+      font-size: 11px;
     }
   }
 }
