@@ -4,7 +4,7 @@ class ScoresController < ApplicationController
 
   # GET /scores.json
   def index
-    @scores = Score.order(value: :desc)
+    @scores = Score.order(value: :desc).limit(100)
   end
 
   # GET /scores/1.json

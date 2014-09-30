@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th class="text-center">Score</th>
+          <th class="text-right">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="score in scores">
+          <td>{{score.rank}}</td>
+          <td class="text-center">{{score.value}}</td>
+          <td class="text-right">{{score.initials}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

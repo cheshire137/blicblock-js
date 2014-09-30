@@ -107,6 +107,10 @@ module.exports = function (grunt) {
               connect.static(appConfig.app)
             ];
 
+            options.base.forEach(function (base) {
+              middlewares.push(connect.static(base));
+            });
+
             // Make directory browse-able.
             var directory = options.directory ||
                             options.base[options.base.length - 1];
@@ -482,6 +486,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'shell:startRailsServer',
       'autoprefixer',
+      'configureProxies:server',
       'connect:livereload',
       'watch'
     ]);
