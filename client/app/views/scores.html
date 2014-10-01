@@ -6,17 +6,13 @@
           <th class="score-rank">Rank</th>
           <th class="score-value">Score</th>
           <th class="score-initials">Name</th>
-          <th class="score-created-at">Date</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="score in scores" class="row-{{score.rank}}">
+        <tr ng-repeat="score in scores" class="row-{{score.rank}}" tooltip="{{score.created_at | amDateFormat:'YYYY-MM-DD'}}" tooltip-placement="right">
           <td class="score-rank">{{score.rank}}</td>
           <td class="score-value">{{score.value}}</td>
           <td class="score-initials">{{score.initials}}</td>
-          <td class="score-created-at">
-            <time am-time-ago="score.created_at" tooltip="{{score.created_at | amDateFormat:'YYYY-MM-DD'}}" tooltip-placement="right"></time>
-          </td>
         </tr>
       </tbody>
     </table>

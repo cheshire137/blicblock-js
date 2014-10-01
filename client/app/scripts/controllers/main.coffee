@@ -8,15 +8,16 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', 'localStorageService', 'Tetromino', 'Score', 'Notification', ($scope, $window, $timeout, $interval, $routeParams, localStorageService, Tetromino, Score, Notification) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', 'localStorageService', 'Config', 'Tetromino', 'Score', 'Notification', ($scope, $window, $timeout, $interval, $routeParams, localStorageService, Config, Tetromino, Score, Notification) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = []
     $scope.game_info = Tetromino.info
+    $scope.score_record = new Score()
     $scope.new_high_score = {}
     game_interval = undefined
-    high_score_storage_key = 'high_score'
 
     $scope.new_game = ->
+      $scope.score_record = new Score()
       $window.location.reload()
 
     all_colors = ['magenta', 'orange', 'yellow', 'green', 'blue', 'white']
@@ -36,7 +37,7 @@ angular.module('blicblockApp')
         value: -1000000
         date: new Date(1969, 0, 1)
       else
-        high_score = localStorageService.get(high_score_storage_key)
+        high_score = localStorageService.get(Config.storage_keys.high_score)
         return high_score if high_score
         {}
 
@@ -52,21 +53,21 @@ angular.module('blicblockApp')
 
     save_high_score = ->
       return if $scope.game_info.test_mode
-      high_score = localStorageService.get(high_score_storage_key)
+      high_score = localStorageService.get(Config.storage_keys.high_score)
       current_score = $scope.game_info.current_score
-      $scope.score_record = new Score
-        value: current_score
+      $scope.score_record.value = current_score
       if high_score && high_score.value < current_score || !high_score
         high_score =
           value: current_score
           date: new Date()
-        localStorageService.set(high_score_storage_key, high_score)
+        localStorageService.set(Config.storage_keys.high_score, high_score)
         $scope.new_high_score.value = high_score.value
 
     $scope.record_high_score = ->
       return if $scope.game_info.test_mode
       on_success = (data) ->
         Notification.notice 'Your score has been recorded!'
+        $scope.game_info.submitted_score = true
       on_error = (response) ->
         Notification.error 'Failed to record your score: ' + response.data.error
       $scope.score_record.$save on_success, on_error

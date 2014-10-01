@@ -16,7 +16,7 @@
     <div class="final-score-message">
       Final score: <span class="value">{{game_info.current_score}}</span>
     </div>
-    <form class="submit-score-form form-inline" ng-show="game_info.current_score &gt; 0 &amp;&amp; !game_info.test_mode &amp;&amp; !score_record.id" ng-submit="record_high_score()">
+    <form class="submit-score-form form-inline" ng-show="game_info.current_score &gt; 0 &amp;&amp; !game_info.test_mode &amp;&amp; !game_info.submitted_score" ng-submit="record_high_score()">
       <input type="text" placeholder="Your initials" maxlength="3" ng-model="score_record.initials" class="form-control" autofocus="autofocus" ng-change="capitalize_initials()">
       <button type="submit" class="btn btn-info">
         Submit Score

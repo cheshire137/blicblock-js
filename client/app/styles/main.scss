@@ -1,6 +1,6 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-@import "bootstrap";
 @import "fonts";
+@import "bootstrap";
 @import "compass";
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -313,9 +313,9 @@ html {
   -moz-border-radius-bottomleft: $board-border-radius;
   border-top-left-radius: $board-border-radius;
   border-bottom-left-radius: $board-border-radius;
-  font-size: $board-counter-height / 4;
+  font-size: $board-counter-height / 5;
   line-height: $board-counter-height;
-  font-family: "Ocr A Extended", monospace;
+  font-family: $font-family-monospace;
   text-align: center;
 }
 
@@ -347,40 +347,40 @@ html {
   height: $board-score-height;
   line-height: $board-score-height;
   background-color: $board-background-color;
-  font-size: $board-score-height / 2;
-  font-family: "Ocr A Extended", $font-family-monospace;
+  font-size: $board-score-height / 3;
+  font-family: $font-family-monospace;
   text-align: center;
 }
 
 .scores-table {
+  background-color: $board-background-color;
+
   .row-1, .row-1 a {
     color: $brand-primary;
   }
 
-  .score-rank {
-    text-align: center;
-  }
-
-  .score-value {
-    text-align: center;
-  }
-
-  .score-initials {
-    text-align: center;
-  }
-
-  .score-created-at {
-    text-align: center;
-  }
-
   td, th {
     font-size: 1.3em;
-    font-family: 'Press Start 2P', $font-family-monospace;
+    font-family: $font-family-monospace;
     font-weight: 400;
+    vertical-align: middle;
+
+    &.score-rank {
+      text-align: center;
+    }
+
+    &.score-value {
+      text-align: center;
+    }
+
+    &.score-initials {
+      text-align: center;
+    }
   }
 
   thead th {
     color: #777;
+    text-decoration: underline;
   }
 
   .tooltip {

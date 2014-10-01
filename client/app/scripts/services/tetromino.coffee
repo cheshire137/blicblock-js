@@ -26,6 +26,7 @@ angular.module('blicblockApp')
           tick_length: 1200 # ms
           level: 1
           test_mode: false
+          submitted_score: false
         @info.middle_col_idx = (@info.cols - 1) / 2
 
       get_active_block: ->
