@@ -16,5 +16,7 @@ end
 
 gem 'spring-commands-rspec', group: :development
 gem 'thin', '~> 1.6.2'
+gem 'sass', '~> 3.4.5'
+gem 'compass', '~> 1.0.1'
 
 ruby "2.1.1"
