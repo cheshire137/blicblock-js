@@ -1,11 +1,7 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :score do
-    initials "MyString"
-    value 1
-    latitude "9.99"
-    longitude "9.99"
-    ip_address "MyString"
+    initials 'ABC'
+    value 15000
+    ip_address '127.0.0.1'
   end
 end

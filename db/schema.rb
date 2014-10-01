@@ -18,9 +18,7 @@ ActiveRecord::Schema.define(version: 20140930011827) do
 
   create_table "scores", force: true do |t|
     t.string   "initials"
-    t.integer  "value",                               null: false
-    t.decimal  "latitude",   precision: 10, scale: 6
-    t.decimal  "longitude",  precision: 10, scale: 6
+    t.integer  "value",      null: false
     t.string   "ip_address"
     t.datetime "created_at"
     t.datetime "updated_at"

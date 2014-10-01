@@ -2,11 +2,9 @@ class Score < ActiveRecord::Base
   BAD_WORDS = %w(ASS CCK CNT COC COK COQ DCK DIK DIX FAG FCK FUC FUK FUQ KKK
                  KOK NIG POO TIT).freeze
 
-  validates :value, presence: true
-  validates :value, numericality: {greater_than_or_equal_to: 0}
-  validates :initials, presence: true
-  validates :initials, exclusion: {in: BAD_WORDS}
-  validates :initials, format: {with: /\A[a-zA-Z]{3}\z/}
+  validates :value, presence: true, numericality: {greater_than: 0}
+  validates :initials, presence: true, exclusion: {in: BAD_WORDS},
+                       format: {with: /\A[a-zA-Z]{3}\z/}
 
   scope :order_by_value, ->{
     order('value DESC, created_at DESC, id DESC')
