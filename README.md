@@ -51,9 +51,9 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 
 ## Screenshots of Blicblock in The Sims 4
 
-![The Sims 4 Blicblock play](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-1.png)
+![The Sims 4 Blicblock play](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/client/app/images/blicblock-screenshot-1.png)
 
-![The Sims 4 Blicblock game over](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/app/images/blicblock-screenshot-2.png)
+![The Sims 4 Blicblock game over](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/client/app/images/blicblock-screenshot-2.png)
 
 ## Screenshots of BlicblockJS
 
