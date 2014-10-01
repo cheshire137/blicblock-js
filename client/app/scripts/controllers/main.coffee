@@ -154,7 +154,7 @@ angular.module('blicblockApp')
         block.y = block_to_left.y + 1
       else
         block.y--
-      $timeout (-> stop_sliding(block)), 150
+      $timeout (-> stop_sliding(block)), 100
 
     $scope.$on 'move_right', (event) ->
       return unless $scope.game_info.in_progress
@@ -169,7 +169,7 @@ angular.module('blicblockApp')
         block.y = block_to_right.y - 1
       else
         block.y++
-      $timeout (-> stop_sliding(block)), 150
+      $timeout (-> stop_sliding(block)), 100
 
     $scope.$on 'move_down', (event) ->
       return unless $scope.game_info.in_progress
