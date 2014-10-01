@@ -44,4 +44,23 @@ RSpec.describe Score, type: :model do
     subject.save!
     expect(subject.reload.initials).to eq('ABC')
   end
+
+  it 'allows multiple scores from different IPs within a minute' do
+    score1 = create(:score, ip_address: '1.2.3.4')
+    score2 = build(:score, ip_address: '8.9.4.5')
+    expect(score2.save).to eq(true)
+  end
+
+  it 'allows multiple scores from the same IP at least a minute apart' do
+    score1 = create(:score, ip_address: '1.2.3.4', created_at: 90.seconds.ago)
+    score2 = build(:score, ip_address: score1.ip_address)
+    expect(score2.save).to eq(true)
+  end
+
+  it 'disallows multiple scores from the same IP within a minute' do
+    score1 = create(:score, ip_address: '1.2.3.4')
+    score2 = build(:score, ip_address: score1.ip_address)
+    expect(score2.save).to eq(false)
+    expect(score2.errors[:base]).to_not be_empty
+  end
 end
