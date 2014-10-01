@@ -1,0 +1,163 @@
+<!doctype html> <html class="no-js"> <head> <meta charset="utf-8"> <title>BlicblockJS</title> <meta name="description" content=""> <meta name="viewport" content="width=device-width"> <!-- Place favicon.ico and apple-touch-icon.png in the root directory --> <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> <link rel="icon" href="/favicon.ico" type="image/x-icon"> <link rel="stylesheet" href="styles/vendor.48b336bb.css"> <link rel="stylesheet" href="styles/main.73c3a2b3.css">  <body ng-app="blicblockApp" ng-left="$broadcast('move_left')" ng-right="$broadcast('move_right')" ng-down="$broadcast('move_down')" ng-space="$broadcast('toggle_pause')"> <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]--> <div class="container"> <nav class="navbar navbar-inverse" role="navigation"> <div class="container-fluid"> <div class="navbar-header"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="/">BlicblockJS</a> </div> <div id="site-navbar" class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li> <a href="#/scores">High Scores</a> </li> <li ng-controller="HowToPlayModalCtrl"> <script type="text/ng-template" id="how-to-play-modal-content.html"><div class="modal-header">
+                  <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <h4 class="modal-title">How to Play BlicblockJS</h4>
+                </div>
+                <div class="modal-body">
+                  <ul class="list-unstyled">
+                    <li>Create tetrominos to score points!</li>
+                    <li>
+                      Blocks in six different colors
+                      &mdash;<span class="magenta">pink</span>,
+                      <span class="orange">orange</span>,
+                      <span class="yellow">yellow</span>
+                      <span class="green">green</span>,
+                      <span class="blue">blue</span>,
+                      and <span class="white">white</span>&mdash;will
+                      fall from the top.
+                    </li>
+                    <li>
+                      Use &#8592; and &#8594;, or <code>a</code> and
+                      <code>d</code>, to position a block as it falls.
+                    </li>
+                    <li>
+                      Use &#8595; or <code>s</code> to drop a block immediately.
+                    </li>
+                    <li>
+                      Hit the spacebar to pause and resume the game.
+                    </li>
+                    <li>
+                      The game ends when there is no more room for blocks to fall.
+                    </li>
+                  </ul>
+                  <p>Possible tetrominos:</p>
+                  <div class="tetromino-previews">
+                    <div class="tetromino-preview tetromino-straight-hor">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-straight-ver">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-square">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-l-a">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-r-a">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-l-c">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-r-c">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-l-b">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-r-b">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-l-d">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-r-d">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-z-a">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-z-b">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-z-c">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-z-d">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-t-a">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-t-b">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-t-c">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                    <div class="tetromino-preview tetromino-t-d">
+                      <div class="block white block-1"></div>
+                      <div class="block white block-2"></div>
+                      <div class="block white block-3"></div>
+                      <div class="block white block-4"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" ng-click="cancel()">
+                    Got it!
+                  </button>
+                </div></script> <a href="#" ng-click="open()">How to Play</a> </li> <li> <a href="#/about">About</a> </li> </ul> </div> </div> </nav> <div class="notifications" id="notifications-container" ng-controller="NotificationsCtrl"> <p class="alert alert-danger clearfix ng-cloak" ng-repeat="error in errors"> <a class="pull-right alert-link" ng-click="remove('error', error.id)"> <span class="glyphicon glyphicon-remove"></span> </a> {{error.message}} </p> <p class="alert alert-success clearfix ng-cloak" ng-repeat="notice in notices"> <a class="pull-right alert-link" ng-click="remove('notice', notice.id)"> <span class="glyphicon glyphicon-remove"></span> </a> {{notice.message}} </p> </div> <div ng-view=""></div> </div> <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-55150360-1', 'auto');
+  ga('send', 'pageview');</script> <!--[if lt IE 9]>
+  <script src="scripts/oldieshim.ff90b0fb.js"></script>
+  <![endif]--> <script src="scripts/vendor.f5e2f20c.js"></script> <script src="scripts/scripts.4270eae2.js"></script>  

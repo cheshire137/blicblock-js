@@ -42,7 +42,7 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 
 1. Create a new Heroku app in your browser.
 1. `git remote add heroku git@heroku.com:yourherokuapp.git`
-1. `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
+1. `heroku config:add BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-ruby.git`
 1. `git push heroku master`
 1. `heroku addons:add heroku-postgresql`
 1. `heroku run rake db:migrate`

@@ -5,7 +5,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
-gem 'pg'
+gem 'pg', '~> 0.17.1'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.1'
@@ -15,8 +15,6 @@ group :development, :test do
 end
 
 gem 'spring-commands-rspec', group: :development
-gem 'sass'
-gem 'compass'
-gem 'devise'
+gem 'thin', '~> 1.6.2'
 
 ruby "2.1.1"
