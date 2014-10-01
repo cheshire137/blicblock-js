@@ -1,0 +1,950 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+@import "fonts";
+@import "bootstrap";
+@import "compass";
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+$block-width: 65px;
+$block-height: $block-width;
+$preview-block-width: 22px;
+$preview-block-height: $preview-block-width;
+$block-magenta: #AF197C;
+$block-yellow: #B7A45D;
+$block-green: #6EAB34;
+$block-blue: #439CAE;
+$block-white: #B0B0B0;
+$block-orange: #AF6D19;
+$block-stripe-count: 4.5;
+$block-stripe-darken-pct: 5%;
+$rows: 7;
+$columns: 5;
+$screenshot-bg: #222;
+$board-background-color: #111;
+$board-border-width: 4px;
+$board-border-color: #3A335D;
+$board-border-radius: 20px;
+$board-score-height: 80px;
+$board-counter-width: 120px;
+$board-counter-height: $board-counter-width;
+$board-block-preview-padding: 0.4 * $block-width;
+$board-block-preview-width: $block-width + ($board-block-preview-padding * 2);
+$board-width: $columns * $block-width + ($board-border-width * 2);
+$board-height: $rows * $block-height + ($board-border-width * 2);
+$board-container-height: $board-height + $board-score-height - $board-border-width;
+
+a, .btn {
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+a {
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
+a[ng-click], a[clip-click] {
+  cursor: pointer;
+}
+
+span.magenta {
+  font-weight: 700;
+  color: $block-magenta;
+}
+
+span.blue {
+  font-weight: 700;
+  color: $block-blue;
+}
+
+span.green {
+  font-weight: 700;
+  color: $block-green;
+}
+
+span.yellow {
+  font-weight: 700;
+  color: $block-yellow;
+}
+
+span.white {
+  font-weight: 700;
+  color: $block-white;
+}
+
+span.orange {
+  font-weight: 700;
+  color: $block-orange;
+}
+
+.block {
+  display: block;
+  width: $block-width;
+  height: $block-height;
+  text-align: center;
+  line-height: $block-height;
+  border-radius: 2px;
+
+  &.magenta {
+    background-color: $block-magenta;
+    @include background-image(linear-gradient(to bottom, $block-magenta, $block-magenta 50%, darken($block-magenta, $block-stripe-darken-pct) 50%, darken($block-magenta, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
+  }
+
+  &.yellow {
+    background-color: $block-yellow;
+    @include background-image(linear-gradient(to bottom, $block-yellow, $block-yellow 50%, darken($block-yellow, $block-stripe-darken-pct) 50%, darken($block-yellow, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
+  }
+
+  &.green {
+    background-color: $block-green;
+    @include background-image(linear-gradient(to bottom, $block-green, $block-green 50%, darken($block-green, $block-stripe-darken-pct) 50%, darken($block-green, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
+  }
+
+  &.blue {
+    background-color: $block-blue;
+    @include background-image(linear-gradient(to bottom, $block-blue, $block-blue 50%, darken($block-blue, $block-stripe-darken-pct) 50%, darken($block-blue, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
+  }
+
+  &.white {
+    border: 1px solid darken($block-white, $block-stripe-darken-pct + 2);
+    background-color: $block-white;
+    @include background-image(linear-gradient(to bottom, $block-white, $block-white 50%, darken($block-white, $block-stripe-darken-pct) 50%, darken($block-white, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
+  }
+
+  &.orange {
+    border: 1px solid darken($block-orange, $block-stripe-darken-pct + 2);
+    background-color: $block-orange;
+    @include background-image(linear-gradient(to bottom, $block-orange, $block-orange 50%, darken($block-orange, $block-stripe-darken-pct) 50%, darken($block-orange, $block-stripe-darken-pct)));
+    @include background-size(100% ($block-height/$block-stripe-count));
+  }
+
+  &.animate.ng-enter {
+    -webkit-animation: fadeIn 0.25s;
+    animation: fadeIn 0.25s;
+  }
+
+  &.animate.ng-leave {
+    -webkit-animation: fadeOut 0.25s;
+    animation: fadeOut 0.25s;
+  }
+}
+
+.block-preview {
+  position: absolute;
+  top: $board-score-height - $board-border-width;
+  right: 0;
+  text-align: center;
+  width: $board-block-preview-width;
+  height: ($board-block-preview-padding * 3) + ($block-height * 2) + ($board-border-width * 2);
+  border: $board-border-width solid $board-border-color;
+  -webkit-border-top-right-radius: $board-border-radius;
+  -webkit-border-bottom-right-radius: $board-border-radius;
+  -moz-border-radius-topright: $board-border-radius;
+  -moz-border-radius-bottomright: $board-border-radius;
+  border-top-right-radius: $board-border-radius;
+  border-bottom-right-radius: $board-border-radius;
+  background-color: $board-background-color;
+
+  .block {
+    margin: $board-block-preview-padding auto 0 auto;
+    position: relative;
+  }
+}
+
+.board-container {
+  position: relative;
+  margin: 0 auto;
+  width: $board-width + $board-counter-width + $board-block-preview-width - ($board-border-width * 2);
+  height: $board-container-height;
+}
+
+.board {
+  background-color: $board-background-color;
+  color: #fff;
+  width: $board-width;
+  height: $board-height;
+  display: block;
+  position: relative;
+  left: $board-counter-width - $board-border-width;
+  top: $board-score-height - $board-border-width;
+  border: $board-border-width solid $board-border-color;
+
+  .block {
+    position: absolute;
+    border: 1px solid $board-background-color;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -ms-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+
+    @for $x from 0 through $rows {
+      @for $y from 0 through $columns {
+        &.pos-#{$x}#{$y} {
+          left: $block-width * $y;
+          top: $block-height * $x;
+        }
+      }
+    }
+  }
+}
+
+body {
+  min-height: 100%;
+  background: -moz-linear-gradient(top,  #090313 0%, #0d0d0d 46%, #2b245c 50%, #0a0a0a 53%, #1f194f 76%, #130b36 87%, #1b1b1b 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#090313), color-stop(46%,#0d0d0d), color-stop(50%,#2b245c), color-stop(53%,#0a0a0a), color-stop(76%,#1f194f), color-stop(87%,#130b36), color-stop(100%,#1b1b1b)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #090313 0%,#0d0d0d 46%,#2b245c 50%,#0a0a0a 53%,#1f194f 76%,#130b36 87%,#1b1b1b 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#090313', endColorstr='#1b1b1b',GradientType=0 ); /* IE6-9 */
+}
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+.content-area {
+  background-color: $board-background-color;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.game-message {
+  display: none;
+
+  &.active {
+    text-align: center;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    width: 100%;
+    top: 0;
+    height: $board-container-height;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    & > .btn {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+    }
+
+    .submit-score-form {
+      margin: 0 40px;
+
+      input[type="text"] {
+        width: 8em;
+      }
+    }
+
+    h2 {
+      color: #A58936;
+      text-shadow: -1px -1px 2px #8A743D, 0 0 0 #000, 1px 1px 2px #634A04;
+      letter-spacing: 0.05em;
+      font-size: 700%;
+    }
+
+    .test-mode-message {
+      font-size: $font-size-large;
+      margin: 40px;
+    }
+
+    &.game-over {
+      .new-game-button {
+        width: 7em;
+        margin-left: -3.5em;
+      }
+
+      .final-score-message, .new-high-score-message,
+      .existing-high-score-message {
+        font-size: $font-size-large;
+        margin: 40px 0;
+      }
+
+      .existing-high-score-message {
+        .date {
+          display: block;
+          font-size: $font-size-small;
+          margin-top: ($line-height-computed / 2);
+          color: #999;
+        }
+      }
+    }
+
+    &.paused {
+      .resume-game-button {
+        width: 9em;
+        margin-left: -4.5em;
+      }
+    }
+  }
+}
+
+html {
+  height: 100%;
+}
+
+.level {
+  background-color: $board-background-color;
+  border: $board-border-width solid $board-border-color;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: $board-counter-width;
+  height: $board-counter-height;
+  -webkit-border-top-left-radius: $board-border-radius;
+  -webkit-border-bottom-left-radius: $board-border-radius;
+  -moz-border-radius-topleft: $board-border-radius;
+  -moz-border-radius-bottomleft: $board-border-radius;
+  border-top-left-radius: $board-border-radius;
+  border-bottom-left-radius: $board-border-radius;
+  font-size: $board-counter-height / 5;
+  line-height: $board-counter-height;
+  font-family: $font-family-monospace;
+  text-align: center;
+}
+
+.modal {
+  hr {
+    border-top-color: #e5e5e5;
+  }
+}
+
+#notifications-container {
+  position: fixed;
+  width: 30em;
+  z-index: 9000;
+  left: 50%;
+  margin-left: -15em;
+}
+
+.score {
+  position: absolute;
+  left: $board-counter-width - $board-border-width;
+  border: $board-border-width solid $board-border-color;
+  -webkit-border-top-left-radius: $board-border-radius;
+  -webkit-border-top-right-radius: $board-border-radius;
+  -moz-border-radius-topleft: $board-border-radius;
+  -moz-border-radius-topright: $board-border-radius;
+  border-top-left-radius: $board-border-radius;
+  border-top-right-radius: $board-border-radius;
+  width: $board-width;
+  height: $board-score-height;
+  line-height: $board-score-height;
+  background-color: $board-background-color;
+  font-size: $board-score-height / 3;
+  font-family: $font-family-monospace;
+  text-align: center;
+}
+
+.scores-table {
+  background-color: $board-background-color;
+
+  .row-1, .row-1 a {
+    color: $brand-primary;
+  }
+
+  td, th {
+    font-size: 1.3em;
+    font-family: $font-family-monospace;
+    font-weight: 400;
+    vertical-align: middle;
+
+    &.score-rank {
+      text-align: center;
+    }
+
+    &.score-value {
+      text-align: center;
+    }
+
+    &.score-initials {
+      text-align: center;
+    }
+  }
+
+  thead th {
+    color: #777;
+    text-decoration: underline;
+  }
+
+  .tooltip {
+    font-family: $font-family-sans-serif;
+    white-space: nowrap;
+  }
+}
+
+.screenshot {
+  margin-bottom: $line-height-computed;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: $screenshot-bg;
+
+  .caption {
+    font-size: $font-size-small;
+    margin-top: $line-height-computed / 2;
+  }
+
+  img {
+    border-radius: 4px;
+    max-width: 100%;
+    border: 1px solid darken($screenshot-bg, 10%);
+  }
+}
+
+.simlish, h2.simlish {
+  font-weight: normal;
+  font-family: 'handwrittensimlishfontmedium', $font-family-sans-serif;
+}
+
+#site-footer {
+  font-size: $font-size-small;
+  margin-top: 20px;
+  padding: 20px 0;
+}
+
+.tetromino-previews {
+  text-align: center;
+  margin-bottom: $line-height-computed / 2;
+
+  .tetromino-preview {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 2px 4px;
+
+    .block {
+      position: absolute;
+      width: $preview-block-width;
+      height: $preview-block-height;
+    }
+
+    &.tetromino-r-a {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-l-a {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          right: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          right: 0;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          left: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-r-b {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          right: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          right: $preview-block-width + 1;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          left: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-l-b {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          left: $preview-block-width + 1;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-r-c {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          right: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          right: 0;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-l-c {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-r-d {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          left: $preview-block-width + 1;
+          top: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-l-d {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          right: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          right: $preview-block-width + 1;
+          top: 0;
+        }
+
+        &.block-4 {
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-z-a {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          left: $preview-block-width + 1;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-3 {
+          left: $preview-block-width + 1;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-z-b {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          left: $preview-block-width + 1;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          left: $preview-block-width + 1;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-z-c {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-z-d {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          right: 0;
+          top: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-4 {
+          left: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-t-a {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          top: 0;
+          left: 0;
+        }
+
+        &.block-2 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-4 {
+          left: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-t-b {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 3) + 2;
+
+      .block {
+        &.block-1 {
+          top: 0;
+          right: 0;
+        }
+
+        &.block-2 {
+          right: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          top: $preview-block-height + 1;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-t-c {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          top: 0;
+          left: $preview-block-width + 1;
+        }
+
+        &.block-2 {
+          left: 0;
+          bottom: 0;
+        }
+
+        &.block-3 {
+          left: $preview-block-width + 1;
+          bottom: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-t-d {
+      width: ($preview-block-width * 3) + 2;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1 {
+          top: 0;
+          left: $preview-block-width + 1;
+        }
+
+        &.block-2 {
+          bottom: 0;
+          left: $preview-block-width + 1;
+        }
+
+        &.block-3 {
+          left: 0;
+          top: 0;
+        }
+
+        &.block-4 {
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+
+    &.tetromino-square {
+      width: ($preview-block-width * 2) + 1;
+      height: ($preview-block-height * 2) + 1;
+
+      .block {
+        &.block-1, &.block-2 {
+          top: 0;
+        }
+
+        &.block-1, &.block-3 {
+          left: 0;
+        }
+
+        &.block-2, &.block-4 {
+          right: 0;
+        }
+
+        &.block-3, &.block-4 {
+          bottom: 0;
+        }
+      }
+    }
+
+    &.tetromino-straight-hor {
+      width: ($preview-block-width * 4) + 3;
+      height: $preview-block-height;
+
+      .block {
+        top: 0;
+
+        &.block-1 {
+          left: 0;
+        }
+
+        &.block-2 {
+          left: $preview-block-width + 1;
+        }
+
+        &.block-3 {
+          left: ($preview-block-width * 2) + 2;
+        }
+
+        &.block-4 {
+          left: ($preview-block-width * 3) + 3;
+        }
+      }
+    }
+
+    &.tetromino-straight-ver {
+      width: $preview-block-width;
+      height: ($preview-block-height * 4) + 3;
+
+      .block {
+        left: 0;
+
+        &.block-1 {
+          top: 0;
+        }
+
+        &.block-2 {
+          top: $preview-block-height + 1;
+        }
+
+        &.block-3 {
+          top: ($preview-block-height * 2) + 2;
+        }
+
+        &.block-4 {
+          top: ($preview-block-height * 3) + 3;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  .scores-table {
+    td, th {
+      font-size: 11px;
+    }
+  }
+}

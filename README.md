@@ -16,20 +16,35 @@ BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 
 ## How to Run
 
-1. [Install Node.js](http://nodejs.org/download/).
+You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
+
+1. `bundle`
+1. Create a `blicblockjs` role in PostgreSQL:
+
+        % psql
+        psql (9.2.1)
+        Type "help" for help.
+
+        sarah=# CREATE USER blicblockjs WITH PASSWORD 'password';
+        CREATE ROLE
+        sarah=# ALTER USER blicblockjs WITH SUPERUSER;
+        ALTER ROLE
+
+1. `rake db:create db:migrate`
+1. `cd client/`
 1. `npm install`
 1. `npm install -g bower`
 1. `bower install`
 1. `npm install -g grunt-cli`
-1. `grunt serve` to watch for file changes.
+1. `grunt serve` to watch for file changes and to launch the Rails server.
 
 ## How to Deploy to Heroku
 
-1. Follow the "How to Run" steps above to get npm, Grunt, Bower, and the necessary packages installed.
 1. Create a new Heroku app in your browser.
-1. `grunt build`
 1. `git remote add heroku git@heroku.com:yourherokuapp.git`
 1. `git push heroku master`
+1. `heroku run rake db:migrate`
+1. `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
 1. `heroku ps:scale web=1`
 1. `heroku config:add NODE_ENV=production`
 
