@@ -1,6 +1,6 @@
 class Score < ActiveRecord::Base
-  BAD_WORDS = %w(ass cck cnt coc cok coq dck dik dix fag fck fuc fuk fuq kkk
-                 kok nig poo tit).freeze
+  BAD_WORDS = %w(ASS CCK CNT COC COK COQ DCK DIK DIX FAG FCK FUC FUK FUQ KKK
+                 KOK NIG POO TIT).freeze
 
   validates :value, presence: true
   validates :value, numericality: {greater_than_or_equal_to: 0}

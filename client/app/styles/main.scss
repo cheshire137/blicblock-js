@@ -246,6 +246,10 @@ body {
 
     .submit-score-form {
       margin: 0 40px;
+
+      input[type="text"] {
+        width: 8em;
+      }
     }
 
     h2 {
@@ -321,6 +325,14 @@ html {
   }
 }
 
+#notifications-container {
+  position: fixed;
+  width: 30em;
+  z-index: 9000;
+  left: 50%;
+  margin-left: -15em;
+}
+
 .score {
   position: absolute;
   left: $board-counter-width - $board-border-width;
@@ -342,7 +354,23 @@ html {
 
 .scores-table {
   .row-1, .row-1 a {
-    color: #F121BE;
+    color: $brand-primary;
+  }
+
+  .score-rank {
+    text-align: center;
+  }
+
+  .score-value {
+    text-align: center;
+  }
+
+  .score-initials {
+    text-align: center;
+  }
+
+  .score-created-at {
+    text-align: center;
   }
 
   td, th {
@@ -353,6 +381,11 @@ html {
 
   thead th {
     color: #777;
+  }
+
+  .tooltip {
+    font-family: $font-family-sans-serif;
+    white-space: nowrap;
   }
 }
 

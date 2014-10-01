@@ -208,7 +208,7 @@
       </div>
     </nav>
 
-    <div class="notifications" ng-controller="NotificationsCtrl">
+    <div class="notifications" id="notifications-container" ng-controller="NotificationsCtrl">
       <p class="alert alert-danger clearfix ng-cloak" ng-repeat="error in errors">
         <a class="pull-right alert-link" ng-click="remove('error', error.id)">
           <span class="glyphicon glyphicon-remove"></span>

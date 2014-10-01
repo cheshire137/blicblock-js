@@ -65,9 +65,11 @@ angular.module('blicblockApp')
 
     $scope.record_high_score = ->
       return if $scope.game_info.test_mode
-      $scope.score_record.$save (data) ->
-        console.log data
+      on_success = (data) ->
         Notification.notice 'Your score has been recorded!'
+      on_error = (response) ->
+        Notification.error 'Failed to record your score: ' + response.data.error
+      $scope.score_record.$save on_success, on_error
 
     game_over = ->
       $scope.game_info.in_progress = false
@@ -194,4 +196,8 @@ angular.module('blicblockApp')
 
     $scope.$on '$locationChangeStart', (event) ->
       $scope.$emit('pause')
+
+    $scope.capitalize_initials = ->
+      return unless $scope.score_record.initials
+      $scope.score_record.initials = $scope.score_record.initials.toUpperCase()
   ]

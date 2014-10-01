@@ -11,6 +11,7 @@ angular.module('blicblockApp')
     (scope, element, attrs) ->
       last_event = undefined
       element.bind 'keydown keypress', (event) ->
+        return if $(event.target).is('input')
         return unless event.which
         return if last_event && last_event.which == event.which
         last_event = event

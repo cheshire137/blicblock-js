@@ -18,7 +18,8 @@ class ScoresController < ApplicationController
     if @score.save
       render :show, status: :created, location: @score
     else
-      render json: @score.errors, status: :unprocessable_entity
+      render json: {error: @score.errors.full_messages.join(', ')},
+             status: :unprocessable_entity
     end
   end
 
