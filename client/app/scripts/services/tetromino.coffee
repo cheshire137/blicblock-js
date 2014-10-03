@@ -18,7 +18,7 @@ angular.module('blicblockApp')
           score_value: 1000
           checking: false
           in_progress: true
-          plumetting_block: false
+          plummetting_block: false
           sliding_block: false
           game_over: false
           current_score: 0
@@ -79,8 +79,8 @@ angular.module('blicblockApp')
       plummet_block: (block, x, on_land_callback) ->
         drop_single_block_interval = undefined
         drop_single_block = =>
-          block.plumetting = true
-          @info.plumetting_block = true
+          block.plummetting = true
+          @info.plummetting_block = true
           if block.x < x
             block.x++
           else if block.x == x
@@ -88,8 +88,8 @@ angular.module('blicblockApp')
             drop_single_block_interval = undefined
             block.locked = true
             block.active = false
-            @info.plumetting_block = false
-            block.plumetting = false
+            @info.plummetting_block = false
+            block.plummetting = false
             @on_block_land block
             on_land_callback() if on_land_callback
         drop_single_block()
