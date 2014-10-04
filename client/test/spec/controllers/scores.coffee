@@ -20,7 +20,7 @@ describe 'Controller: ScoresCtrl', ->
     expect(scope.filters).toBeDefined()
 
   it 'queries list of scores', ->
-    httpBackend.expectGET('/api/scores.json')
+    httpBackend.expectGET('/api/scores.json?initials=&order=value&time=month')
                .respond([{value: 1000, initials: 'ABC'}])
     httpBackend.flush()
     expect(scope.scores).toBeDefined()
