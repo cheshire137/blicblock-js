@@ -1,19 +1,28 @@
 'use strict'
 
 describe 'Controller: ScoresCtrl', ->
-
-  # load the controller's module
   beforeEach module 'blicblockApp'
 
+  Score = {}
   ScoresCtrl = {}
   scope = {}
+  httpBackend = {}
 
-  # Initialize the controller and a mock scope
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($injector, $controller, $rootScope) ->
     scope = $rootScope.$new()
-    ScoresCtrl = $controller 'ScoresCtrl', {
+    Score = $injector.get('Score')
+    httpBackend = $injector.get('$httpBackend')
+    ScoresCtrl = $controller 'ScoresCtrl',
       $scope: scope
-    }
+      Score: Score
 
-  it 'should attach a list of awesomeThings to the scope', ->
-    expect(scope.awesomeThings.length).toBe 3
+  it 'sets up score filters', ->
+    expect(scope.filters).toBeDefined()
+
+  it 'queries list of scores', ->
+    httpBackend.expectGET('/api/scores.json')
+               .respond([{value: 1000, initials: 'ABC'}])
+    httpBackend.flush()
+    expect(scope.scores).toBeDefined()
+    expect(scope.scores[0].value).toEqual(1000)
+    expect(scope.scores[0].initials).toEqual('ABC')
