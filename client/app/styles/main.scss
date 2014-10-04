@@ -1076,7 +1076,7 @@ span.orange {
     max-width: 100%;
     width: $mobile-board-width - ($board-border-width * 2);
 
-    &.game-over {
+    &.game-over, &.paused {
       .level {
         display: none;
       }
@@ -1099,6 +1099,8 @@ span.orange {
 
   .game-message {
     &.active {
+      width: $mobile-board-width + $board-border-width;
+
       .btn {
         position: relative;
         bottom: auto;
@@ -1119,6 +1121,11 @@ span.orange {
       &.paused {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+
+        .resume-game-button {
+          margin-left: 0;
+          width: auto;
+        }
       }
 
       .submit-score-form {

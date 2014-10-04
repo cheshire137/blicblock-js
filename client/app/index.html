@@ -30,7 +30,7 @@
   <!-- endbuild -->
 </head>
 
-<body ng-left="$broadcast('move_left')" ng-right="$broadcast('move_right')" ng-down="$broadcast('move_down')" ng-space="$broadcast('toggle_pause')">
+<body ng-left="$broadcast('move_left')" ng-right="$broadcast('move_right')" ng-down="$broadcast('move_down')" ng-space="$broadcast('toggle_pause')" ng-tap="$broadcast('toggle_pause')">
   <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -292,6 +292,7 @@
   <script src="scripts/directives/ngright.js"></script>
   <script src="scripts/directives/ngdown.js"></script>
   <script src="scripts/directives/ngspace.js"></script>
+  <script src="scripts/directives/ngtap.js"></script>
   <script src="scripts/services/config.js"></script>
   <script src="scripts/services/tetromino.js"></script>
   <script src="scripts/services/score.js"></script>
