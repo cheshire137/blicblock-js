@@ -219,6 +219,12 @@ body {
   padding: 0.2em 0;
 }
 
+code {
+  background-color: #222;
+  display: inline-block;
+  padding: 0.2em 0.4em;
+}
+
 .content-area {
   background-color: $board-background-color;
   padding: 20px;
@@ -323,13 +329,30 @@ html {
   border-bottom-left-radius: $board-border-radius;
   font-size: $board-counter-height / 5;
   line-height: $board-counter-height;
-  font-family: $font-family-monospace;
+  font-family: "press_start_2pregular", "Ocr A Extended", $font-family-monospace;
   text-align: center;
 }
 
 .modal {
+  .close {
+    color: #efefef;
+    text-shadow: 0 1px 0 #000;
+  }
+
   hr {
     border-top-color: #e5e5e5;
+  }
+
+  .modal-content {
+    background-color: #272727;
+  }
+
+  .modal-footer {
+    border-top-color: #222;
+  }
+
+  .modal-header {
+    border-bottom-color: #222;
   }
 }
 
@@ -356,7 +379,7 @@ html {
   line-height: $board-score-height;
   background-color: $board-background-color;
   font-size: $board-score-height / 3;
-  font-family: $font-family-monospace;
+  font-family: "press_start_2pregular", "Ocr A Extended", $font-family-monospace;
   text-align: center;
 }
 
@@ -391,7 +414,7 @@ html {
 
   td, th {
     font-size: 1.3em;
-    font-family: $font-family-monospace;
+    font-family: "press_start_2pregular", "Ocr A Extended", $font-family-monospace;
     font-weight: 400;
     vertical-align: middle;
 
@@ -421,18 +444,20 @@ html {
 
 .screenshot {
   margin-bottom: $line-height-computed;
-  border-radius: 4px;
-  padding: 10px;
+  border-radius: $border-radius-base;
+  padding: $line-height-computed / 4;
+  text-align: center;
   background-color: $screenshot-bg;
 
   .caption {
     font-size: $font-size-small;
-    margin-top: $line-height-computed / 2;
+    margin-top: $line-height-computed / 4;
   }
 
   img {
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     max-width: 100%;
+    max-height: 250px;
     border: 1px solid darken($screenshot-bg, 10%);
   }
 }
