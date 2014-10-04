@@ -1,7 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+puts 'Seed scores'
+letters = ('A'..'Z').to_a
+50.times do
+  initials = letters.sample + letters.sample + letters.sample
+  score = Score.create(initials: initials, value: (rand * 10).round * 1000,
+                       ip_address: Faker::Internet.ip_v4_address)
+  if score.persisted?
+    puts "\t#{score.value} by #{initials} (#{score.ip_address})"
+  end
+end

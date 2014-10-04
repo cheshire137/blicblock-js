@@ -30,7 +30,7 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
         sarah=# ALTER USER blicblockjs WITH SUPERUSER;
         ALTER ROLE
 
-1. `rake db:create db:migrate`
+1. `rake db:create db:migrate db:seed`
 1. `cd client/`
 1. `npm install`
 1. `npm install -g bower`
