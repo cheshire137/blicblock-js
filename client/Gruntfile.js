@@ -469,7 +469,7 @@ module.exports = function (grunt) {
     karma: {
       unit: {
         configFile: 'test/karma.conf.coffee',
-        singleRun: false
+        singleRun: true
       }
     }
   });
