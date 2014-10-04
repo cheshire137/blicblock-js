@@ -45,7 +45,7 @@ angular.module('blicblockApp')
         @notices.push
           message: message
           id: id
-        $timeout (=> @remove('notice', id)), 3500
+        $timeout (=> @remove('notice', id)), 3000
 
     new Notification()
   ]
