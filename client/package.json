@@ -1,5 +1,6 @@
 {
-  "name": "blicblock",
+  "name": "blicblockJS",
+  "description": "A JavaScript implementation of the game Blicblock that your Sims play in The Sims 4.",
   "repository": {
     "type": "git",
     "url": "git://github.com/moneypenny/blicblock-js.git"
