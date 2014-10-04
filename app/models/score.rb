@@ -7,10 +7,9 @@ class Score < ActiveRecord::Base
                        format: {with: /\A[a-zA-Z]{3}\z/}
   validate :not_playing_too_much
 
-  scope :order_by_value, ->{
-    order('value DESC, created_at DESC, id DESC')
-  }
-
+  scope :order_by_value, ->{ order('value DESC, created_at DESC, id DESC') }
+  scope :order_by_newest, ->{ order(created_at: :desc) }
+  scope :order_by_oldest, ->{ order(:created_at) }
   scope :by_ip_address, ->(ip_address) { where(ip_address: ip_address) }
 
   scope :this_week, ->{

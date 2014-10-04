@@ -365,8 +365,20 @@ html {
 }
 
 .scores-filter-form {
-  #score_initials_filter {
+  text-align: center;
+
+  #score_initials_filter.initials-filter {
     width: 8em;
+
+    &.rounded {
+      border-top-right-radius: $input-border-radius;
+      border-bottom-right-radius: $input-border-radius;
+
+      &.input-sm {
+        border-top-right-radius: $border-radius-small;
+        border-bottom-right-radius: $border-radius-small;
+      }
+    }
   }
 }
 

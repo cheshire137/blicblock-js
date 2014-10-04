@@ -5,7 +5,14 @@ class ScoresController < ApplicationController
   # GET /scores.json
   def index
     @ip_address = request.remote_ip
-    @scores = Score.order_by_value
+    @scores = Score
+    if params[:order] == 'newest'
+      @scores = @scores.order_by_newest
+    elsif params[:order] == 'oldest'
+      @scores = @scores.order_by_oldest
+    else
+      @scores = @scores.order_by_value
+    end
     if params[:time] == 'week'
       @scores = @scores.this_week
     elsif params[:time] == 'month'

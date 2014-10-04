@@ -12,6 +12,7 @@ angular.module('blicblockApp')
     $scope.filters =
       time: 'all'
       initials: ''
+      order: 'value'
     $scope.scores = Score.query()
 
     $scope.filter = ->
