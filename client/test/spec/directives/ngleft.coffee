@@ -1,16 +1,43 @@
 'use strict'
 
 describe 'Directive: ngLeft', ->
-
-  # load the directive's module
   beforeEach module 'blicblockApp'
 
   scope = {}
+  compile = {}
 
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($controller, $compile, $rootScope) ->
     scope = $rootScope.$new()
+    compile = $compile
 
-  it 'should make hidden element visible', inject ($compile) ->
-    element = angular.element '<ng-left></ng-left>'
-    element = $compile(element) scope
-    expect(element.text()).toBe 'this is the ngLeft directive'
+  it 'is triggered on left arrow keydown', ->
+    element = compile('<div ng-left="touched = true"></div>')(scope)
+    expect(scope.touched).toBeFalsy()
+    e = $.Event('keydown')
+    e.which = 37
+    $(element).trigger(e)
+    expect(scope.touched).toEqual(true)
+
+  it 'is triggered on left arrow keypress', ->
+    element = compile('<div ng-left="touched = true"></div>')(scope)
+    expect(scope.touched).toBeFalsy()
+    e = $.Event('keypress')
+    e.which = 37
+    $(element).trigger(e)
+    expect(scope.touched).toEqual(true)
+
+  it 'is triggered on letter a keydown', ->
+    element = compile('<div ng-left="touched = true"></div>')(scope)
+    expect(scope.touched).toBeFalsy()
+    e = $.Event('keydown')
+    e.which = 97
+    $(element).trigger(e)
+    expect(scope.touched).toEqual(true)
+
+  it 'is triggered on letter a keypress', ->
+    element = compile('<div ng-left="touched = true"></div>')(scope)
+    expect(scope.touched).toBeFalsy()
+    e = $.Event('keypress')
+    e.which = 97
+    $(element).trigger(e)
+    expect(scope.touched).toEqual(true)

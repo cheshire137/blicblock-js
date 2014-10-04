@@ -26,7 +26,7 @@ describe 'Directive: ngRight', ->
     $(element).trigger(e)
     expect(scope.touched).toEqual(true)
 
-  it 'is triggered on letter a keydown', ->
+  it 'is triggered on letter d keydown', ->
     element = compile('<div ng-right="touched = true"></div>')(scope)
     expect(scope.touched).toBeFalsy()
     e = $.Event('keydown')
@@ -34,7 +34,7 @@ describe 'Directive: ngRight', ->
     $(element).trigger(e)
     expect(scope.touched).toEqual(true)
 
-  it 'is triggered on letter a keypress', ->
+  it 'is triggered on letter d keypress', ->
     element = compile('<div ng-right="touched = true"></div>')(scope)
     expect(scope.touched).toBeFalsy()
     e = $.Event('keypress')
