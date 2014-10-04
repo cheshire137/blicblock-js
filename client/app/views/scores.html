@@ -1,5 +1,13 @@
 <div class="row">
   <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+    <form class="form-inline">
+      <label for="score_time_filter">Scores from:</label>
+      <select class="form-control" ng-model="filters.time" ng-change="filter()" id="score_time_filter">
+        <option value="all">All time</option>
+        <option value="month">This month</option>
+        <option value="week">This week</option>
+      </select>
+    </form>
     <table class="table scores-table">
       <thead>
         <tr>
