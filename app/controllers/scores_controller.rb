@@ -16,6 +16,7 @@ class ScoresController < ApplicationController
     @score = Score.new(score_params)
     @score.ip_address = request.remote_ip
     if @score.save
+      @total_scores = Score.count
       render :show, status: :created, location: @score
     else
       render json: {error: @score.errors.full_messages.join(', ')},

@@ -37,7 +37,7 @@ angular.module('blicblockApp')
         @errors.push
           message: message
           id: id
-        $timeout (=> @remove('error', id)), 3000
+        $timeout (=> @remove('error', id)), 3500
 
       notice: (message) ->
         return unless message
@@ -45,7 +45,7 @@ angular.module('blicblockApp')
         @notices.push
           message: message
           id: id
-        $timeout (=> @remove('notice', id)), 3000
+        $timeout (=> @remove('notice', id)), 3500
 
     new Notification()
   ]

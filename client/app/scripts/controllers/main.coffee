@@ -66,7 +66,8 @@ angular.module('blicblockApp')
     $scope.record_high_score = ->
       return if $scope.game_info.test_mode
       on_success = (data) ->
-        Notification.notice 'Your score has been recorded!'
+        Notification.notice("You are ##{data.rank} out of " +
+                            "#{data.total_scores} scores!")
         $scope.game_info.submitted_score = true
       on_error = (response) ->
         Notification.error 'Failed to record your score: ' + response.data.error
