@@ -41,6 +41,10 @@ angular
         templateUrl: 'views/about.html'
         controller: 'AboutCtrl'
         title: 'About'
+      .when '/help',
+        templateUrl: 'views/help.html'
+        controller: 'AboutCtrl'
+        title: 'How to Play'
       .when '/scores',
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'

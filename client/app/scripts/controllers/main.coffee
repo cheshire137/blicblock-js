@@ -8,7 +8,7 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', 'localStorageService', 'Config', 'Tetromino', 'Score', 'Notification', ($scope, $window, $timeout, $interval, $routeParams, localStorageService, Config, Tetromino, Score, Notification) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', '$rootScope', 'localStorageService', 'Config', 'Tetromino', 'Score', 'Notification', ($scope, $window, $timeout, $interval, $routeParams, $rootScope, localStorageService, Config, Tetromino, Score, Notification) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = Tetromino.upcoming
     $scope.game_info = Tetromino.info
@@ -44,10 +44,9 @@ angular.module('blicblockApp')
         color: get_color()
     else
       $scope.new_game() if $scope.game_info.test_mode
-      $scope.upcoming.push new Block
-        color: get_color()
-      $scope.upcoming.push new Block
-        color: get_color()
+      while $scope.upcoming.length < 2
+        $scope.upcoming.push new Block
+          color: get_color()
 
     $scope.game_info.test_mode = !!$routeParams.color_count ||
                                  !!$routeParams.cascade_count
@@ -144,13 +143,14 @@ angular.module('blicblockApp')
       cancel_game_interval()
 
     $scope.$on 'resume', (event) ->
+      return if $scope.game_info.game_over
       $scope.game_info.in_progress = true
       start_game_interval()
 
     $scope.$on 'toggle_pause', (event) ->
       if $scope.game_info.in_progress
         $scope.$emit('pause')
-      else if !$scope.game_info.game_over
+      else
         $scope.$emit('resume')
 
     stop_sliding = (block) ->
@@ -213,6 +213,10 @@ angular.module('blicblockApp')
 
     $scope.$on '$locationChangeStart', (event) ->
       $scope.$emit('pause')
+
+    $rootScope.$watch 'collapse.nav', ->
+      unless $rootScope.collapse.nav
+        $scope.$emit('pause')
 
     $scope.capitalize_initials = ->
       return unless $scope.score_record.initials
