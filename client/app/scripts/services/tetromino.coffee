@@ -167,7 +167,9 @@ angular.module('blicblockApp')
 
       # Animate dropping the given block to the given x coordinate.
       plummet_block: (block, x, on_land_callback) ->
-        return if block.x == x
+        if block.x == x
+          on_land_callback() if on_land_callback
+          return
         drop_single_block_interval = undefined
         drop_single_block = =>
           block.plummetting = true
