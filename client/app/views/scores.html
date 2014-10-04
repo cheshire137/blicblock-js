@@ -9,7 +9,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="score in scores" class="row-{{score.rank}}" tooltip="{{score.created_at | amDateFormat:'YYYY-MM-DD'}}" tooltip-placement="right">
+        <tr ng-repeat="score in scores" class="row-{{score.rank}}" ng-class="{mine: score.is_mine}" tooltip="{{score.created_at | amDateFormat:'YYYY-MM-DD'}}" tooltip-placement="right">
           <td class="score-rank">{{score.rank}}</td>
           <td class="score-value">{{score.value}}</td>
           <td class="score-initials">{{score.initials}}</td>

@@ -4,6 +4,7 @@ class ScoresController < ApplicationController
 
   # GET /scores.json
   def index
+    @ip_address = request.remote_ip
     @scores = Score.order_by_value.limit(25)
   end
 

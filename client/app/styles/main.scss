@@ -367,6 +367,10 @@ html {
 .scores-table {
   background-color: $board-background-color;
 
+  .mine {
+    color: $block-green;
+  }
+
   .row-1, .row-1 a {
     color: $brand-primary;
   }
