@@ -37,6 +37,14 @@ angular.module('blicblockApp')
           @blocks.splice(idx, 1)
           idx--
 
+      add_locked_block: (color, x, y) ->
+        @blocks.push new Block
+          color: color
+          x: x
+          y: y
+          locked: true
+          active: false
+
       setup_cascade: ->
         @info.in_progress = false
         @remove_all_blocks()
@@ -46,48 +54,13 @@ angular.module('blicblockApp')
         last_row_x = @info.rows - 1
         color1 = @colors[0]
         color2 = @colors[1]
-        @blocks.push new Block
-          color: color1
-          x: last_row_x
-          y: 0
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x
-          y: 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x
-          y: 2
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 1
-          y: 0
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 1
-          y: 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 1
-          y: 2
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 2
-          y: 0
-          locked: true
-          active: false
+        @add_locked_block color1, last_row_x, 0
+        @add_locked_block color1, last_row_x, 1
+        @add_locked_block color1, last_row_x, 2
+        @add_locked_block color2, last_row_x - 1, 0
+        @add_locked_block color2, last_row_x - 1, 1
+        @add_locked_block color2, last_row_x - 1, 2
+        @add_locked_block color1, last_row_x - 2, 0
         @upcoming[0] = new Block
           color: color2
         @info.in_progress = true
@@ -96,58 +69,19 @@ angular.module('blicblockApp')
         @setup_one_cascade()
         color3 = @colors[2]
         last_row_x = @info.rows - 1
-        @blocks.push new Block
-          color: color3
-          x: last_row_x - 4
-          y: 0
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color3
-          x: last_row_x - 3
-          y: 0
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color3
-          x: last_row_x - 5
-          y: 0
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color3
-          x: last_row_x - 2
-          y: 1
-          locked: true
-          active: false
+        @add_locked_block color3, last_row_x - 4, 0
+        @add_locked_block color3, last_row_x - 3, 0
+        @add_locked_block color3, last_row_x - 5, 0
+        @add_locked_block color3, last_row_x - 2, 1
 
       setup_three_cascades: ->
         @setup_two_cascades()
         color4 = @colors[3]
-        @blocks.push new Block
-          color: color4
-          x: 0
-          y: 0
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color4
-          x: 3
-          y: 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color4
-          x: 2
-          y: 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color4
-          x: 1
-          y: 1
-          locked: true
-          active: false
+        last_row_x = @info.rows - 1
+        @add_locked_block color4, last_row_x - 6, 0
+        @add_locked_block color4, last_row_x - 3, 1
+        @add_locked_block color4, last_row_x - 4, 1
+        @add_locked_block color4, last_row_x - 5, 1
 
       setup_four_cascades: ->
         @setup_cascade()
@@ -156,130 +90,30 @@ angular.module('blicblockApp')
         color1 = @colors[0]
         color2 = @colors[1]
 
-        @blocks.push new Block
-          color: color1
-          x: last_row_x
-          y: last_col_y
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x
-          y: last_col_y - 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x
-          y: last_col_y - 2
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x
-          y: last_col_y - 3
-          locked: true
-          active: false
+        @add_locked_block color1, last_row_x, last_col_y
+        @add_locked_block color2, last_row_x, last_col_y - 1
+        @add_locked_block color2, last_row_x, last_col_y - 2
+        @add_locked_block color2, last_row_x, last_col_y - 3
 
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 1
-          y: last_col_y
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 1
-          y: last_col_y - 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 1
-          y: last_col_y - 2
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 1
-          y: last_col_y - 3
-          locked: true
-          active: false
+        @add_locked_block color2, last_row_x - 1, last_col_y
+        @add_locked_block color1, last_row_x - 1, last_col_y - 1
+        @add_locked_block color1, last_row_x - 1, last_col_y - 2
+        @add_locked_block color1, last_row_x - 1, last_col_y - 3
 
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 2
-          y: last_col_y
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 2
-          y: last_col_y - 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 2
-          y: last_col_y - 2
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 2
-          y: last_col_y - 3
-          locked: true
-          active: false
+        @add_locked_block color1, last_row_x - 2, last_col_y
+        @add_locked_block color2, last_row_x - 2, last_col_y - 1
+        @add_locked_block color2, last_row_x - 2, last_col_y - 2
+        @add_locked_block color2, last_row_x - 2, last_col_y - 3
 
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 3
-          y: last_col_y
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 3
-          y: last_col_y - 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 3
-          y: last_col_y - 2
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 3
-          y: last_col_y - 3
-          locked: true
-          active: false
+        @add_locked_block color2, last_row_x - 3, last_col_y
+        @add_locked_block color1, last_row_x - 3, last_col_y - 1
+        @add_locked_block color1, last_row_x - 3, last_col_y - 2
+        @add_locked_block color1, last_row_x - 3, last_col_y - 3
 
-        @blocks.push new Block
-          color: color1
-          x: last_row_x - 4
-          y: last_col_y
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 4
-          y: last_col_y - 1
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 4
-          y: last_col_y - 2
-          locked: true
-          active: false
-        @blocks.push new Block
-          color: color2
-          x: last_row_x - 4
-          y: last_col_y - 3
-          locked: true
-          active: false
+        @add_locked_block color1, last_row_x - 4, last_col_y
+        @add_locked_block color2, last_row_x - 4, last_col_y - 1
+        @add_locked_block color2, last_row_x - 4, last_col_y - 2
+        @add_locked_block color2, last_row_x - 4, last_col_y - 3
 
         @upcoming[0] = new Block
           color: color2
