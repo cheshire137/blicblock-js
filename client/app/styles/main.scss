@@ -53,6 +53,18 @@ a[ng-click], a[clip-click] {
   cursor: pointer;
 }
 
+.animate {
+  &.ng-hide-add,
+  &.ng-hide-remove {
+    transition: 0.25s ease-in-out all;
+  }
+
+  &.ng-hide-add-active,
+  &.ng-hide-remove-active {
+    transition: 0.25s ease-in-out all;
+  }
+}
+
 span.magenta {
   font-weight: 700;
   color: $block-magenta;
@@ -379,6 +391,8 @@ html {
 }
 
 .scores-filter-form {
+  margin-top: $line-height-computed / 2;
+
   #score_initials_filter.initials-filter {
     width: 8em;
 

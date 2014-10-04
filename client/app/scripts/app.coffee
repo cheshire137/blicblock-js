@@ -19,7 +19,8 @@ angular
     'ui.bootstrap',
     'LocalStorageModule',
     'angularMoment',
-    'swipe'
+    'swipe',
+    'ngResize'
   ])
   .config(['$routeProvider', 'localStorageServiceProvider', ($routeProvider, localStorageServiceProvider) ->
     localStorageServiceProvider.setPrefix('blicblockJS')
