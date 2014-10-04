@@ -1,19 +1,29 @@
 'use strict'
 
 describe 'Controller: HowToPlayModalInstanceCtrl', ->
-
-  # load the controller's module
   beforeEach module 'blicblockApp'
 
   HowToPlayModalInstanceCtrl = {}
   scope = {}
+  modalInstance = {}
 
-  # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
-    HowToPlayModalInstanceCtrl = $controller 'HowToPlayModalInstanceCtrl', {
+    modalInstance =
+      close: jasmine.createSpy('modalInstance.close')
+      dismiss: jasmine.createSpy('modalInstance.dismiss')
+      result:
+        then: jasmine.createSpy('modalInstance.result.then')
+    HowToPlayModalInstanceCtrl = $controller 'HowToPlayModalInstanceCtrl',
       $scope: scope
-    }
+      $modalInstance: modalInstance
 
-  it 'should attach a list of awesomeThings to the scope', ->
-    expect(scope.awesomeThings.length).toBe 3
+  describe 'ok', ->
+    it 'closes modal', ->
+      scope.ok()
+      expect(modalInstance.close).toHaveBeenCalled()
+
+  describe 'cancel', ->
+    it 'dismisses modal', ->
+      scope.cancel()
+      expect(modalInstance.dismiss).toHaveBeenCalledWith 'cancel'
