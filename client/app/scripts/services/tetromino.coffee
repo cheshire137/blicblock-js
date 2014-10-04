@@ -19,6 +19,7 @@ angular.module('blicblockApp')
           rows: 7
           score_value: 1000
           checking: false
+          removing: false
           in_progress: true
           plummetting_block: false
           sliding_block: false
@@ -127,7 +128,7 @@ angular.module('blicblockApp')
 
       check_for_tetrominos: ->
         return unless @info.in_progress
-        return if @info.checking
+        return if @info.checking || @info.removing
         @info.checking = true
         for block in @blocks
           continue unless block && block.locked && !block.active
@@ -167,6 +168,7 @@ angular.module('blicblockApp')
 
       # Animate dropping the given block to the given x coordinate.
       plummet_block: (block, x, on_land_callback) ->
+        return if block.x == x
         drop_single_block_interval = undefined
         drop_single_block = =>
           block.plummetting = true
@@ -203,18 +205,20 @@ angular.module('blicblockApp')
 
       drop_blocks: ->
         return unless @info.in_progress
+        return if @info.removing
+        last_row_x = @info.rows - 1
         for block in @blocks
           continue unless block
           continue if block.sliding
-          active_or_not_locked = block.active || !block.locked
-          if block.x == @info.rows - 1 && active_or_not_locked
-            block.locked = true
-            block.active = false
-            @on_block_land block
-          if @is_block_directly_below(block.x, block.y) && active_or_not_locked
-            block.locked = true
-            block.active = false
-            @on_block_land block
+          if block.active || !block.locked
+            if block.x == last_row_x
+              block.locked = true
+              block.active = false
+              @on_block_land block
+            if @is_block_directly_below(block.x, block.y)
+              block.locked = true
+              block.active = false
+              @on_block_land block
           continue if block.locked
           block.x++
 
@@ -236,12 +240,15 @@ angular.module('blicblockApp')
 
       remove_blocks: (to_remove) ->
         return unless @info.in_progress
+        return if @info.removing
+        @info.removing = true
         ids_to_remove = to_remove.map((b) -> b.id)
         idx = @blocks.length - 1
         while idx >= 0
           if ids_to_remove.indexOf(@blocks[idx].id) > -1
             @blocks.splice(idx, 1)
           idx--
+        @info.removing = false
         @info.current_score += @info.score_value
         @increment_level_if_necessary()
         on_top = @blocks_on_top(to_remove)
