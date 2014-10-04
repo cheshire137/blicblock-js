@@ -1,10 +1,12 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="blicblockApp">
 
 <head>
   <meta charset="utf-8">
-  <title>BlicblockJS</title>
+  <title ng-bind="'BlicblockJS - ' + title">BlicblockJS</title>
   <meta name="description" content="Play the game Blicblock from The Sims 4!">
+  <meta name="keywords" content="blicblock,blic,block,sims,4,video,game,games,javascript,tetromino">
+  <meta name="author" content="Sarah Vessels">
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -28,7 +30,7 @@
   <!-- endbuild -->
 </head>
 
-<body ng-app="blicblockApp" ng-left="$broadcast('move_left')" ng-right="$broadcast('move_right')" ng-down="$broadcast('move_down')" ng-space="$broadcast('toggle_pause')">
+<body ng-left="$broadcast('move_left')" ng-right="$broadcast('move_right')" ng-down="$broadcast('move_down')" ng-space="$broadcast('toggle_pause')">
   <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->

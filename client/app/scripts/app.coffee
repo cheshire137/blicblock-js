@@ -27,20 +27,30 @@ angular
       .when '/',
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
+        title: 'Play'
       .when '/test/:color_count',
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
+        title: 'Test'
       .when '/test/cascade/:cascade_count',
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
+        title: 'Test Cascades'
       .when '/about',
         templateUrl: 'views/about.html'
         controller: 'AboutCtrl'
+        title: 'About'
       .when '/scores',
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
+        title: 'High Scores'
       .otherwise
         redirectTo: '/'
   ])
-  .filter 'reverse', ->
+  .filter('reverse', ->
     (items) -> items.slice().reverse()
+  ).run ['$location', '$rootScope', ($location, $rootScope) ->
+    $rootScope.$on '$routeChangeSuccess', (event, current, previous) ->
+      if current.hasOwnProperty('$$route')
+        $rootScope.title = current.$$route.title
+  ]

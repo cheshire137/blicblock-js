@@ -8,5 +8,4 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'AboutCtrl', ['$scope', ($scope) ->
-  ]
+  .controller 'AboutCtrl', ->
