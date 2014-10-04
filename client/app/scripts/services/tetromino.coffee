@@ -8,7 +8,7 @@
  # Service in the blicblockApp.
 ###
 angular.module('blicblockApp')
-  .service 'Tetromino', ['$rootScope', '$interval', ($rootScope, $interval) ->
+  .service 'Tetromino', ['$rootScope', '$interval', '$timeout', ($rootScope, $interval, $timeout) ->
     class Tetromino
       constructor: ->
         @blocks = []
@@ -107,6 +107,10 @@ angular.module('blicblockApp')
           0
         on_top
 
+      highlight: (block) ->
+        block.highlight = true
+        $timeout (-> block.highlight = false), @info.tick_length * 0.21
+
       drop_blocks: ->
         return unless @info.in_progress
         for block in @blocks
@@ -125,6 +129,7 @@ angular.module('blicblockApp')
           block.x++
 
       on_block_land: (block) ->
+        @highlight block
         @check_for_tetrominos()
 
       increment_level_if_necessary: ->
