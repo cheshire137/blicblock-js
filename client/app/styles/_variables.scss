@@ -149,9 +149,9 @@ $table-border-color:            lighten($body-bg, 5%) !default;
 
 $btn-font-weight:                normal !default;
 
-$btn-default-color:              lighten($text-color, 20%) !default;
-$btn-default-bg:                 lighten($body-bg, 10%) !default;
-$btn-default-border:             lighten($body-bg, 15%) !default;
+$btn-default-color:              #efefef !default;
+$btn-default-bg:                 #333 !default;
+$btn-default-border:             lighten($btn-default-bg, 5%) !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
@@ -181,18 +181,18 @@ $btn-link-disabled-color:        $gray-light !default;
 //##
 
 //** `<input>` background color
-$input-bg:                       darken($btn-info-bg, 10%) !default;
+$input-bg:                       $btn-default-bg !default;
 //** `<input disabled>` background color
-$input-bg-disabled:              darken($input-bg, 15%) !default;
+$input-bg-disabled:              #343434 !default;
 
 //** Text color for `<input>`s
-$input-color:                    $btn-info-color !default;
+$input-color:                    $btn-default-color !default;
 //** `<input>` border color
-$input-border:                   $btn-info-border !default;
+$input-border:                   $btn-default-border !default;
 //** `<input>` border radius
 $input-border-radius:            $border-radius-base !default;
 //** Border color for inputs on focus
-$input-border-focus:             darken($btn-info-border, 10%) !default;
+$input-border-focus:             lighten($input-bg, 15%) !default;
 
 //** Placeholder text color
 $input-color-placeholder:        lighten($input-bg, 25%) !default;
