@@ -56,6 +56,8 @@ angular.module('blicblockApp')
       high_score = localStorageService.get(Config.storage_keys.high_score)
       current_score = $scope.game_info.current_score
       $scope.score_record.value = current_score
+      $scope.score_record.initials =
+          localStorageService.get(Config.storage_keys.initials)
       if high_score && high_score.value < current_score || !high_score
         high_score =
           value: current_score
@@ -69,6 +71,7 @@ angular.module('blicblockApp')
         Notification.notice("You are ##{data.rank} out of " +
                             "#{data.total_scores} scores!")
         $scope.game_info.submitted_score = true
+        localStorageService.set(Config.storage_keys.initials, data.initials)
       on_error = (response) ->
         Notification.error 'Failed to record your score: ' + response.data.error
       $scope.score_record.$save on_success, on_error

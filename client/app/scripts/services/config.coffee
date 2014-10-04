@@ -13,5 +13,6 @@ angular.module('blicblockApp')
       constructor: ->
         @storage_keys =
           high_score: 'high_score'
+          initials: 'initials'
 
     new Config()
