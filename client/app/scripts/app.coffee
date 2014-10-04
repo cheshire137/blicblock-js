@@ -30,6 +30,9 @@ angular
       .when '/test/:color_count',
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
+      .when '/test/cascade/:cascade_count',
+        templateUrl: 'views/main.html'
+        controller: 'MainCtrl'
       .when '/about',
         templateUrl: 'views/about.html'
         controller: 'AboutCtrl'

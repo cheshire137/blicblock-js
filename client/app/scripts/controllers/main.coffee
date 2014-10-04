@@ -10,7 +10,7 @@
 angular.module('blicblockApp')
   .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', 'localStorageService', 'Config', 'Tetromino', 'Score', 'Notification', ($scope, $window, $timeout, $interval, $routeParams, localStorageService, Config, Tetromino, Score, Notification) ->
     $scope.blocks = Tetromino.blocks
-    $scope.upcoming = []
+    $scope.upcoming = Tetromino.upcoming
     $scope.game_info = Tetromino.info
     $scope.score_record = new Score()
     $scope.new_high_score = {}
@@ -20,17 +20,37 @@ angular.module('blicblockApp')
       $scope.score_record = new Score()
       $window.location.reload()
 
-    all_colors = ['magenta', 'orange', 'yellow', 'green', 'blue', 'white']
     if $routeParams.color_count
       color_count = parseInt($routeParams.color_count, 10)
-      color_count = all_colors.length - 1 if color_count > all_colors.length
+      if color_count > Tetromino.colors.length
+        color_count = Tetromino.colors.length - 1
       color_count = 1 if color_count < 1
-      colors = all_colors.slice(0, color_count)
-      $scope.game_info.test_mode = true
+      colors = Tetromino.colors.slice(0, color_count)
     else
-      colors = all_colors
+      colors = Tetromino.colors
       $scope.new_game() if $scope.game_info.test_mode
-      $scope.game_info.test_mode = false
+
+    get_color = ->
+      colors[Math.floor(Math.random() * colors.length)]
+
+    if $routeParams.cascade_count
+      cascade_count = parseInt($routeParams.cascade_count, 10)
+      switch cascade_count
+        when 1 then Tetromino.setup_one_cascade()
+        when 2 then Tetromino.setup_two_cascades()
+        when 3 then Tetromino.setup_three_cascades()
+        else Tetromino.setup_four_cascades()
+      $scope.upcoming.push new Block
+        color: get_color()
+    else
+      $scope.new_game() if $scope.game_info.test_mode
+      $scope.upcoming.push new Block
+        color: get_color()
+      $scope.upcoming.push new Block
+        color: get_color()
+
+    $scope.game_info.test_mode = !!$routeParams.color_count ||
+                                 !!$routeParams.cascade_count
 
     get_existing_high_score = ->
       if $scope.game_info.test_mode
@@ -42,9 +62,6 @@ angular.module('blicblockApp')
         {}
 
     $scope.existing_high_score = get_existing_high_score()
-
-    get_color = ->
-      colors[Math.floor(Math.random() * colors.length)]
 
     cancel_game_interval = ->
       if angular.isDefined(game_interval)
@@ -120,11 +137,6 @@ angular.module('blicblockApp')
     start_game_interval = ->
       return if angular.isDefined(game_interval)
       game_interval = $interval(game_loop, $scope.game_info.tick_length)
-
-    $scope.upcoming.push new Block
-      color: get_color()
-    $scope.upcoming.push new Block
-      color: get_color()
 
     $scope.$on 'pause', (event) ->
       return if $scope.game_info.plummetting_block

@@ -12,6 +12,8 @@ angular.module('blicblockApp')
     class Tetromino
       constructor: ->
         @blocks = []
+        @upcoming = []
+        @colors = ['magenta', 'orange', 'yellow', 'green', 'blue', 'white']
         @info =
           cols: 5
           rows: 7
@@ -28,6 +30,76 @@ angular.module('blicblockApp')
           test_mode: false
           submitted_score: false
         @info.middle_col_idx = (@info.cols - 1) / 2
+
+      remove_all_blocks: ->
+        idx = @blocks.length - 1
+        while idx >= 0
+          @blocks.splice(idx, 1)
+          idx--
+
+      setup_cascade: ->
+        @info.in_progress = false
+        @remove_all_blocks()
+
+      setup_one_cascade: ->
+        @setup_cascade()
+        last_row_x = @info.rows - 1
+        color1 = @colors[0]
+        color2 = @colors[1]
+        @blocks.push new Block
+          color: color1
+          x: last_row_x
+          y: 0
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x
+          y: 1
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x
+          y: 2
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 1
+          y: 0
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 2
+          y: 0
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 3
+          y: 0
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 4
+          y: 0
+          locked: true
+          active: false
+        @upcoming[0] = new Block
+          color: color2
+        @info.in_progress = true
+
+      setup_two_cascades: ->
+        @setup_cascade()
+
+      setup_three_cascades: ->
+        @setup_cascade()
+
+      setup_four_cascades: ->
+        @setup_cascade()
 
       get_active_block: ->
         @blocks.filter((b) -> b.active)[0]
