@@ -172,6 +172,16 @@ span.orange {
   margin: 0 auto;
   width: $board-width + $board-counter-width + $board-block-preview-width - ($board-border-width * 2);
   height: $board-container-height;
+
+  &.test-mode {
+    .game-message {
+      &.active {
+        &.paused {
+          background-color: rgba(0, 0, 0, 0.7);
+        }
+      }
+    }
+  }
 }
 
 .board {

@@ -1,4 +1,4 @@
-<div class="board-container" ng-swipe-left="$emit('move_left')" ng-swipe-right="$emit('move_right')" ng-swipe-down="$emit('move_down')">
+<div class="board-container" ng-class="{'test-mode': game_info.test_mode}" ng-swipe-left="$emit('move_left')" ng-swipe-right="$emit('move_right')" ng-swipe-down="$emit('move_down')">
   <div class="score">
     {{game_info.current_score}}
   </div>
