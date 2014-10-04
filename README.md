@@ -67,6 +67,12 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 1. `heroku ps:scale web=1`
 1. `heroku config:add NODE_ENV=production`
 
+## BlicblockJS Mentions
+
+- [The Sims 4: Play "BlicBlock" On Your Browser - SimsVIP](http://simsvip.com/2014/10/03/the-sims-4-play-blicblock-on-your-browser/)
+- [The Sims 4 RU - VK](http://vk.com/thesims4ru?w=wall-31385407_119374)
+- [The Sims 4: Играем, как симы! - RoleSim](http://rolesim.com/news/sims-4-igraem-kak-simy)
+
 ## Screenshots of Blicblock in The Sims 4
 
 ![The Sims 4 Blicblock play](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/client/app/images/blicblock-screenshot-1.png)
