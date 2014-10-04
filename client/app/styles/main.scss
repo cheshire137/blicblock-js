@@ -1026,7 +1026,35 @@ span.orange {
   }
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: $screen-xs) {
+  .block-preview {
+    left: 0;
+    top: 0;
+    border-top-left-radius: $board-border-radius;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: (($board-block-preview-padding / 2) * 3) + ($block-height * 2) + ($board-border-width * 2);
+    height: $board-score-height;
+
+    .block {
+      margin: 3px;
+      display: inline-block;
+      position: relative;
+    }
+  }
+
+  .board {
+    left: 0;
+  }
+
+  .board-container {
+    width: 100%;
+  }
+
+  .score {
+    left: 0;
+  }
+
   .scores-table {
     td, th {
       font-size: 11px;
