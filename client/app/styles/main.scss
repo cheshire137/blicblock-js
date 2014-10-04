@@ -231,6 +231,10 @@ body {
   background-color: $board-background-color;
   padding: 20px;
   border-radius: 4px;
+
+  & > h2:first-child {
+    margin-top: 0;
+  }
 }
 
 .game-message {
