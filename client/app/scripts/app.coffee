@@ -20,7 +20,7 @@ angular
     'LocalStorageModule',
     'angularMoment'
   ])
-  .config ['$routeProvider', 'localStorageServiceProvider', ($routeProvider, localStorageServiceProvider) ->
+  .config(['$routeProvider', 'localStorageServiceProvider', ($routeProvider, localStorageServiceProvider) ->
     localStorageServiceProvider.setPrefix('blicblockJS')
     $routeProvider
       .when '/',
@@ -37,4 +37,6 @@ angular
         controller: 'ScoresCtrl'
       .otherwise
         redirectTo: '/'
-  ]
+  ])
+  .filter 'reverse', ->
+    (items) -> items.slice().reverse()

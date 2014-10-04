@@ -9,7 +9,7 @@
     <div ng-repeat="block in blocks" ng-id="{{block.id}}" class="animate block {{block.color}} pos-{{block.x}}{{block.y}}" ng-class="{glow: block.highlight}"></div>
   </div>
   <div class="block-preview">
-    <div ng-repeat="block in upcoming" class="block {{block.color}}"></div>
+    <div ng-repeat="block in upcoming | reverse" class="block {{block.color}}"></div>
   </div>
   <div class="game-message game-over" ng-class="{active: !game_info.in_progress &amp;&amp; game_info.game_over}">
     <h2 class="simlish">game over</h2>
