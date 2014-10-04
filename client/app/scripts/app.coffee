@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'ui.bootstrap',
     'LocalStorageModule',
-    'angularMoment'
+    'angularMoment',
+    'swipe'
   ])
   .config(['$routeProvider', 'localStorageServiceProvider', ($routeProvider, localStorageServiceProvider) ->
     localStorageServiceProvider.setPrefix('blicblockJS')
