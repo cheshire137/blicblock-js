@@ -14,9 +14,9 @@ class ScoresController < ApplicationController
       @scores = @scores.order_by_value
     end
     if params[:time] == 'week'
-      @scores = @scores.this_week
+      @scores = @scores.last_seven_days
     elsif params[:time] == 'month'
-      @scores = @scores.this_month
+      @scores = @scores.last_thirty_days
     end
     if (initials=params[:initials]).present?
       @scores = @scores.where(initials: initials.strip.upcase)

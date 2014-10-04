@@ -10,11 +10,12 @@
 angular.module('blicblockApp')
   .controller 'ScoresCtrl', ['$scope', 'Score', ($scope, Score) ->
     $scope.filters =
-      time: 'all'
+      time: 'month'
       initials: ''
       order: 'value'
-    $scope.scores = Score.query()
 
     $scope.filter = ->
       $scope.scores = Score.query($scope.filters)
+
+    $scope.filter()
   ]

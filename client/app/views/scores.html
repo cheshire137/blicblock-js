@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-    <form class="form-inline scores-filter-form" ng-submit="filter()">
+  <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+    <form class="form-inline scores-filter-form text-center-sm" ng-submit="filter()">
       <label for="score_time_filter" class="input-sm">Date:</label>
       <select class="form-control input-sm" ng-model="filters.time" ng-change="filter()" id="score_time_filter">
         <option value="all">All time</option>
-        <option value="month">This month</option>
-        <option value="week">This week</option>
+        <option value="month">Last 30 days</option>
+        <option value="week">Last 7 days</option>
       </select>
       <label class="input-sm" for="score_initials_filter">Initials:</label>
       <div class="input-group">

@@ -64,37 +64,37 @@ RSpec.describe Score, type: :model do
     expect(score2.errors[:base]).to_not be_empty
   end
 
-  describe 'this_week' do
+  describe 'last_seven_days' do
     it 'includes score made today' do
       score = create(:score)
-      expect(Score.this_week).to include(score)
+      expect(Score.last_seven_days).to include(score)
     end
 
     it 'excludes score made last week' do
       score = create(:score, created_at: 1.week.ago)
-      expect(Score.this_week).to_not include(score)
+      expect(Score.last_seven_days).to_not include(score)
     end
 
-    it 'excludes score made next week' do
-      score = create(:score, created_at: 1.week.from_now)
-      expect(Score.this_week).to_not include(score)
+    it 'excludes score made tomorrow' do
+      score = create(:score, created_at: 1.day.from_now)
+      expect(Score.last_seven_days).to_not include(score)
     end
   end
 
-  describe 'this_month' do
+  describe 'last_thirty_days' do
     it 'includes score made today' do
       score = create(:score)
-      expect(Score.this_month).to include(score)
+      expect(Score.last_thirty_days).to include(score)
     end
 
-    it 'excludes score made last month' do
-      score = create(:score, created_at: 1.month.ago)
-      expect(Score.this_month).to_not include(score)
+    it 'excludes score made 31 days ago' do
+      score = create(:score, created_at: 31.days.ago)
+      expect(Score.last_thirty_days).to_not include(score)
     end
 
-    it 'excludes score made next month' do
-      score = create(:score, created_at: 1.month.from_now)
-      expect(Score.this_month).to_not include(score)
+    it 'excludes score made tomorrow' do
+      score = create(:score, created_at: 1.day.from_now)
+      expect(Score.last_thirty_days).to_not include(score)
     end
   end
 end
