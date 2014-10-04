@@ -364,6 +364,12 @@ html {
   text-align: center;
 }
 
+.scores-filter-form {
+  #score_initials_filter {
+    width: 8em;
+  }
+}
+
 .scores-table {
   background-color: $board-background-color;
 

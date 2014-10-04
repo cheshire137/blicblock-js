@@ -11,6 +11,9 @@ class ScoresController < ApplicationController
     elsif params[:time] == 'month'
       @scores = @scores.this_month
     end
+    if (initials=params[:initials]).present?
+      @scores = @scores.where(initials: initials.strip.upcase)
+    end
     @scores = @scores.limit(25)
   end
 
