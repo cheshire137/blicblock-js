@@ -13,6 +13,18 @@ class Score < ActiveRecord::Base
 
   scope :by_ip_address, ->(ip_address) { where(ip_address: ip_address) }
 
+  scope :this_week, ->{
+    week_start = Time.now.beginning_of_week(:sunday)
+    week_end = week_start + 1.week
+    where(created_at: week_start...week_end)
+  }
+
+  scope :this_month, ->{
+    month_start = Time.now.beginning_of_month
+    month_end = month_start + 1.month
+    where(created_at: month_start...month_end)
+  }
+
   before_save :capitalize_initials
 
   def rank
