@@ -1,14 +1,14 @@
 'use strict'
 
-describe 'Service: tetromino', ->
-
-  # load the service's module
+describe 'Service: Tetromino', ->
   beforeEach module 'blicblockApp'
 
-  # instantiate service
-  tetromino = {}
-  beforeEach inject (_tetromino_) ->
-    tetromino = _tetromino_
+  Tetromino = {}
+  beforeEach inject ($injector) ->
+    Tetromino = $injector.get('Tetromino')
 
-  it 'should do something', ->
-    expect(!!tetromino).toBe true
+  it 'is defined', ->
+    expect(Tetromino).toBeDefined()
+
+  it 'initializes an empty array of blocks', ->
+    expect(Tetromino.blocks.length).toEqual 0

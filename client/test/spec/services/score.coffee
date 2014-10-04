@@ -1,14 +1,11 @@
 'use strict'
 
-describe 'Service: score', ->
-
-  # load the service's module
+describe 'Service: Score', ->
   beforeEach module 'blicblockApp'
 
-  # instantiate service
-  score = {}
-  beforeEach inject (_score_) ->
-    score = _score_
+  Score = {}
+  beforeEach inject ($injector) ->
+    Score = $injector.get('Score')
 
-  it 'should do something', ->
-    expect(!!score).toBe true
+  it 'is defined', ->
+    expect(Score).toBeDefined()
