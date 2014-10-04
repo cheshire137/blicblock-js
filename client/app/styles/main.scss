@@ -296,6 +296,9 @@ body {
     }
 
     &.paused {
+      background-color: #272153;
+      border-radius: 20px;
+
       .resume-game-button {
         width: 9em;
         margin-left: -4.5em;
