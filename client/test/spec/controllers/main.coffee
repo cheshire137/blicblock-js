@@ -1,19 +1,28 @@
 'use strict'
 
 describe 'Controller: MainCtrl', ->
-
-  # load the controller's module
   beforeEach module 'blicblockApp'
 
   MainCtrl = {}
+  Tetromino = {}
   scope = {}
 
-  # Initialize the controller and a mock scope
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($injector, $controller, $rootScope) ->
+    Tetromino = $injector.get('Tetromino')
     scope = $rootScope.$new()
-    MainCtrl = $controller 'MainCtrl', {
+    MainCtrl = $controller 'MainCtrl',
       $scope: scope
-    }
+      Tetromino: Tetromino
 
-  it 'should attach a list of awesomeThings to the scope', ->
-    expect(scope.awesomeThings.length).toBe 3
+  it 'initializes an empty list of blocks', ->
+    expect(scope.blocks).toEqual Tetromino.blocks
+    expect(scope.blocks.length).toEqual 0
+
+  it 'initializes a list of upcoming blocks', ->
+    expect(scope.upcoming.length).toEqual 2
+
+  it 'initializes game state', ->
+    expect(scope.game_info).toEqual Tetromino.info
+
+  it 'initializes an empty object for new high score', ->
+    expect(scope.new_high_score).toEqual {}

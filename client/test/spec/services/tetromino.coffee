@@ -4,6 +4,7 @@ describe 'Service: Tetromino', ->
   beforeEach module 'blicblockApp'
 
   Tetromino = {}
+
   beforeEach inject ($injector) ->
     Tetromino = $injector.get('Tetromino')
 
