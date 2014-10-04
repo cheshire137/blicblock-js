@@ -150,10 +150,8 @@ angular.module('blicblockApp')
       block.sliding = true
       $scope.game_info.sliding_block = true
       block_to_left = Tetromino.get_closest_block_to_left(block.x, block.y)
-      if block_to_left
-        block.y = block_to_left.y + 1
-      else
-        block.y--
+      return if block_to_left && block_to_left.y == block.y - 1
+      block.y--
       $timeout (-> stop_sliding(block)), 100
 
     $scope.$on 'move_right', (event) ->
@@ -165,10 +163,8 @@ angular.module('blicblockApp')
       block.sliding = true
       $scope.game_info.sliding_block = true
       block_to_right = Tetromino.get_closest_block_to_right(block.x, block.y)
-      if block_to_right
-        block.y = block_to_right.y - 1
-      else
-        block.y++
+      return if block_to_right && block_to_right.y == block.y + 1
+      block.y++
       $timeout (-> stop_sliding(block)), 100
 
     $scope.$on 'move_down', (event) ->
