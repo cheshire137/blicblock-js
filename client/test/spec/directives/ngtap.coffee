@@ -1,16 +1,26 @@
 'use strict'
 
 describe 'Directive: ngTap', ->
-
-  # load the directive's module
   beforeEach module 'blicblockApp'
 
   scope = {}
+  compile = {}
 
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($controller, $compile, $rootScope) ->
     scope = $rootScope.$new()
+    compile = $compile
 
-  it 'should make hidden element visible', inject ($compile) ->
-    element = angular.element '<ng-tap></ng-tap>'
-    element = $compile(element) scope
-    expect(element.text()).toBe 'this is the ngTap directive'
+  it 'is triggered on body tap', ->
+    element = compile('<div ng-tap="touched = true"></div>')(scope)
+    expect(scope.touched).toBeFalsy()
+    $(element).trigger($.Event('touchstart'))
+    $(element).trigger($.Event('touchend'))
+    expect(scope.touched).toEqual(true)
+
+  it 'is not triggered on body drag', ->
+    element = compile('<div ng-tap="touched = true"></div>')(scope)
+    expect(scope.touched).toBeFalsy()
+    $(element).trigger($.Event('touchstart'))
+    $(element).trigger($.Event('touchmove'))
+    $(element).trigger($.Event('touchend'))
+    expect(scope.touched).toBeFalsy()
