@@ -150,7 +150,140 @@ angular.module('blicblockApp')
           active: false
 
       setup_four_cascades: ->
-        @setup_three_cascades()
+        @setup_cascade()
+        last_row_x = @info.rows - 1
+        last_col_y = @info.cols - 1
+        color1 = @colors[0]
+        color2 = @colors[1]
+
+        @blocks.push new Block
+          color: color1
+          x: last_row_x
+          y: last_col_y
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x
+          y: last_col_y - 1
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x
+          y: last_col_y - 2
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x
+          y: last_col_y - 3
+          locked: true
+          active: false
+
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 1
+          y: last_col_y
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 1
+          y: last_col_y - 1
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 1
+          y: last_col_y - 2
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 1
+          y: last_col_y - 3
+          locked: true
+          active: false
+
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 2
+          y: last_col_y
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 2
+          y: last_col_y - 1
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 2
+          y: last_col_y - 2
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 2
+          y: last_col_y - 3
+          locked: true
+          active: false
+
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 3
+          y: last_col_y
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 3
+          y: last_col_y - 1
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 3
+          y: last_col_y - 2
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 3
+          y: last_col_y - 3
+          locked: true
+          active: false
+
+        @blocks.push new Block
+          color: color1
+          x: last_row_x - 4
+          y: last_col_y
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 4
+          y: last_col_y - 1
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 4
+          y: last_col_y - 2
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color2
+          x: last_row_x - 4
+          y: last_col_y - 3
+          locked: true
+          active: false
+
+        @upcoming[0] = new Block
+          color: color2
+        @info.in_progress = true
 
       get_active_block: ->
         @blocks.filter((b) -> b.active)[0]
