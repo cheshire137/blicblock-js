@@ -78,13 +78,13 @@ angular.module('blicblockApp')
           active: false
         @blocks.push new Block
           color: color2
-          x: last_row_x - 2
-          y: 0
+          x: last_row_x - 1
+          y: 2
           locked: true
           active: false
         @blocks.push new Block
           color: color1
-          x: last_row_x - 3
+          x: last_row_x - 2
           y: 0
           locked: true
           active: false
@@ -104,14 +104,14 @@ angular.module('blicblockApp')
           active: false
         @blocks.push new Block
           color: color3
-          x: last_row_x - 5
+          x: last_row_x - 3
           y: 0
           locked: true
           active: false
         @blocks.push new Block
           color: color3
-          x: last_row_x - 3
-          y: 1
+          x: last_row_x - 5
+          y: 0
           locked: true
           active: false
         @blocks.push new Block
@@ -122,10 +122,35 @@ angular.module('blicblockApp')
           active: false
 
       setup_three_cascades: ->
-        @setup_cascade()
+        @setup_two_cascades()
+        color4 = @colors[3]
+        @blocks.push new Block
+          color: color4
+          x: 0
+          y: 0
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color4
+          x: 3
+          y: 1
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color4
+          x: 2
+          y: 1
+          locked: true
+          active: false
+        @blocks.push new Block
+          color: color4
+          x: 1
+          y: 1
+          locked: true
+          active: false
 
       setup_four_cascades: ->
-        @setup_cascade()
+        @setup_three_cascades()
 
       get_active_block: ->
         @blocks.filter((b) -> b.active)[0]
