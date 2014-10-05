@@ -24,20 +24,24 @@ class Score < ActiveRecord::Base
     where(created_at: month_start..month_end)
   }
 
-  # SELECT "scores".*,
-  # DENSE_RANK() OVER (ORDER BY "scores"."value" DESC) AS rank FROM "scores"
+  # SELECT * FROM (
+  #   SELECT "scores".*,
+  #   DENSE_RANK() OVER (ORDER BY "scores"."value" DESC) AS rank
+  #   FROM "scores"
+  # ) scores
   scope :ranked, ->{
     scores = arel_table
     dense_rank = Arel::Nodes::SqlLiteral.new('DENSE_RANK()')
     window = Arel::Nodes::Window.new.order(scores[:value].desc)
     over = Arel::Nodes::Over.new(dense_rank, window).as('rank')
-    select(scores[Arel.star], over)
+    rankings = scores.project(scores[Arel.star], over).as(Score.table_name)
+    from(rankings).select(Arel.star)
   }
 
   before_save :capitalize_initials
 
   def rank
-    self.class.order_by_value.pluck(:id).index(id) + 1
+    self['rank'] || self.class.ranked.find(id)['rank']
   end
 
   private

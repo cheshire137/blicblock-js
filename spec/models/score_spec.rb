@@ -64,6 +64,20 @@ RSpec.describe Score, type: :model do
     expect(score2.errors[:base]).to_not be_empty
   end
 
+  describe 'rank' do
+    it 'returns same rank for scores with the same value' do
+      score1 = create(:score, value: 3000)
+      score2 = create(:score, value: 3000)
+      expect(score1.rank).to eq(score2.rank)
+    end
+
+    it 'returns lower number for score with higher value' do
+      score1 = create(:score, value: 5000)
+      score2 = create(:score, value: 4000)
+      expect(score1.rank).to be < score2.rank
+    end
+  end
+
   describe 'last_seven_days' do
     it 'includes score made today' do
       score = create(:score)
