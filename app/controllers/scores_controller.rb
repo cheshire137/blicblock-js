@@ -5,7 +5,7 @@ class ScoresController < ApplicationController
   # GET /scores.json
   def index
     @ip_address = request.remote_ip
-    @scores = Score
+    @scores = Score.ranked
     if params[:order] == 'newest'
       @scores = @scores.order_by_newest
     elsif params[:order] == 'oldest'
