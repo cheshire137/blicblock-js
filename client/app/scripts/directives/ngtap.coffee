@@ -13,10 +13,13 @@ angular.module('blicblockApp')
       element.bind 'touchstart', (e) ->
         element.addClass('active')
         tapping = true
+        true
       element.bind 'touchmove', (e) ->
         element.removeClass('active')
         tapping = false
+        true
       element.bind 'touchend', (e) ->
         element.removeClass('active')
         scope.$apply(attrs['ngTap'], element) if tapping
+        true
   )

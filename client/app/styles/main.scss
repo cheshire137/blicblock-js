@@ -1103,6 +1103,10 @@ span.orange {
       display: inline-block;
       width: auto;
     }
+
+    input + button {
+      margin-top: -1px;
+    }
   }
 }
 
