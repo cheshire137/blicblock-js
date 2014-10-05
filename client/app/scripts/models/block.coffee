@@ -3,8 +3,14 @@ class Block
     @color = attribs.color
     @x = attribs.x
     @y = attribs.y
-    @locked = false
-    @active = true
+    if typeof attribs.locked == 'undefined'
+      @locked = false
+    else
+      @locked = attribs.locked
+    if typeof attribs.active == 'undefined'
+      @active = true
+    else
+      @active = attribs.active
     @sliding = false
     @plummetting = false
     @highlight = false
