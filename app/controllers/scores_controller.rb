@@ -26,6 +26,7 @@ class ScoresController < ApplicationController
 
   # GET /scores/1.json
   def show
+    @total_scores = Score.count
   end
 
   # POST /scores.json
@@ -44,10 +45,10 @@ class ScoresController < ApplicationController
   private
 
   def set_score
-    @score = Score.find(params[:id])
+    @score = Score.ranked.find(params[:id])
   end
 
   def score_params
-    params.require(:score).permit(:initials, :value, :latitude, :longitude)
+    params.require(:score).permit(:initials, :value)
   end
 end

@@ -115,17 +115,49 @@ RSpec.describe ScoresController, type: :controller do
   end
 
   describe 'GET show' do
-    let(:score) { create(:score) }
+    let!(:score) { create(:score) }
+    before { get :show, id: score, format: :json }
 
     it 'assigns the requested score as @score' do
-      get :show, id: score, format: :json
       expect(assigns(:score)).to eq(score)
+    end
+
+    it 'loads successfully' do
+      expect(response).to be_success
+    end
+
+    it 'assigns total score count to @total_scores' do
+      expect(assigns(:total_scores)).to eq(1)
+    end
+
+    describe 'JSON response' do
+      subject { JSON.parse(response.body) }
+
+      it 'includes value' do
+        expect(subject['value']).to eq(score.value)
+      end
+
+      it 'includes initials' do
+        expect(subject['initials']).to eq(score.initials)
+      end
+
+      it 'includes rank' do
+        expect(subject['rank']).to eq(1)
+      end
+
+      it 'includes total score count' do
+        expect(subject['total_scores']).to eq(1)
+      end
     end
   end
 
   describe 'POST create' do
+    let!(:other_score) { create(:score, value: 5000) }
+    let(:initials) { 'BIG' }
+    let(:value) { 2000 }
     let(:make_request) {
-      ->{ post :create, score: attributes_for(:score), format: :json }
+      ->{ post :create, score: {initials: initials, value: value},
+                        format: :json }
     }
 
     describe 'with valid params' do
@@ -139,12 +171,30 @@ RSpec.describe ScoresController, type: :controller do
         expect(assigns(:score)).to be_persisted
       end
 
-      it 'responds with score details' do
+      it 'assigns total score count to @total_scores' do
         make_request.call
-        expect(response.body).to include('"id"')
-        expect(response.body).to include('"value"')
-        expect(response.body).to include('"initials"')
-        expect(response.body).to include('"created_at"')
+        expect(assigns(:total_scores)).to eq(2)
+      end
+
+      describe 'JSON response' do
+        before { make_request.call }
+        subject { JSON.parse(response.body) }
+
+        it 'includes value' do
+          expect(subject['value']).to eq(value)
+        end
+
+        it 'includes initials' do
+          expect(subject['initials']).to eq(initials)
+        end
+
+        it 'includes rank' do
+          expect(subject['rank']).to eq(2)
+        end
+
+        it 'includes total score count' do
+          expect(subject['total_scores']).to eq(2)
+        end
       end
     end
 
@@ -153,7 +203,7 @@ RSpec.describe ScoresController, type: :controller do
         allow_any_instance_of(Score).to receive(:save).and_return(false)
       end
 
-      it 'assigns a newly created but unsaved score as @score' do
+      it 'assigns a new, unsaved score as @score' do
         make_request.call
         expect(assigns(:score)).to be_a_new(Score)
       end
