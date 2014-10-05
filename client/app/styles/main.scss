@@ -183,23 +183,6 @@ $board-block-preview-height: ($board-block-preview-padding * 3) + ($block-height
         top: ($board-block-preview-padding * 2) + $block-height;
       }
     }
-
-    // &.animate {
-    //   &.ng-enter {
-    //     -webkit-animation: bounceInDown 0.25s;
-    //     animation: bounceInDown 0.25s;
-    //   }
-
-    //   &.ng-move {
-    //     -webkit-animation: shake 0.25s;
-    //     animation: shake 0.25s;
-    //   }
-
-    //   &.ng-leave {
-    //     -webkit-animation: bounceInUp 0.25s;
-    //     animation: bounceInUp 0.25s;
-    //   }
-    // }
   }
 }
 
@@ -1116,11 +1099,50 @@ span.orange {
     height: $board-score-height;
 
     .block {
-      margin: 9px 4px 0 5px;
+      margin: 0;
       display: inline-block;
-      position: relative;
+      position: absolute;
       width: $mobile-block-width;
       height: $mobile-block-height;
+      left: auto;
+      right: 9px;
+      top: 9px;
+
+      & + .block {
+        left: 9px;
+        right: auto;
+        top: 9px;
+      }
+
+      &.ng-leave {
+        left: auto;
+        right: 0 - ($mobile-block-width / 4);
+        top: 9px;
+
+        &.ng-leave-active {
+          left: auto;
+          right: 0 - $mobile-block-width;
+          top: 9px;
+
+          & + .block {
+            left: 18px + $mobile-block-width;
+            right: auto;
+            top: 9px;
+          }
+        }
+      }
+
+      &.ng-enter {
+        left: 0 - $mobile-block-width;
+        right: auto;
+        top: 9px;
+
+        &.ng-enter-active {
+          left: 9px;
+          right: auto;
+          top: 9px;
+        }
+      }
     }
   }
 
