@@ -15,14 +15,27 @@ describe 'Controller: ScoresCtrl', ->
     ScoresCtrl = $controller 'ScoresCtrl',
       $scope: scope
       Score: Score
+    httpBackend.expectGET('/api/scores.json?initials=&order=value&time=month')
+               .respond([{value: 1000, initials: 'ABC'}])
+    httpBackend.flush()
 
   it 'sets up score filters', ->
     expect(scope.filters).toBeDefined()
 
   it 'queries list of scores', ->
-    httpBackend.expectGET('/api/scores.json?initials=&order=value&time=month')
-               .respond([{value: 1000, initials: 'ABC'}])
-    httpBackend.flush()
     expect(scope.scores).toBeDefined()
     expect(scope.scores[0].value).toEqual(1000)
     expect(scope.scores[0].initials).toEqual('ABC')
+
+  describe 'filter', ->
+    it 'makes query with filters', ->
+      scope.filters.time = 'a'
+      scope.filters.initials = 'b'
+      scope.filters.order = 'c'
+      httpBackend.expectGET('/api/scores.json?initials=b&order=c&time=a')
+                 .respond([{value: 250, initials: 'neato'}])
+      scope.filter()
+      httpBackend.flush()
+      expect(scope.scores).toBeDefined()
+      expect(scope.scores[0].value).toEqual(250)
+      expect(scope.scores[0].initials).toEqual('neato')

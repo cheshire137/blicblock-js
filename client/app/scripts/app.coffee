@@ -10,17 +10,16 @@
 ###
 angular
   .module('blicblockApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'ui.bootstrap',
-    'LocalStorageModule',
-    'angularMoment',
-    'swipe',
-    'ngResize'
+    'ngAnimate'
+    'ngCookies'
+    'ngResource'
+    'ngRoute'
+    'ngSanitize'
+    'ngTouch'
+    'ui.bootstrap'
+    'LocalStorageModule'
+    'angularMoment'
+    'swipe'
   ])
   .config(['$routeProvider', 'localStorageServiceProvider', ($routeProvider, localStorageServiceProvider) ->
     localStorageServiceProvider.setPrefix('blicblockJS')

@@ -28,7 +28,6 @@ module.exports = (config) ->
       'bower_components/angular-moment/angular-moment.js'
       'bower_components/angular-swipe/dist/angular-swipe.js'
       'app/scripts/**/*.coffee'
-      'app/scripts/**/*.js'
       'test/mock/**/*.coffee'
       'test/spec/**/*.coffee'
     ],

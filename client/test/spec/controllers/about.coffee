@@ -11,3 +11,6 @@ describe 'Controller: AboutCtrl', ->
     AboutCtrl = $controller 'AboutCtrl', {
       $scope: scope
     }
+
+  it 'is defined', ->
+    expect(AboutCtrl).toBeDefined()
