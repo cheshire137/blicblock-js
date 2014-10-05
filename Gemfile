@@ -13,6 +13,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'database_cleaner', '< 1.1.0'
   gem 'faker', '~> 1.4.3'
+  gem 'awesome_print', '~> 1.2.0'
 end
 
 gem 'spring-commands-rspec', group: :development
