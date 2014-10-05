@@ -20,7 +20,7 @@ angular.module('blicblockApp')
       $scope.scores = Score.query($scope.filters)
 
     $scope.on_resize = (window_size) ->
-      $scope.collapse.filters = window_size.width < 768
+      $scope.collapse.filters = window_size.width < 545
 
     $scope.filter()
   ]

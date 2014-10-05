@@ -6,27 +6,29 @@
       Filters
     </a>
     <form class="animate form-inline scores-filter-form" ng-submit="filter()" ng-hide="collapse.filters">
-      <label for="score_time_filter" class="input-sm">Date:</label>
-      <select class="form-control input-sm" ng-model="filters.time" ng-change="filter()" id="score_time_filter">
-        <option value="all">All time</option>
-        <option value="month">Last 30 days</option>
-        <option value="week">Last 7 days</option>
-      </select>
-      <label class="input-sm" for="score_initials_filter">Initials:</label>
-      <div class="input-group">
-        <input type="text" id="score_initials_filter" ng-class="{rounded: filters.initials.length < 1}" class="input-sm form-control initials-filter" ng-model="filters.initials" maxlength="3">
-        <span class="input-group-btn" ng-show="filters.initials.length > 0">
-          <button type="button" ng-click="filters.initials = ''; filter()" class="btn btn-sm btn-default">
-            <span class="glyphicon glyphicon-remove"></span>
-          </button>
-        </span>
+      <div class="form-group">
+        <label for="score_time_filter" class="input-sm">Date:</label>
+        <select class="form-control input-sm" ng-model="filters.time" ng-change="filter()" id="score_time_filter">
+          <option value="all">All time</option>
+          <option value="month">Last 30 days</option>
+          <option value="week">Last 7 days</option>
+        </select>
       </div>
-      <label for="score_order_filter" class="input-sm">Order:</label>
-      <select class="form-control input-sm" ng-model="filters.order" ng-change="filter()" id="score_order_filter">
-        <option value="value">Top</option>
-        <option value="newest">Newest</option>
-        <option value="oldest">Oldest</option>
-      </select>
+      <div class="form-group">
+        <label class="input-sm" for="score_initials_filter">Initials:</label>
+        <input type="text" id="score_initials_filter" ng-class="{rounded: filters.initials.length < 1}" class="input-sm form-control initials-filter" ng-model="filters.initials" maxlength="3">
+        <button type="button" ng-click="filters.initials = ''; filter()" class="btn btn-sm btn-default" ng-show="filters.initials.length > 0">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+      <div class="form-group">
+        <label for="score_order_filter" class="input-sm">Order:</label>
+        <select class="form-control input-sm" ng-model="filters.order" ng-change="filter()" id="score_order_filter">
+          <option value="value">Top</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
+      </div>
     </form>
     <hr>
     <table class="table scores-table">

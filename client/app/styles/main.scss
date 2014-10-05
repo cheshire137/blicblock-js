@@ -1093,6 +1093,19 @@ span.orange {
   }
 }
 
+@media only screen and (max-width: $screen-sm) {
+  .scores-filter-form {
+    .form-group {
+      display: inline-block;
+    }
+
+    input, select {
+      display: inline-block;
+      width: auto;
+    }
+  }
+}
+
 @media only screen and (max-width: $screen-xs) {
   .block-preview {
     left: 0;
