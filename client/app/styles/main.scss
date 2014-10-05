@@ -155,32 +155,32 @@ $board-block-preview-height: ($board-block-preview-padding * 3) + ($block-height
     position: absolute;
     left: $board-block-preview-padding;
     top: $board-block-preview-padding;
-    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.25s;
-    -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.25s;
-    -o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.25s;
-    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.25s;
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+    -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+    -o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
 
     & + .block {
       top: ($board-block-preview-padding * 2) + $block-height;
     }
 
     &.ng-leave {
-      top: 0 - ($block-height / 2);
+      top: 0 - ($block-height / 4);
 
       &.ng-leave-active {
         top: 0 - $block-height;
 
         & + .block {
-          top: $board-block-preview-padding + ($block-height / 2);
+          top: $board-block-preview-padding;
         }
       }
     }
 
     &.ng-enter {
-      top: $board-block-preview-height;
+      top: $board-block-preview-height - ($block-height / 3);
 
       &.ng-enter-active {
-        top: $board-block-preview-height - $block-height;
+        top: ($board-block-preview-padding * 2) + $block-height;
       }
     }
 
