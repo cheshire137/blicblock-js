@@ -57,5 +57,6 @@ angular
   ).run ['$location', '$rootScope', ($location, $rootScope) ->
     $rootScope.$on '$routeChangeSuccess', (event, current, previous) ->
       if current.hasOwnProperty('$$route')
+        $rootScope.collapse.nav = true
         $rootScope.title = current.$$route.title
   ]
