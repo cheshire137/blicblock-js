@@ -64,6 +64,37 @@ RSpec.describe Score, type: :model do
     expect(score2.errors[:base]).to_not be_empty
   end
 
+  describe 'set_location' do
+    subject { build(:score, ip_address: '46.120.178.122') }
+    let(:save_record) {
+      ->{ VCR.use_cassette('lookup_ip_address') { subject.save } }
+    }
+
+    context 'when matching location does not already exist' do
+      it 'creates a new location record' do
+        expect(save_record).to change(Location, :count).by(1)
+      end
+
+      it 'ties new location record to score' do
+        save_record.call
+        expect(Score.last.location).to eq(Location.last)
+      end
+    end
+
+    context 'when matching location already exists' do
+      let!(:location) { create(:location, country: 'Israel') }
+
+      it 'does not create a new location record' do
+        expect(save_record).to_not change(Location, :count)
+      end
+
+      it 'ties existing location record to score' do
+        save_record.call
+        expect(Score.last.location).to eq(location)
+      end
+    end
+  end
+
   describe 'rank' do
     it 'returns same rank for scores with the same value' do
       score1 = create(:score, value: 3000)

@@ -4,6 +4,8 @@ class Score < ActiveRecord::Base
 
   belongs_to :location
 
+  before_create :set_location
+
   validates :value, presence: true, numericality: {greater_than: 0}
   validates :initials, presence: true, exclusion: {in: BAD_WORDS},
                        format: {with: /\A[a-zA-Z]{3}\z/}
@@ -47,6 +49,22 @@ class Score < ActiveRecord::Base
   end
 
   private
+
+  def set_location
+    return if ip_address.blank?
+    geocode_location = Geokit::Geocoders::MultiGeocoder.geocode(ip_address)
+    if (country_code=geocode_location.country_code).present?
+      country_data = Country[geocode_location.country_code]
+      country = country_data ? country_data.name : nil
+    else
+      country = geocode_location.country
+    end
+    return if country.blank?
+    self.location = Location.with_country(country)
+  rescue => exception
+    err_msg = "#{exception.message}\n#{exception.backtrace.join("\n")}"
+    Rails.logger.error err_msg
+  end
 
   def capitalize_initials
     return unless initials

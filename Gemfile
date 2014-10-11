@@ -13,7 +13,11 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'database_cleaner', '< 1.1.0'
   gem 'faker', '~> 1.4.3'
-  gem 'awesome_print', '~> 1.2.0'
+end
+
+group :test do
+  gem 'vcr', '~> 2.9.3'
+  gem 'webmock', '~> 1.19.0'
 end
 
 gem 'spring-commands-rspec', group: :development
@@ -21,5 +25,7 @@ gem 'thin', '~> 1.6.2'
 gem 'sass', '~> 3.4.5'
 gem 'compass', '~> 1.0.1'
 gem 'will_paginate', '~> 3.0.7'
+gem 'geokit-rails', '~> 2.0.1'
+gem 'countries', '~> 0.9.3'
 
 ruby "2.1.1"

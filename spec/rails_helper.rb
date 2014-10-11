@@ -19,6 +19,11 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/vcr_cassettes'
+  c.hook_into :webmock
+end
+
 RSpec.configure do |config|
   config.render_views
 

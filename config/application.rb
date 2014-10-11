@@ -29,5 +29,7 @@ module Blicblockjs
         request_specs: false,
         controller_specs: true
     end
+
+    config.gem 'geokit'
   end
 end
