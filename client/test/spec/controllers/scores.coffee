@@ -15,7 +15,7 @@ describe 'Controller: ScoresCtrl', ->
     ScoresCtrl = $controller 'ScoresCtrl',
       $scope: scope
       Score: Score
-    httpBackend.expectGET('/api/scores.json?initials=&order=value&time=month')
+    httpBackend.expectGET('/api/scores.json?initials=&order=value&time=week')
                .respond([{value: 1000, initials: 'ABC'}])
     httpBackend.flush()
 
