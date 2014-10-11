@@ -19,6 +19,7 @@ angular.module('blicblockApp')
       initials: $routeParams.initials || default_initials
       order: $routeParams.order || default_order
       country_code: $routeParams.country_code || default_country_code
+      page: $routeParams.page || 1
     $scope.score_results = Score.query($scope.filters)
 
     $scope.filter = ->
@@ -32,12 +33,11 @@ angular.module('blicblockApp')
         path += "/time/#{$scope.filters.time}"
       unless $scope.filters.order == default_order
         path += "/order/#{$scope.filters.order}"
+      unless $scope.score_results.page == 1
+        path += "/page/#{$scope.score_results.page}"
       $location.path path
 
     $scope.change_page = ->
-      params = {}
-      for key, value of $scope.filters
-        params[key] = value
-      params.page = $scope.score_results.page
-      $scope.score_results = Score.query(params)
+      $scope.filters.page = $scope.score_results.page
+      $scope.filter()
   ]

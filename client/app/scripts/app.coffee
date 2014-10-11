@@ -44,72 +44,39 @@ angular
         templateUrl: 'views/help.html'
         controller: 'AboutCtrl'
         title: 'How to Play'
-      .when '/scores',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/country/:country_code',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/country/:country_code/order/:order',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/country/:country_code/initials/:initials',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/country/:country_code/initials/:initials/order/:order',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/country/:country_code/time/:time',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/country/:country_code/time/:time/order/:order',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/country/:country_code/initials/:initials/time/:time',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/country/:country_code/initials/:initials/time/:time/order/:order',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/initials/:initials',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/initials/:initials/order/:order',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/initials/:initials/time/:time',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/initials/:initials/time/:time/order/:order',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/time/:time',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/time/:time/order/:order',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .when '/scores/order/:order',
-        templateUrl: 'views/scores.html'
-        controller: 'ScoresCtrl'
-        title: 'High Scores'
-      .otherwise
-        redirectTo: '/'
+    score_opts =
+      templateUrl: 'views/scores.html'
+      controller: 'ScoresCtrl'
+      title: 'High Scores'
+    $routeProvider.when '/scores', score_opts
+                  .when '/scores/country/:country_code', score_opts
+                  .when '/scores/initials/:initials', score_opts
+                  .when '/scores/time/:time', score_opts
+                  .when '/scores/order/:order', score_opts
+                  .when '/scores/page/:page', score_opts
+                  .when '/scores/country/:country_code/order/:order', score_opts
+                  .when '/scores/country/:country_code/order/:order/page/:page', score_opts
+                  .when '/scores/country/:country_code/initials/:initials', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/page/:page', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/order/:order', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/order/:order/page/:page', score_opts
+                  .when '/scores/country/:country_code/time/:time', score_opts
+                  .when '/scores/country/:country_code/time/:time/page/:page', score_opts
+                  .when '/scores/country/:country_code/time/:time/order/:order', score_opts
+                  .when '/scores/country/:country_code/time/:time/order/:order/page/:page', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/time/:time', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/time/:time/page/:page', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/time/:time/order/:order', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/time/:time/order/:order/page/:page', score_opts
+                  .when '/scores/initials/:initials/order/:order', score_opts
+                  .when '/scores/initials/:initials/order/:order/page/:page', score_opts
+                  .when '/scores/initials/:initials/time/:time', score_opts
+                  .when '/scores/initials/:initials/time/:time/page/:page', score_opts
+                  .when '/scores/initials/:initials/time/:time/order/:order', score_opts
+                  .when '/scores/initials/:initials/time/:time/order/:order/page/:page', score_opts
+                  .when '/scores/time/:time/order/:order', score_opts
+                  .when '/scores/time/:time/order/:order/page/:page', score_opts
+    $routeProvider.otherwise redirectTo: '/'
   ])
   .filter('reverse', ->
     (items) -> items.slice().reverse()
