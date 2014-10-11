@@ -11,7 +11,11 @@ class Score < ActiveRecord::Base
                        format: {with: /\A[a-zA-Z]{3}\z/}
   validate :not_playing_too_much
 
-  scope :order_by_value, ->{ order('value DESC, created_at DESC, id DESC') }
+  scope :order_by_value, ->{
+    scores = arel_table
+    order(scores[:value].desc, scores[:created_at].desc, scores[:id].desc)
+  }
+
   scope :order_by_newest, ->{ order(created_at: :desc) }
   scope :order_by_oldest, ->{ order(:created_at) }
   scope :by_ip_address, ->(ip_address) { where(ip_address: ip_address) }
@@ -26,6 +30,11 @@ class Score < ActiveRecord::Base
     month_end = Time.now.end_of_day
     month_start = month_end - 30.days
     where(created_at: month_start..month_end)
+  }
+
+  scope :in_country, ->(country_code) {
+    joins(:location).
+        where(locations: {country_code: country_code.strip.downcase})
   }
 
   # SELECT * FROM (
@@ -62,6 +71,7 @@ class Score < ActiveRecord::Base
 
   def set_location
     return if ip_address.blank?
+    return if location
     geocode_location = Geokit::Geocoders::MultiGeocoder.geocode(ip_address)
     if (country_code=geocode_location.country_code).present?
       country_data = Country[geocode_location.country_code]

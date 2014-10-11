@@ -64,6 +64,27 @@ RSpec.describe Score, type: :model do
     expect(score2.errors[:base]).to_not be_empty
   end
 
+  describe 'in_country' do
+    let!(:location) {
+      create(:location, country_code: 'de', country: 'Germany')
+    }
+    let!(:good_score) { create(:score, location: location) }
+    let!(:bad_score1) { create(:score, ip_address: nil) }
+    let!(:bad_score2) { create(:score) }
+
+    it 'includes scores with a location matching given code' do
+      expect(Score.in_country('de')).to include(good_score)
+    end
+
+    it 'excludes scores without a location' do
+      expect(Score.in_country('de')).to_not include(bad_score1)
+    end
+
+    it 'excludes scores with a location not matching given code' do
+      expect(Score.in_country('de')).to_not include(bad_score2)
+    end
+  end
+
   describe 'set_location' do
     subject { build(:score, ip_address: '46.120.178.122') }
     let(:save_record) {
