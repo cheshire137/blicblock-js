@@ -13,9 +13,21 @@ angular.module('blicblockApp')
       time: 'week'
       initials: ''
       order: 'value'
+    $scope.score_results =
+      scores: []
+      page: 1
+      total_pages: 1
+      total_records: 1
 
     $scope.filter = ->
-      $scope.scores = Score.query($scope.filters)
+      $scope.score_results = Score.query($scope.filters)
+
+    $scope.load_page = (page) ->
+      params = {}
+      for key, value of $scope.filters
+        params[key] = value
+      params.page = page
+      $scope.score_results = Score.query(params)
 
     $scope.filter()
   ]

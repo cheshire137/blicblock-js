@@ -9,7 +9,10 @@
 ###
 angular.module('blicblockApp')
   .factory 'Score', ['$resource', ($resource) ->
-    $resource '/api/scores/:id.json', null,
+    $resource '/api/scores/:id.json', {},
+      'query':
+        method: 'GET'
+        isArray: false
       'update':
         method: 'PUT'
   ]

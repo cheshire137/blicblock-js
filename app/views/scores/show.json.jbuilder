@@ -1,2 +1,2 @@
-json.extract! @score, :id, :initials, :value, :rank, :created_at
+json.partial! @score, partial: 'score', as: :score
 json.total_scores @total_scores

@@ -35,12 +35,41 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="score in scores" class="row-{{score.rank}}" ng-class="{mine: score.is_mine}" tooltip="{{score.created_at | amDateFormat:'YYYY-MM-DD'}}" tooltip-placement="right">
+        <tr ng-repeat="score in score_results.scores" class="row-{{score.rank}}" ng-class="{mine: score.is_mine}" tooltip="{{score.created_at | amDateFormat:'YYYY-MM-DD'}}" tooltip-placement="right">
           <td class="score-rank">{{score.rank}}</td>
           <td class="score-value">{{score.value}}</td>
           <td class="score-initials">{{score.initials}}</td>
         </tr>
       </tbody>
     </table>
+    <div class="text-center" ng-show="score_results.total_pages &gt; 1">
+      <ul class="pagination">
+        <li ng-show="score_results.page !== 1">
+          <a tooltip="First Page" ng-click="load_page(1)">
+            &laquo;
+          </a>
+        </li>
+        <li ng-show="score_results.page !== 1">
+          <a tooltip="Previous Page" ng-click="load_page(score_results.page - 1)">
+            &lt;
+          </a>
+        </li>
+        <li ng-repeat="i in [] | range:score_results.total_pages" ng-class="{active: i + 1 === score_results.page}">
+          <a ng-click="load_page(i + 1)">
+            {{i + 1}}
+          </a>
+        </li>
+        <li ng-show="score_results.page !== score_results.total_pages">
+          <a tooltip="Next Page" ng-click="load_page(score_results.page + 1)">
+            &gt;
+          </a>
+        </li>
+        <li ng-show="score_results.page !== score_results.total_pages">
+          <a tooltip="Last Page" ng-click="load_page(score_results.total_pages)">
+            &raquo;
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

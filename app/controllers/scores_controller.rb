@@ -1,10 +1,10 @@
 class ScoresController < ApplicationController
+  before_action :set_ip_address
   before_action :set_score, only: [:show]
   respond_to :json
 
   # GET /scores.json
   def index
-    @ip_address = request.remote_ip
     @scores = Score.ranked
     if params[:order] == 'newest'
       @scores = @scores.order_by_newest
@@ -21,7 +21,9 @@ class ScoresController < ApplicationController
     if (initials=params[:initials]).present?
       @scores = @scores.where(initials: initials.strip.upcase)
     end
-    @scores = @scores.limit(25)
+    page = (params[:page].presence || 1).to_i
+    page = 1 if page < 1
+    @scores = @scores.paginate(page: page, per_page: 10)
   end
 
   # GET /scores/1.json
@@ -32,7 +34,7 @@ class ScoresController < ApplicationController
   # POST /scores.json
   def create
     @score = Score.new(score_params)
-    @score.ip_address = request.remote_ip
+    @score.ip_address = @ip_address
     if @score.save
       @total_scores = Score.count
       render :show, status: :created, location: @score
@@ -43,6 +45,10 @@ class ScoresController < ApplicationController
   end
 
   private
+
+  def set_ip_address
+    @ip_address = request.remote_ip
+  end
 
   def set_score
     @score = Score.ranked.find(params[:id])

@@ -53,6 +53,12 @@ angular
   ])
   .filter('reverse', ->
     (items) -> items.slice().reverse()
+  ).filter('range', ->
+    (input, total) ->
+      total = parseInt(total, 10)
+      for i in [0...total]
+        input.push i
+      input
   ).run ['$location', '$rootScope', ($location, $rootScope) ->
     $rootScope.$on '$routeChangeSuccess', (event, current, previous) ->
       if current.hasOwnProperty('$$route')
