@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20141011173528) do
 
   create_table "locations", force: true do |t|
     t.string   "country"
+    t.string   "country_code", limit: 3
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -5,16 +5,22 @@ RSpec.describe Location, type: :model do
     expect(subject).to have(1).error_on(:country)
   end
 
-  it 'requires a unique country' do
+  it 'requires a unique country code' do
     existing = create(:location)
-    new_location = build(:location, country: existing.country)
-    expect(new_location).to have(1).error_on(:country)
+    new_location = build(:location, country_code: existing.country_code)
+    expect(new_location).to have(1).error_on(:country_code)
   end
 
   it 'adjusts capitalization of country on save' do
-    new_location = build(:location, country: "\n\tTHESE caps ARE wEiRD   ")
+    new_location = build(:location, country: "\n\talGERia   ")
     new_location.save!
-    expect(new_location.reload.country).to eq('These Caps Are Weird')
+    expect(new_location.reload.country).to eq('Algeria')
+  end
+
+  it 'sets country code on save' do
+    new_location = build(:location, country: "\n\talGERia   ")
+    new_location.save!
+    expect(new_location.reload.country_code).to eq('dz')
   end
 
   describe 'with_country' do
@@ -28,6 +34,11 @@ RSpec.describe Location, type: :model do
       it 'creates a new record' do
         expect { Location.with_country(country) }.
             to change(Location, :count).by(1)
+      end
+
+      it 'sets country code on new record' do
+        Location.with_country(country)
+        expect(Location.last.country_code).to eq('us')
       end
 
       it 'returns a record with adjusted capitalization' do

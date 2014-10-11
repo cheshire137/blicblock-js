@@ -54,13 +54,8 @@ class Score < ActiveRecord::Base
   end
 
   def country_code
-    country_name = country
-    return if country_name.blank?
-    country_data = Country.find_country_by_name(country_name)
-    return unless country_data
-    code = country_data.alpha2
-    return unless code
-    code.downcase
+    return unless location
+    location.country_code
   end
 
   private
