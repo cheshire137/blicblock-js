@@ -6,24 +6,16 @@ class ScoresController < ApplicationController
   # GET /scores.json
   def index
     @scores = Score.ranked
-    if params[:order] == 'newest'
-      @scores = @scores.order_by_newest
-    elsif params[:order] == 'oldest'
-      @scores = @scores.order_by_oldest
-    else
-      @scores = @scores.order_by_value
-    end
-    if params[:time] == 'week'
-      @scores = @scores.last_seven_days
-    elsif params[:time] == 'month'
-      @scores = @scores.last_thirty_days
-    end
-    if (initials=params[:initials]).present?
-      @scores = @scores.where(initials: initials.strip.upcase)
-    end
-    page = (params[:page].presence || 1).to_i
-    page = 1 if page < 1
-    @scores = @scores.paginate(page: page, per_page: 15)
+    sort_scores
+    filter_scores_by_time
+    filter_scores_by_initials
+    filter_scores_by_country
+    paginate_scores
+  end
+
+  # GET /scores/countries.json
+  def countries
+    @locations = Location.order(:country)
   end
 
   # GET /scores/1.json
@@ -56,5 +48,41 @@ class ScoresController < ApplicationController
 
   def score_params
     params.require(:score).permit(:initials, :value)
+  end
+
+  def sort_scores
+    if params[:order] == 'newest'
+      @scores = @scores.order_by_newest
+    elsif params[:order] == 'oldest'
+      @scores = @scores.order_by_oldest
+    else
+      @scores = @scores.order_by_value
+    end
+  end
+
+  def filter_scores_by_time
+    if params[:time] == 'week'
+      @scores = @scores.last_seven_days
+    elsif params[:time] == 'month'
+      @scores = @scores.last_thirty_days
+    end
+  end
+
+  def filter_scores_by_initials
+    if (initials=params[:initials]).present?
+      @scores = @scores.where(initials: initials.strip.upcase)
+    end
+  end
+
+  def filter_scores_by_country
+    if (country_code=params[:country_code]).present?
+      @scores = @scores.in_country(country_code)
+    end
+  end
+
+  def paginate_scores
+    page = (params[:page].presence || 1).to_i
+    page = 1 if page < 1
+    @scores = @scores.paginate(page: page, per_page: 15)
   end
 end

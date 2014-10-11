@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ScoresController, type: :controller do
   describe 'GET index' do
+    let(:germany) { create(:location, country_code: 'de', country: 'Germany') }
     let!(:score1) { create(:score, value: 9000, created_at: 8.days.ago) }
     let!(:score2) { create(:score, value: 7000, initials: 'CAT') }
-    let!(:score3) { create(:score, value: score2.value) }
+    let!(:score3) { create(:score, value: score2.value, location: germany) }
     let!(:score4) { create(:score, value: 3000, created_at: 2.months.ago) }
 
     context 'with no parameters' do
@@ -122,6 +123,44 @@ RSpec.describe ScoresController, type: :controller do
         it 'orders by oldest first' do
           get :index, time: 'month', order: 'oldest', format: :json
           expect(assigns(:scores)).to eq([score1, score2, score3])
+        end
+      end
+    end
+
+    context 'with country_code=de' do
+      it 'includes only scores with the given country' do
+        get :index, country_code: 'de', format: :json
+        expect(assigns(:scores)).to eq([score3])
+      end
+
+      context 'with time=month' do
+        it 'includes only scores from the last thirty days' do
+          get :index, time: 'month', country_code: 'de', format: :json
+          expect(assigns(:scores)).to eq([score3])
+        end
+
+        context 'with initials' do
+          it 'includes only scores that match the given initials' do
+            get :index, initials: 'abc', country_code: 'de', time: 'month',
+                        format: :json
+            expect(assigns(:scores)).to eq([score3])
+          end
+        end
+
+        context 'with order=newest' do
+          it 'orders by newest first' do
+            get :index, time: 'month', country_code: 'de', order: 'newest',
+                        format: :json
+            expect(assigns(:scores)).to eq([score3])
+          end
+        end
+
+        context 'with order=oldest' do
+          it 'orders by oldest first' do
+            get :index, time: 'month', country_code: 'de', order: 'oldest',
+                        format: :json
+            expect(assigns(:scores)).to eq([score3])
+          end
         end
       end
     end

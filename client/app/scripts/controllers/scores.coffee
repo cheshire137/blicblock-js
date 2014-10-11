@@ -8,11 +8,13 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'ScoresCtrl', ['$scope', 'Score', ($scope, Score) ->
+  .controller 'ScoresCtrl', ['$scope', 'Score', 'Country', ($scope, Score, Country) ->
+    $scope.countries = Country.query()
     $scope.filters =
       time: 'week'
       initials: ''
       order: 'value'
+      country_code: ''
     $scope.score_results =
       scores: []
       page: 1

@@ -37,7 +37,7 @@ class Score < ActiveRecord::Base
         where(locations: {country_code: country_code.strip.downcase})
   }
 
-  # SELECT * FROM (
+  # SELECT "scores".* FROM (
   #   SELECT "scores".*,
   #   DENSE_RANK() OVER (ORDER BY "scores"."value" DESC) AS rank
   #   FROM "scores"
@@ -48,7 +48,7 @@ class Score < ActiveRecord::Base
     window = Arel::Nodes::Window.new.order(scores[:value].desc)
     over = Arel::Nodes::Over.new(dense_rank, window).as('rank')
     rankings = scores.project(scores[Arel.star], over).as(Score.table_name)
-    from(rankings).select(Arel.star)
+    from(rankings).select(scores[Arel.star])
   }
 
   before_save :capitalize_initials

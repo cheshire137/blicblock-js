@@ -15,7 +15,11 @@ describe 'Controller: ScoresCtrl', ->
     ScoresCtrl = $controller 'ScoresCtrl',
       $scope: scope
       Score: Score
-    httpBackend.expectGET('/api/scores.json?initials=&order=value&time=week')
+    httpBackend.expectGET('/api/scores/countries.json').
+                respond [{name: 'United States', code: 'us'},
+                         {name: 'Canada', code: 'ca'}]
+    httpBackend.expectGET('/api/scores.json?country_code=&initials=' +
+                          '&order=value&time=week')
                .respond
                  scores: [value: 1000, initials: 'ABC']
                  page: 1
@@ -25,6 +29,13 @@ describe 'Controller: ScoresCtrl', ->
 
   it 'sets up score filters', ->
     expect(scope.filters).toBeDefined()
+
+  it 'queries list of countries', ->
+    expect(scope.countries).toBeDefined()
+    expect(scope.countries[0].name).toEqual('United States')
+    expect(scope.countries[0].code).toEqual('us')
+    expect(scope.countries[1].name).toEqual('Canada')
+    expect(scope.countries[1].code).toEqual('ca')
 
   it 'queries list of scores', ->
     expect(scope.score_results).toBeDefined()
@@ -39,7 +50,9 @@ describe 'Controller: ScoresCtrl', ->
       scope.filters.time = 'a'
       scope.filters.initials = 'b'
       scope.filters.order = 'c'
-      httpBackend.expectGET('/api/scores.json?initials=b&order=c&time=a')
+      scope.filters.country_code = 'd'
+      httpBackend.expectGET('/api/scores.json?country_code=d&initials=b' +
+                            '&order=c&time=a')
                  .respond
                    scores: [value: 250, initials: 'COO']
                    page: 1
