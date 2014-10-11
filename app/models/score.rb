@@ -2,6 +2,8 @@ class Score < ActiveRecord::Base
   BAD_WORDS = %w(ASS CCK CNT COC COK COQ DCK DIK DIX FAG FCK FUC FUK FUQ KKK
                  KOK NIG POO TIT).freeze
 
+  belongs_to :location
+
   validates :value, presence: true, numericality: {greater_than: 0}
   validates :initials, presence: true, exclusion: {in: BAD_WORDS},
                        format: {with: /\A[a-zA-Z]{3}\z/}
