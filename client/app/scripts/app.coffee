@@ -48,6 +48,34 @@ angular
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
         title: 'High Scores'
+      .when '/scores/country/:country_code',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/country/:country_code/initials/:initials',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/country/:country_code/time/:time',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/country/:country_code/initials/:initials/time/:time',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/initials/:initials',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/initials/:initials/time/:time',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/time/:time',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
       .otherwise
         redirectTo: '/'
   ])
