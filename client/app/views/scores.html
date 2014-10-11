@@ -32,7 +32,7 @@
           <th class="score-rank">Rank</th>
           <th class="score-value">Score</th>
           <th class="score-initials">Name</th>
-          <th class="score-location"></th>
+          <th class="score-country"></th>
         </tr>
       </thead>
       <tbody>
@@ -40,7 +40,7 @@
           <td class="score-rank">{{score.rank}}</td>
           <td class="score-value">{{score.value}}</td>
           <td class="score-initials">{{score.initials}}</td>
-          <td class="score-location">
+          <td class="score-country">
             <img class="flag flag-{{score.country_code}}" tooltip="{{score.country}}" ng-show="score.country &amp;&amp; score.country_code" alt="{{score.country}}" src="images/blank.gif">
           </td>
         </tr>

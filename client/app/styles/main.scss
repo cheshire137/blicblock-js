@@ -497,14 +497,26 @@ html {
 
     &.score-rank {
       text-align: center;
+      min-width: 6em;
+      width: 25%;
     }
 
     &.score-value {
       text-align: center;
+      min-width: 6em;
+      width: 35%;
     }
 
     &.score-initials {
       text-align: center;
+      min-width: 6em;
+      width: 25%;
+    }
+
+    &.score-country {
+      text-align: center;
+      width: 32px;
+      width: 15%;
     }
   }
 
