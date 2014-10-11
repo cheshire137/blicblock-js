@@ -229,8 +229,8 @@ RSpec.describe ScoresController, type: :controller do
           expect(subject['country']).to eq('Israel')
         end
 
-        it 'includes country code' do
-          expect(subject['country_code']).to eq('IL')
+        it 'includes lowercase country code' do
+          expect(subject['country_code']).to eq('il')
         end
       end
     end

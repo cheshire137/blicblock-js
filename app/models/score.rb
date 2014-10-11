@@ -48,6 +48,21 @@ class Score < ActiveRecord::Base
     self['rank'] || self.class.ranked.find(id)['rank']
   end
 
+  def country
+    return unless location
+    location.country
+  end
+
+  def country_code
+    country_name = country
+    return if country_name.blank?
+    country_data = Country.find_country_by_name(country_name)
+    return unless country_data
+    code = country_data.alpha2
+    return unless code
+    code.downcase
+  end
+
   private
 
   def set_location
