@@ -10,7 +10,7 @@ class Score < ActiveRecord::Base
   validates :value, presence: true, numericality: {greater_than: 0}
   validates :initials, presence: true, exclusion: {in: BAD_WORDS},
                        format: {with: /\A[a-zA-Z]{3}\z/}
-  validate :not_playing_too_much
+  validate :not_playing_too_much, on: :create
 
   scope :order_by_value, ->{
     scores = arel_table

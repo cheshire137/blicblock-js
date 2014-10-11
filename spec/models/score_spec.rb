@@ -57,11 +57,19 @@ RSpec.describe Score, type: :model do
     expect(score2.save).to eq(true)
   end
 
-  it 'disallows multiple scores from the same IP within a minute' do
-    score1 = create(:score, ip_address: '1.2.3.4')
-    score2 = build(:score, ip_address: score1.ip_address)
-    expect(score2.save).to eq(false)
-    expect(score2.errors[:base]).to_not be_empty
+  describe 'not_playing_too_much' do
+    it 'disallows multiple scores from the same IP within a minute' do
+      score1 = create(:score, ip_address: '1.2.3.4')
+      score2 = build(:score, ip_address: score1.ip_address)
+      expect(score2.save).to eq(false)
+      expect(score2.errors[:base]).to_not be_empty
+    end
+
+    it 'allows updating recently created score' do
+      score = create(:score)
+      score.location = create(:location)
+      expect(score.save).to eq(true)
+    end
   end
 
   describe 'in_country' do
