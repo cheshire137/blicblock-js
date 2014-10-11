@@ -55,6 +55,8 @@ class ScoresController < ApplicationController
       @scores = @scores.order_by_newest
     elsif params[:order] == 'oldest'
       @scores = @scores.order_by_oldest
+    elsif params[:order] == 'initials'
+      @scores = @scores.order(:initials)
     else
       @scores = @scores.order_by_value
     end

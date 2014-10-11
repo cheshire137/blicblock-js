@@ -54,6 +54,10 @@ angular
                   .when '/scores/time/:time', score_opts
                   .when '/scores/order/:order', score_opts
                   .when '/scores/page/:page', score_opts
+                  .when '/scores/country/:country_code/page/:page', score_opts
+                  .when '/scores/initials/:initials/page/:page', score_opts
+                  .when '/scores/time/:time/page/:page', score_opts
+                  .when '/scores/order/:order/page/:page', score_opts
                   .when '/scores/country/:country_code/order/:order', score_opts
                   .when '/scores/country/:country_code/order/:order/page/:page', score_opts
                   .when '/scores/country/:country_code/initials/:initials', score_opts
