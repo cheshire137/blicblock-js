@@ -63,9 +63,15 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 1. `heroku config:add BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-ruby.git`
 1. `git push heroku master`
 1. `heroku addons:add heroku-postgresql`
+1. `heroku addons:add pgbackups`
 1. `heroku run rake db:migrate`
 1. `heroku ps:scale web=1`
 1. `heroku config:add NODE_ENV=production`
+
+### How to Backup Heroku PostgreSQL Database
+
+    heroku pgbackups:capture
+    curl -o latest.dump `heroku pgbackups:url`
 
 ## BlicblockJS Mentions
 
