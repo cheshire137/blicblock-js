@@ -23,7 +23,7 @@ class ScoresController < ApplicationController
     end
     page = (params[:page].presence || 1).to_i
     page = 1 if page < 1
-    @scores = @scores.paginate(page: page, per_page: 10)
+    @scores = @scores.paginate(page: page, per_page: 15)
   end
 
   # GET /scores/1.json

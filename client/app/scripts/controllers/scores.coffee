@@ -22,11 +22,11 @@ angular.module('blicblockApp')
     $scope.filter = ->
       $scope.score_results = Score.query($scope.filters)
 
-    $scope.load_page = (page) ->
+    $scope.change_page = ->
       params = {}
       for key, value of $scope.filters
         params[key] = value
-      params.page = page
+      params.page = $scope.score_results.page
       $scope.score_results = Score.query(params)
 
     $scope.filter()
