@@ -74,6 +74,8 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 - [The Sims 4: Играем, как симы! - RoleSim](http://rolesim.com/news/sims-4-igraem-kak-simy)
 - [Znacie grę BlicBlock z The Sims 4? - Sims True Life](http://simstruelife.pl/News:Znacie_gre_BlicBlock_z_The_Sims_4_04.10.14)
 - [le jeu Sims - Blic Block - débarque chez vous! - SimCookie](http://www.simcookie.com/2014/10/06/jeu-sims-blic-block-debarque-chez/)
+- [Blicblock, playable version of game depicted in The Sims 4 - RunJumpDev](https://groups.google.com/forum/m/#!topic/runjumpdev/Wn3W625CG34)
+- [Play the game your sims playing - Speak No Evil Tumblr](http://brial-immortelle.tumblr.com/post/99095876514/play-the-game-your-sims-playing-its-amazing)
 
 ## Blicblock in The Sims 4
 
