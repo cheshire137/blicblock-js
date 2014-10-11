@@ -4,6 +4,7 @@ class Location < ActiveRecord::Base
 
   before_validation :set_country_and_code
 
+  # Returns a saved Location with the given country name, case insensitive.
   def self.with_country country
     locations = arel_table
     lowercase_country = Arel::Nodes::NamedFunction.new('LOWER',
@@ -11,6 +12,33 @@ class Location < ActiveRecord::Base
     location = where(lowercase_country.eq(country.downcase.strip).to_sql).first
     return location if location
     create(country: country)
+  end
+
+  # Returns nil or a saved Location for the country of the given IP address.
+  def self.for_ip_address ip_address
+    country = local_ip_address_country_lookup(ip_address)
+    country ||= remote_ip_address_country_lookup(ip_address)
+    return if country.blank?
+    with_country(country)
+  end
+
+  # Get a country name for the given IP address.
+  def self.local_ip_address_country_lookup ip_address
+    geoip = GeoIP.new(Rails.root.join('db', 'GeoIP.dat'))
+    country_data = geoip.country(ip_address)
+    return unless country_data
+    country_data.country_name
+  end
+
+  # Get a country name for the given IP address.
+  def self.remote_ip_address_country_lookup ip_address
+    geocode_location = Geokit::Geocoders::MultiGeocoder.geocode(ip_address)
+    if (country_code=geocode_location.country_code).present?
+      country_data = Country[geocode_location.country_code]
+      country_data ? country_data.name : nil
+    else
+      geocode_location.country
+    end
   end
 
   private

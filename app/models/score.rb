@@ -69,15 +69,7 @@ class Score < ActiveRecord::Base
   def set_location_from_ip_address
     return if ip_address.blank?
     return if location
-    geocode_location = Geokit::Geocoders::MultiGeocoder.geocode(ip_address)
-    if (country_code=geocode_location.country_code).present?
-      country_data = Country[geocode_location.country_code]
-      country = country_data ? country_data.name : nil
-    else
-      country = geocode_location.country
-    end
-    return if country.blank?
-    self.location = Location.with_country(country)
+    self.location = Location.for_ip_address(ip_address)
   rescue => exception
     err_msg = "#{exception.message}\n#{exception.backtrace.join("\n")}"
     Rails.logger.error err_msg
