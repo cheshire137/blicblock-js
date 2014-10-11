@@ -52,7 +52,15 @@ angular
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
         title: 'High Scores'
+      .when '/scores/country/:country_code/order/:order',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
       .when '/scores/country/:country_code/initials/:initials',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/country/:country_code/initials/:initials/order/:order',
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
         title: 'High Scores'
@@ -60,7 +68,15 @@ angular
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
         title: 'High Scores'
+      .when '/scores/country/:country_code/time/:time/order/:order',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
       .when '/scores/country/:country_code/initials/:initials/time/:time',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/country/:country_code/initials/:initials/time/:time/order/:order',
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
         title: 'High Scores'
@@ -68,11 +84,27 @@ angular
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
         title: 'High Scores'
+      .when '/scores/initials/:initials/order/:order',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
       .when '/scores/initials/:initials/time/:time',
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
         title: 'High Scores'
+      .when '/scores/initials/:initials/time/:time/order/:order',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
       .when '/scores/time/:time',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/time/:time/order/:order',
+        templateUrl: 'views/scores.html'
+        controller: 'ScoresCtrl'
+        title: 'High Scores'
+      .when '/scores/order/:order',
         templateUrl: 'views/scores.html'
         controller: 'ScoresCtrl'
         title: 'High Scores'
