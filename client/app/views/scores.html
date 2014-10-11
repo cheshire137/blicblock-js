@@ -53,7 +53,7 @@
       </tbody>
     </table>
     <div class="text-center" ng-show="score_results.total_pages &gt; 1">
-      <pagination total-items="score_results.total_records" ng-model="score_results.page" ng-change="change_page()" previous-text="&lt;" next-text="&gt;" boundary-links="true" first-text="&laquo;" last-text="&raquo;" max-size="5"></pagination>
+      <pagination total-items="score_results.total_records" ng-model="score_results.page" ng-change="change_page()" previous-text="&lt;" next-text="&gt;" boundary-links="true" first-text="&laquo;" last-text="&raquo;" max-size="5" items-per-page="15"></pagination>
     </div>
   </div>
 </div>
