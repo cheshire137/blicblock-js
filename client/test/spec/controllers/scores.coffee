@@ -7,11 +7,13 @@ describe 'Controller: ScoresCtrl', ->
   ScoresCtrl = {}
   scope = {}
   httpBackend = {}
+  location = {}
 
   beforeEach inject ($injector, $controller, $rootScope) ->
     scope = $rootScope.$new()
     Score = $injector.get('Score')
     httpBackend = $injector.get('$httpBackend')
+    location = $injector.get('$location')
     ScoresCtrl = $controller 'ScoresCtrl',
       $scope: scope
       Score: Score
@@ -19,7 +21,7 @@ describe 'Controller: ScoresCtrl', ->
                 respond [{name: 'United States', code: 'us'},
                          {name: 'Canada', code: 'ca'}]
     httpBackend.expectGET('/api/scores.json?country_code=&initials=' +
-                          '&order=value&time=week')
+                          '&order=value&page=1&time=week')
                .respond
                  scores: [value: 1000, initials: 'ABC']
                  page: 1
@@ -46,23 +48,12 @@ describe 'Controller: ScoresCtrl', ->
     expect(scope.score_results.scores[0].initials).toEqual 'ABC'
 
   describe 'filter', ->
-    it 'makes query with filters', ->
+    it 'changes location', ->
       scope.filters.time = 'a'
       scope.filters.initials = 'b'
       scope.filters.order = 'c'
       scope.filters.country_code = 'd'
-      httpBackend.expectGET('/api/scores.json?country_code=d&initials=b' +
-                            '&order=c&time=a')
-                 .respond
-                   scores: [value: 250, initials: 'COO']
-                   page: 1
-                   total_pages: 1
-                   total_records: 1
+      scope.filters.page = 4
+      spyOn(location, 'path')
       scope.filter()
-      httpBackend.flush()
-      expect(scope.score_results).toBeDefined()
-      expect(scope.score_results.page).toEqual 1
-      expect(scope.score_results.total_pages).toEqual 1
-      expect(scope.score_results.total_records).toEqual 1
-      expect(scope.score_results.scores[0].value).toEqual 250
-      expect(scope.score_results.scores[0].initials).toEqual 'COO'
+      expect(location.path).toHaveBeenCalledWith('/scores/country/d/initials/b/time/a/order/c/page/4')

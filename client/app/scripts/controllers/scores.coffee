@@ -33,8 +33,8 @@ angular.module('blicblockApp')
         path += "/time/#{$scope.filters.time}"
       unless $scope.filters.order == default_order
         path += "/order/#{$scope.filters.order}"
-      unless $scope.score_results.page == 1
-        path += "/page/#{$scope.score_results.page}"
+      unless $scope.filters.page == 1
+        path += "/page/#{$scope.filters.page}"
       $location.path path
 
     $scope.change_page = ->
