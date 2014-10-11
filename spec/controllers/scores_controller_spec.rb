@@ -20,6 +20,26 @@ RSpec.describe ScoresController, type: :controller do
         expect(assigns(:scores)[2]['rank']).to eq(2)
         expect(assigns(:scores)[3]['rank']).to eq(3)
       end
+
+      describe 'JSON response' do
+        subject { JSON.parse(response.body) }
+
+        it 'includes list of scores' do
+          expect(subject['scores']).to_not be_empty
+        end
+
+        it 'includes current page' do
+          expect(subject['page']).to eq(1)
+        end
+
+        it 'includes total number of page' do
+          expect(subject['total_pages']).to eq(1)
+        end
+
+        it 'includes total number of scores' do
+          expect(subject['total_records']).to eq(4)
+        end
+      end
     end
 
     context 'with order=newest' do
