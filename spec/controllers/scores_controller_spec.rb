@@ -175,12 +175,21 @@ RSpec.describe ScoresController, type: :controller do
     let!(:other_score) { create(:score, value: 5000) }
     let(:initials) { 'BIG' }
     let(:value) { 2000 }
+    before { @request.env['REMOTE_ADDR'] = '46.120.178.122' }
     let(:make_request) {
-      ->{ post :create, score: {initials: initials, value: value},
-                        format: :json }
+      ->{
+        VCR.use_cassette('lookup_ip_address') do
+          post :create, score: {initials: initials, value: value},
+                        format: :json
+        end
+      }
     }
 
     describe 'with valid params' do
+      it 'creates a new Location' do
+        expect(make_request).to change(Location, :count).by(1)
+      end
+
       it 'creates a new Score' do
         expect(make_request).to change(Score, :count).by(1)
       end
@@ -214,6 +223,10 @@ RSpec.describe ScoresController, type: :controller do
 
         it 'includes total score count' do
           expect(subject['total_scores']).to eq(2)
+        end
+
+        it 'includes country' do
+          expect(subject['country']).to eq('Israel')
         end
       end
     end
