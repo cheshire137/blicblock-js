@@ -16,16 +16,23 @@ describe 'Controller: ScoresCtrl', ->
       $scope: scope
       Score: Score
     httpBackend.expectGET('/api/scores.json?initials=&order=value&time=week')
-               .respond([{value: 1000, initials: 'ABC'}])
+               .respond
+                 scores: [value: 1000, initials: 'ABC']
+                 page: 1
+                 total_pages: 1
+                 total_records: 1
     httpBackend.flush()
 
   it 'sets up score filters', ->
     expect(scope.filters).toBeDefined()
 
   it 'queries list of scores', ->
-    expect(scope.scores).toBeDefined()
-    expect(scope.scores[0].value).toEqual(1000)
-    expect(scope.scores[0].initials).toEqual('ABC')
+    expect(scope.score_results).toBeDefined()
+    expect(scope.score_results.page).toEqual 1
+    expect(scope.score_results.total_pages).toEqual 1
+    expect(scope.score_results.total_records).toEqual 1
+    expect(scope.score_results.scores[0].value).toEqual 1000
+    expect(scope.score_results.scores[0].initials).toEqual 'ABC'
 
   describe 'filter', ->
     it 'makes query with filters', ->
@@ -33,9 +40,16 @@ describe 'Controller: ScoresCtrl', ->
       scope.filters.initials = 'b'
       scope.filters.order = 'c'
       httpBackend.expectGET('/api/scores.json?initials=b&order=c&time=a')
-                 .respond([{value: 250, initials: 'neato'}])
+                 .respond
+                   scores: [value: 250, initials: 'COO']
+                   page: 1
+                   total_pages: 1
+                   total_records: 1
       scope.filter()
       httpBackend.flush()
-      expect(scope.scores).toBeDefined()
-      expect(scope.scores[0].value).toEqual(250)
-      expect(scope.scores[0].initials).toEqual('neato')
+      expect(scope.score_results).toBeDefined()
+      expect(scope.score_results.page).toEqual 1
+      expect(scope.score_results.total_pages).toEqual 1
+      expect(scope.score_results.total_records).toEqual 1
+      expect(scope.score_results.scores[0].value).toEqual 250
+      expect(scope.score_results.scores[0].initials).toEqual 'COO'
