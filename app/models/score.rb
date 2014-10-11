@@ -4,7 +4,8 @@ class Score < ActiveRecord::Base
 
   belongs_to :location
 
-  before_create :set_location
+  before_save :capitalize_initials
+  before_create :set_location_from_ip_address
 
   validates :value, presence: true, numericality: {greater_than: 0}
   validates :initials, presence: true, exclusion: {in: BAD_WORDS},
@@ -51,8 +52,6 @@ class Score < ActiveRecord::Base
     from(rankings).select(scores[Arel.star])
   }
 
-  before_save :capitalize_initials
-
   def rank
     self['rank'] || self.class.ranked.find(id)['rank']
   end
@@ -67,9 +66,7 @@ class Score < ActiveRecord::Base
     location.country_code
   end
 
-  private
-
-  def set_location
+  def set_location_from_ip_address
     return if ip_address.blank?
     return if location
     geocode_location = Geokit::Geocoders::MultiGeocoder.geocode(ip_address)
@@ -85,6 +82,8 @@ class Score < ActiveRecord::Base
     err_msg = "#{exception.message}\n#{exception.backtrace.join("\n")}"
     Rails.logger.error err_msg
   end
+
+  private
 
   def capitalize_initials
     return unless initials
