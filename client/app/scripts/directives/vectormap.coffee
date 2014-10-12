@@ -11,7 +11,7 @@ angular.module('blicblockApp')
     restrict: 'A'
     scope:
       countries: '='
-      countryCode: '='
+      countryCodes: '='
     link:
       (scope, element, attrs) ->
         scope.$watch 'countries.length', ->
@@ -19,11 +19,12 @@ angular.module('blicblockApp')
           country_values = {}
           for country in scope.countries
             country_values[country.code.toUpperCase()] = country.total_scores
-          focus = (scope.countryCode || '').toUpperCase()
+          focus = (code.toUpperCase() for code in (scope.countryCodes || '').split(','))
+          focus = focus[0] if focus.length == 1
           focus = {x: 0, y: 0.41, scale: 2.75} if focus == 'US'
-          $(element).vectorMap
+          $(element).vectorMap(
             map: 'world_mill_en'
-            focusOn: focus
+            focusOn: if typeof focus == 'string' then focus else ''
             backgroundColor: 'rgba(0, 0, 0, 0.5)'
             series:
               regions: [
@@ -37,4 +38,5 @@ angular.module('blicblockApp')
                 units = 'score'
                 units += 's' unless total_scores == 1
                 el.html(el.html() + ' - ' + total_scores + ' ' + units)
+          )
   )
