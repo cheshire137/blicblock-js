@@ -54,6 +54,11 @@ angular
                   .when '/scores/time/:time', score_opts
                   .when '/scores/order/:order', score_opts
                   .when '/scores/page/:page', score_opts
+                  .when '/scores/country/:country_code/view/:view', score_opts
+                  .when '/scores/initials/:initials/view/:view', score_opts
+                  .when '/scores/time/:time/view/:view', score_opts
+                  .when '/scores/order/:order/view/:view', score_opts
+                  .when '/scores/page/:page/view/:view', score_opts
                   .when '/scores/country/:country_code/page/:page', score_opts
                   .when '/scores/initials/:initials/page/:page', score_opts
                   .when '/scores/time/:time/page/:page', score_opts
@@ -80,6 +85,32 @@ angular
                   .when '/scores/initials/:initials/time/:time/order/:order/page/:page', score_opts
                   .when '/scores/time/:time/order/:order', score_opts
                   .when '/scores/time/:time/order/:order/page/:page', score_opts
+                  .when '/scores/country/:country_code/page/:page/view/:view', score_opts
+                  .when '/scores/initials/:initials/page/:page/view/:view', score_opts
+                  .when '/scores/time/:time/page/:page/view/:view', score_opts
+                  .when '/scores/order/:order/page/:page/view/:view', score_opts
+                  .when '/scores/country/:country_code/order/:order/view/:view', score_opts
+                  .when '/scores/country/:country_code/order/:order/page/:page/view/:view', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/view/:view', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/page/:page/view/:view', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/order/:order/view/:view', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/order/:order/page/:page/view/:view', score_opts
+                  .when '/scores/country/:country_code/time/:time/view/:view', score_opts
+                  .when '/scores/country/:country_code/time/:time/page/:page/view/:view', score_opts
+                  .when '/scores/country/:country_code/time/:time/order/:order/view/:view', score_opts
+                  .when '/scores/country/:country_code/time/:time/order/:order/page/:page/view/:view', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/time/:time/view/:view', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/time/:time/page/:page/view/:view', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/time/:time/order/:order/view/:view', score_opts
+                  .when '/scores/country/:country_code/initials/:initials/time/:time/order/:order/page/:page/view/:view', score_opts
+                  .when '/scores/initials/:initials/order/:order/view/:view', score_opts
+                  .when '/scores/initials/:initials/order/:order/page/:page/view/:view', score_opts
+                  .when '/scores/initials/:initials/time/:time/view/:view', score_opts
+                  .when '/scores/initials/:initials/time/:time/page/:page/view/:view', score_opts
+                  .when '/scores/initials/:initials/time/:time/order/:order/view/:view', score_opts
+                  .when '/scores/initials/:initials/time/:time/order/:order/page/:page/view/:view', score_opts
+                  .when '/scores/time/:time/order/:order/view/:view', score_opts
+                  .when '/scores/time/:time/order/:order/page/:page/view/:view', score_opts
     $routeProvider.otherwise redirectTo: '/'
   ])
   .filter('reverse', ->

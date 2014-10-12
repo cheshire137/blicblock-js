@@ -14,6 +14,7 @@ angular.module('blicblockApp')
     default_initials = ''
     default_country_code = ''
     default_order = 'value'
+    default_view = 'table'
     $scope.filters =
       time: $routeParams.time || default_time
       initials: $routeParams.initials || default_initials
@@ -23,7 +24,7 @@ angular.module('blicblockApp')
     $scope.score_results = Score.query($scope.filters)
     $scope.countries = Country.query($scope.filters)
     $scope.settings =
-      view: 'table'
+      view: $routeParams.view || default_view
 
     $scope.filter = ->
       path = '/scores'
@@ -38,6 +39,8 @@ angular.module('blicblockApp')
         path += "/order/#{$scope.filters.order}"
       unless $scope.filters.page == 1
         path += "/page/#{$scope.filters.page}"
+      unless $scope.settings.view == default_view
+        path += "/view/#{$scope.settings.view}"
       $location.path path
 
     $scope.change_page = ->

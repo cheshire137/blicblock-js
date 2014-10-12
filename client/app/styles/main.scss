@@ -505,7 +505,17 @@ html {
 .scores-filter-form {
   margin-top: $line-height-computed / 2;
 
+  .form-control {
+    display: inline-block;
+  }
+
+  input + button {
+    margin-top: -3px;
+  }
+
   #score_initials_filter.initials-filter {
+    width: 8em;
+
     &.rounded {
       border-top-right-radius: $input-border-radius;
       border-bottom-right-radius: $input-border-radius;

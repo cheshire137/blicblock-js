@@ -3,7 +3,7 @@
     <div class="scores-sidebar">
       <form class="scores-filter-form" ng-submit="filter()">
         <div class="form-group">
-          <label for="score_time_filter">Date:</label>
+          <label for="score_time_filter">Date submitted:</label>
           <select class="form-control" ng-model="filters.time" ng-change="filter()" id="score_time_filter">
             <option value="all">All time</option>
             <option value="month">Last 30 days</option>
@@ -11,23 +11,12 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="score_initials_filter">Initials:</label>
-          <div class="input-group">
-            <input type="text" id="score_initials_filter" ng-class="{rounded: filters.initials.length < 1}" class="form-control initials-filter" ng-model="filters.initials" maxlength="3">
-            <span class="input-group-btn">
-              <button type="button" ng-click="filters.initials = ''; filter()" class="btn btn-default" ng-show="filters.initials.length > 0">
-                <span class="glyphicon glyphicon-remove"></span>
-              </button>
-            </span>
-          </div>
-        </div>
-        <div class="form-group">
           <label for="score_order_filter">Order:</label>
           <select class="form-control" ng-model="filters.order" ng-change="filter()" id="score_order_filter">
             <option value="value">Top</option>
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
-            <option value="initials">Initials</option>
+            <option value="initials">Name</option>
           </select>
         </div>
         <div class="form-group">
@@ -37,15 +26,22 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="score_initials_filter">Initials:</label>
+          <input type="text" id="score_initials_filter" ng-class="{rounded: filters.initials.length < 1}" class="form-control initials-filter" ng-model="filters.initials" maxlength="3">
+          <button type="button" ng-click="filters.initials = ''; filter()" class="btn btn-default" ng-show="filters.initials.length > 0">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
+        <div class="form-group">
           <div class="radio-inline">
             <label>
-              <input ng-model="settings.view" value="table" type="radio">
+              <input ng-model="settings.view" ng-change="filter()" value="table" type="radio">
               Table
             </label>
           </div>
           <div class="radio-inline">
             <label>
-              <input ng-model="settings.view" value="map" type="radio">
+              <input ng-model="settings.view" ng-change="filter()" value="map" type="radio">
               Map
             </label>
           </div>
