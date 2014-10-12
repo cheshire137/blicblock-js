@@ -12,25 +12,31 @@ angular.module('blicblockApp')
     $scope.all_countries = Country.query()
     default_time = 'week'
     default_initials = ''
-    default_country_code = ''
+    default_country_codes = ''
     default_order = 'value'
     default_view = 'table'
+    $scope.settings =
+      view: $routeParams.view || default_view
+    $scope.country_options = []
     $scope.filters =
       time: $routeParams.time || default_time
       initials: $routeParams.initials || default_initials
       order: $routeParams.order || default_order
-      country_code: $routeParams.country_code || default_country_code
+      country_codes: $routeParams.country_codes || default_country_codes
       page: $routeParams.page || 1
     $scope.score_results = Score.query($scope.filters)
     $scope.countries = Country.query($scope.filters)
-    $scope.settings =
-      view: $routeParams.view || default_view
+
+    $scope.$watch 'all_countries.length', ->
+      return if $scope.all_countries.length < 1
+      selected_codes = $scope.filters.country_codes.split(',')
+      $scope.country_options = ({name: c.name, code: c.code, selected: selected_codes.indexOf(c.code) > -1} for c in $scope.all_countries)
 
     $scope.filter = ->
       path = '/scores'
-      country_code = $scope.filters.country_code
-      if country_code && country_code != default_country_code
-        path += "/country/#{country_code}"
+      country_codes = (c.code for c in $scope.country_options when c.selected).join(',')
+      unless country_codes == default_country_codes
+        path += "/countries/#{country_codes}"
       unless $scope.filters.initials == default_initials
         path += "/initials/#{$scope.filters.initials}"
       unless $scope.filters.time == default_time

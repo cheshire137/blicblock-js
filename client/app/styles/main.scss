@@ -255,7 +255,7 @@ body {
   background-attachment: fixed;
 
   & > .container {
-    overflow-x: hidden;
+    // overflow-x: hidden;
   }
 }
 
@@ -1408,8 +1408,8 @@ and (-webkit-min-device-pixel-ratio: 2) {
   }
 
   .scores-sidebar {
-    position: fixed;
-    top: 73px;
+    // position: fixed;
+    // top: 73px;
   }
 }
 

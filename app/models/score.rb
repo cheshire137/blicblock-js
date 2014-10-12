@@ -33,9 +33,9 @@ class Score < ActiveRecord::Base
     where(created_at: month_start..month_end)
   }
 
-  scope :in_country, ->(country_code) {
-    joins(:location).
-        where(locations: {country_code: country_code.strip.downcase})
+  scope :in_country, ->(country_codes) {
+    clean_country_codes = country_codes.map {|str| str.strip.downcase }
+    joins(:location).where(locations: {country_code: clean_country_codes})
   }
 
   # SELECT "scores".* FROM (

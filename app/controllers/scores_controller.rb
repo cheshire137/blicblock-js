@@ -87,8 +87,8 @@ class ScoresController < ApplicationController
   end
 
   def filter_scores_by_country
-    if (country_code=params[:country_code]).present?
-      @scores = @scores.in_country(country_code)
+    if (country_codes=params[:country_codes]).present?
+      @scores = @scores.in_country(country_codes.split(','))
     end
   end
 
