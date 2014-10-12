@@ -1,24 +1,28 @@
 <div class="row">
-  <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-    <form class="form-inline scores-filter-form" ng-submit="filter()">
+  <div class="col-sm-4 col-md-3">
+    <form class="scores-filter-form" ng-submit="filter()">
       <div class="form-group">
-        <label for="score_time_filter" class="input-sm">Date:</label>
-        <select class="form-control input-sm" ng-model="filters.time" ng-change="filter()" id="score_time_filter">
+        <label for="score_time_filter">Date:</label>
+        <select class="form-control" ng-model="filters.time" ng-change="filter()" id="score_time_filter">
           <option value="all">All time</option>
           <option value="month">Last 30 days</option>
           <option value="week">Last 7 days</option>
         </select>
       </div>
       <div class="form-group">
-        <label class="input-sm" for="score_initials_filter">Initials:</label>
-        <input type="text" id="score_initials_filter" ng-class="{rounded: filters.initials.length < 1}" class="input-sm form-control initials-filter" ng-model="filters.initials" maxlength="3">
-        <button type="button" ng-click="filters.initials = ''; filter()" class="btn btn-sm btn-default" ng-show="filters.initials.length > 0">
-          <span class="glyphicon glyphicon-remove"></span>
-        </button>
+        <label for="score_initials_filter">Initials:</label>
+        <div class="input-group">
+          <input type="text" id="score_initials_filter" ng-class="{rounded: filters.initials.length < 1}" class="form-control initials-filter" ng-model="filters.initials" maxlength="3">
+          <span class="input-group-btn">
+            <button type="button" ng-click="filters.initials = ''; filter()" class="btn btn-default" ng-show="filters.initials.length > 0">
+              <span class="glyphicon glyphicon-remove"></span>
+            </button>
+          </span>
+        </div>
       </div>
       <div class="form-group">
-        <label for="score_order_filter" class="input-sm">Order:</label>
-        <select class="form-control input-sm" ng-model="filters.order" ng-change="filter()" id="score_order_filter">
+        <label for="score_order_filter">Order:</label>
+        <select class="form-control" ng-model="filters.order" ng-change="filter()" id="score_order_filter">
           <option value="value">Top</option>
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
@@ -26,8 +30,8 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="score_country_filter" class="input-sm">Country:</label>
-        <select class="form-control input-sm" ng-model="filters.country_code" ng-change="filters.page = 1; filter()" id="score_country_filter" ng-options="country.code as country.name for country in all_countries">
+        <label for="score_country_filter">Country:</label>
+        <select class="form-control" ng-model="filters.country_code" ng-change="filters.page = 1; filter()" id="score_country_filter" ng-options="country.code as country.name for country in all_countries">
           <option value="">All</option>
         </select>
       </div>
@@ -46,7 +50,8 @@
         </div>
       </div>
     </form>
-    <hr>
+  </div>
+  <div class="col-sm-8 col-md-6">
     <div class="scores-map" ng-class="{shown: settings.view === 'map'}" vector-map countries="countries" country-code="filters.country_code"></div>
     <div ng-show="settings.view === 'table'">
       <table class="table scores-table">
@@ -70,7 +75,7 @@
         </tbody>
       </table>
       <div class="text-center" ng-show="score_results.total_pages &gt; 1">
-        <pagination total-items="score_results.total_records" ng-model="score_results.page" ng-change="change_page()" previous-text="&lt;" next-text="&gt;" boundary-links="true" first-text="&laquo;" last-text="&raquo;" max-size="5" items-per-page="15"></pagination>
+        <pagination total-items="score_results.total_records" ng-model="score_results.page" ng-change="change_page()" previous-text="&lt;" next-text="&gt;" boundary-links="true" first-text="&laquo;" last-text="&raquo;" max-size="5" items-per-page="10"></pagination>
       </div>
     </div>
   </div>
