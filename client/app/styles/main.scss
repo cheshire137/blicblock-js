@@ -3,6 +3,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap";
 @import "compass";
 @import "flags";
+@import "jquery-jvectormap-1.2.2";
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
@@ -476,6 +477,11 @@ html {
       }
     }
   }
+}
+
+.scores-map {
+  width: 100%;
+  height: 400px;
 }
 
 .scores-table {
@@ -1346,6 +1352,12 @@ and (-webkit-min-device-pixel-ratio: 2) {
 @media (min-width: $screen-desktop) {
   .text-center-md, .text-center-sm, .text-center-xs { text-align: center; }
   .text-right-md, .text-right-sm, .text-right-xs { text-align: right; }
+
+  .scores-filter-form {
+    .form-group {
+      margin-right: 20px;
+    }
+  }
 }
 
 /* Large grid */

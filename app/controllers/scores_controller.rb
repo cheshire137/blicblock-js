@@ -3,7 +3,7 @@ class ScoresController < ApplicationController
   before_action :set_score, only: [:show]
   respond_to :json
 
-  # GET /scores.json
+  # GET /api/scores.json
   def index
     @scores = Score.ranked
     sort_scores
@@ -13,17 +13,27 @@ class ScoresController < ApplicationController
     paginate_scores
   end
 
-  # GET /scores/countries.json
+  # GET /api/scores/countries.json
   def countries
-    @locations = Location.order(:country)
+    @scores = Score
+    filter_scores_by_time
+    filter_scores_by_initials
+    filter_scores_by_country
+    location_ids = @scores.pluck(:location_id)
+    @location_score_counts = {}
+    location_ids.each do |id|
+      @location_score_counts[id] ||= 0
+      @location_score_counts[id] += 1
+    end
+    @locations = Location.where(id: location_ids).order(:country)
   end
 
-  # GET /scores/1.json
+  # GET /api/scores/1.json
   def show
     @total_scores = Score.count
   end
 
-  # POST /scores.json
+  # POST /api/scores.json
   def create
     @score = Score.new(score_params)
     @score.ip_address = @ip_address

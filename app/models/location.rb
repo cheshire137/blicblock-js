@@ -1,8 +1,18 @@
 class Location < ActiveRecord::Base
+  has_many :scores
+
   validates :country, presence: true
   validates :country_code, presence: true, uniqueness: true
 
   before_validation :set_country_and_code
+
+  scope :with_score_count, ->{
+    locations = arel_table
+    scores = Score.arel_table
+    count_scores = Arel::Nodes::Count.new([locations[:id]]).as('num_scores')
+    joins(:scores).group(locations[:id]).
+                   select(locations[Arel.star], count_scores.to_sql)
+  }
 
   # Returns a saved Location with the given country name, case insensitive.
   def self.with_country country
@@ -39,6 +49,10 @@ class Location < ActiveRecord::Base
     else
       geocode_location.country
     end
+  end
+
+  def num_scores
+    self['num_scores']
   end
 
   private

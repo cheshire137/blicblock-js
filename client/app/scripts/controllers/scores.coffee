@@ -9,7 +9,7 @@
 ###
 angular.module('blicblockApp')
   .controller 'ScoresCtrl', ['$scope', '$location', '$routeParams', 'Score', 'Country', ($scope, $location, $routeParams, Score, Country) ->
-    $scope.countries = Country.query()
+    $scope.all_countries = Country.query()
     default_time = 'week'
     default_initials = ''
     default_country_code = ''
@@ -21,6 +21,9 @@ angular.module('blicblockApp')
       country_code: $routeParams.country_code || default_country_code
       page: $routeParams.page || 1
     $scope.score_results = Score.query($scope.filters)
+    $scope.countries = Country.query($scope.filters)
+    $scope.settings =
+      view: 'map'
 
     $scope.filter = ->
       path = '/scores'

@@ -27,34 +27,51 @@
       </div>
       <div class="form-group">
         <label for="score_country_filter" class="input-sm">Country:</label>
-        <select class="form-control input-sm" ng-model="filters.country_code" ng-change="filter()" id="score_country_filter" ng-options="country.code as country.name for country in countries">
+        <select class="form-control input-sm" ng-model="filters.country_code" ng-change="filter()" id="score_country_filter" ng-options="country.code as country.name for country in all_countries">
           <option value="">All</option>
         </select>
       </div>
+      <div class="form-group">
+        <div class="radio-inline">
+          <label>
+            <input ng-model="settings.view" value="table" type="radio">
+            Table
+          </label>
+        </div>
+        <div class="radio-inline">
+          <label>
+            <input ng-model="settings.view" value="map" type="radio">
+            Map
+          </label>
+        </div>
+      </div>
     </form>
     <hr>
-    <table class="table scores-table">
-      <thead>
-        <tr>
-          <th class="score-rank">Rank</th>
-          <th class="score-value">Score</th>
-          <th class="score-initials">Name</th>
-          <th class="score-country"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="score in score_results.scores" class="row-{{score.rank}}" ng-class="{mine: score.is_mine}" tooltip="{{score.created_at | amDateFormat:'YYYY-MM-DD'}}" tooltip-placement="right">
-          <td class="score-rank">{{score.rank}}</td>
-          <td class="score-value">{{score.value}}</td>
-          <td class="score-initials">{{score.initials}}</td>
-          <td class="score-country">
-            <img class="flag flag-{{score.country_code}}" tooltip="{{score.country}}" ng-show="score.country &amp;&amp; score.country_code" alt="{{score.country}}" src="images/blank.gif">
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="text-center" ng-show="score_results.total_pages &gt; 1">
-      <pagination total-items="score_results.total_records" ng-model="score_results.page" ng-change="change_page()" previous-text="&lt;" next-text="&gt;" boundary-links="true" first-text="&laquo;" last-text="&raquo;" max-size="5" items-per-page="15"></pagination>
+    <div class="scores-map" ng-show="settings.view === 'map'" vector-map countries="countries"></div>
+    <div ng-show="settings.view === 'table'">
+      <table class="table scores-table">
+        <thead>
+          <tr>
+            <th class="score-rank">Rank</th>
+            <th class="score-value">Score</th>
+            <th class="score-initials">Name</th>
+            <th class="score-country"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="score in score_results.scores" class="row-{{score.rank}}" ng-class="{mine: score.is_mine}" tooltip="{{score.created_at | amDateFormat:'YYYY-MM-DD'}}" tooltip-placement="right">
+            <td class="score-rank">{{score.rank}}</td>
+            <td class="score-value">{{score.value}}</td>
+            <td class="score-initials">{{score.initials}}</td>
+            <td class="score-country">
+              <img class="flag flag-{{score.country_code}}" tooltip="{{score.country}}" ng-show="score.country &amp;&amp; score.country_code" alt="{{score.country}}" src="images/blank.gif">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-center" ng-show="score_results.total_pages &gt; 1">
+        <pagination total-items="score_results.total_records" ng-model="score_results.page" ng-change="change_page()" previous-text="&lt;" next-text="&gt;" boundary-links="true" first-text="&laquo;" last-text="&raquo;" max-size="5" items-per-page="15"></pagination>
+      </div>
     </div>
   </div>
 </div>
