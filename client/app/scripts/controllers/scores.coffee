@@ -23,7 +23,7 @@ angular.module('blicblockApp')
     $scope.score_results = Score.query($scope.filters)
     $scope.countries = Country.query($scope.filters)
     $scope.settings =
-      view: 'map'
+      view: 'table'
 
     $scope.filter = ->
       path = '/scores'

@@ -27,7 +27,7 @@
       </div>
       <div class="form-group">
         <label for="score_country_filter" class="input-sm">Country:</label>
-        <select class="form-control input-sm" ng-model="filters.country_code" ng-change="filter()" id="score_country_filter" ng-options="country.code as country.name for country in all_countries">
+        <select class="form-control input-sm" ng-model="filters.country_code" ng-change="filters.page = 1; filter()" id="score_country_filter" ng-options="country.code as country.name for country in all_countries">
           <option value="">All</option>
         </select>
       </div>
@@ -47,7 +47,7 @@
       </div>
     </form>
     <hr>
-    <div class="scores-map" ng-show="settings.view === 'map'" vector-map countries="countries"></div>
+    <div class="scores-map" ng-class="{shown: settings.view === 'map'}" vector-map countries="countries" country-code="filters.country_code"></div>
     <div ng-show="settings.view === 'table'">
       <table class="table scores-table">
         <thead>

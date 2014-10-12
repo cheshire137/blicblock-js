@@ -25,7 +25,7 @@ class ScoresController < ApplicationController
       @location_score_counts[id] ||= 0
       @location_score_counts[id] += 1
     end
-    @locations = Location.where(id: location_ids).order(:country)
+    @locations = Location.where(id: location_ids.uniq).order(:country)
   end
 
   # GET /api/scores/1.json
