@@ -95,6 +95,6 @@ class ScoresController < ApplicationController
   def paginate_scores
     page = (params[:page].presence || 1).to_i
     page = 1 if page < 1
-    @scores = @scores.paginate(page: page, per_page: 10)
+    @scores = @scores.paginate(page: page, per_page: 20)
   end
 end

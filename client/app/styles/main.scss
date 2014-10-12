@@ -575,6 +575,12 @@ html {
   thead th {
     color: #777;
     text-decoration: underline;
+
+    a {
+      &, &:link, &:visited, &:active, &:hover, &:focus {
+        color: #777;
+      }
+    }
   }
 
   .tooltip {
@@ -1163,20 +1169,6 @@ span.orange {
 }
 
 @media only screen and (max-width: $screen-sm) {
-  .scores-filter-form {
-    .form-group {
-      display: inline-block;
-    }
-
-    input, select {
-      display: inline-block;
-      width: auto;
-    }
-
-    input + button {
-      margin-top: -1px;
-    }
-  }
 }
 
 @media only screen and (max-width: $screen-xs) {
@@ -1403,6 +1395,11 @@ and (-webkit-min-device-pixel-ratio: 2) {
     .form-group {
       margin-right: 20px;
     }
+  }
+
+  .scores-sidebar {
+    position: fixed;
+    top: 73px;
   }
 }
 
