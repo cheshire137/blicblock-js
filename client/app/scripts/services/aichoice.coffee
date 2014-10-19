@@ -14,9 +14,10 @@ angular.module('blicblockApp')
         Tetromino.get_active_block().y = move
 
       canMove: (move) ->
-        top = @columnTopBlock(move)
-        if top && top.x == 0
-          return false
+       for col in [move..2]
+          top = @columnTopBlock(move)
+          if top && top.x == 0
+            return false
         return true
 
       makeChoice: ->
