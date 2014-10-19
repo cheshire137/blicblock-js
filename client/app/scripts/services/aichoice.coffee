@@ -15,7 +15,7 @@ angular.module('blicblockApp')
 
       canMove: (move) ->
        for col in [move..2]
-          top = @columnTopBlock(move)
+          top = @columnTopBlock(col)
           if top && top.x == 0
             return false
         return true
