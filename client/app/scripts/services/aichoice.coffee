@@ -7,10 +7,9 @@
  # # aichoice
  # Service in the blicblockApp.
 ###
-
 angular.module('blicblockApp')
-  .service 'AiChoice', ['$rootScope', '$interval', '$timeout', 'Tetromino', ($rootScope, $interval, $timeout) ->
-    class AI
+  .service 'AiChoice', ['$rootScope', '$interval', '$timeout', 'Tetromino', ($rootScope, $interval, $timeout, Tetromino) ->
+    class AiChoice
       makeMove: (move) ->
         Tetromino.get_active_block().y = move
 

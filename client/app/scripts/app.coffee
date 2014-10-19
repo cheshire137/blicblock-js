@@ -28,7 +28,7 @@ angular
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
         title: 'Play'
-      .when '/ai'
+      .when '/ai/:ai_count',
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
         title: 'AI Play'
