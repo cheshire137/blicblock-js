@@ -30,12 +30,15 @@ angular.module('blicblockApp')
             @makeMove(move)
 
       evalColorSpace: ->
+        lowestX = Tetromino.info.rows
+        choice = -1
         for col in [0...Tetromino.info.cols]
           topBlock = @columnTopBlock(col)
           if topBlock && @canMove(col)
             if topBlock.color == Tetromino.get_active_block().color
-              return col
-        return -1
+              if topBlock.x < lowestX
+                choice = col
+        return choice
 
       randChoice: (arr) ->
         if arr.length != 0
@@ -64,6 +67,8 @@ angular.module('blicblockApp')
                 cols = []
                 highestX = Tetromino.info.rows-1
               cols.push col
+        # for col in cols
+        #   if @columnTopBlock(col
         return cols
 
       columnTopBlock: (colNum) ->
