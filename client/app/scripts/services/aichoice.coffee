@@ -67,8 +67,16 @@ angular.module('blicblockApp')
                 cols = []
                 highestX = Tetromino.info.rows-1
               cols.push col
-        # for col in cols
-        #   if @columnTopBlock(col
+        newCols = []
+        for col in cols
+          top = @columnTopBlock(col)
+          if top
+            color = top.color
+            if color != Tetromino.upcoming[0].color
+              if color != Tetromino.upcoming[1].color
+                newCols.push col
+        if newCols.length > 0
+          cols = newCols
         return cols
 
       columnTopBlock: (colNum) ->
