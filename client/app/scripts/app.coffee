@@ -28,6 +28,10 @@ angular
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'
         title: 'Play'
+      .when '/ai'
+        templateUrl: 'views/main.html'
+        controller: 'MainCtrl'
+        title: 'AI Play'
       .when '/test/:color_count',
         templateUrl: 'views/main.html'
         controller: 'MainCtrl'

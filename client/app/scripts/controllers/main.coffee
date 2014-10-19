@@ -8,7 +8,7 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', '$rootScope', 'localStorageService', 'Config', 'Tetromino', 'Score', 'Notification', ($scope, $window, $timeout, $interval, $routeParams, $rootScope, localStorageService, Config, Tetromino, Score, Notification) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', '$rootScope', 'localStorageService', 'Config', 'Tetromino', 'Score', 'Notification', 'AiChoice', ($scope, $window, $timeout, $interval, $routeParams, $rootScope, localStorageService, Config, Tetromino, Score, Notification) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = Tetromino.upcoming
     $scope.game_info = Tetromino.info
