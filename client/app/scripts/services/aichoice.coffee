@@ -22,6 +22,9 @@ angular.module('blicblockApp')
 
       makeChoice: ->
         if Tetromino.get_active_block()
+          centerTop = @columnTopBlock(2)
+          if centerTop && centerTop.x == 0
+            return
           move = @evalColorSpace()
           if move != -1 && @canMove(move)
             @makeMove(move)
