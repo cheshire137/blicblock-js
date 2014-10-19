@@ -8,10 +8,12 @@
  # Controller of the blicblockApp
 ###
 angular.module('blicblockApp')
-  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', '$rootScope', 'localStorageService', 'Config', 'Tetromino', 'Score', 'Notification', ($scope, $window, $timeout, $interval, $routeParams, $rootScope, localStorageService, Config, Tetromino, Score, Notification) ->
+  .controller 'MainCtrl', ['$scope', '$window', '$timeout', '$interval', '$routeParams', '$rootScope', 'localStorageService', 'Config', 'Tetromino', 'Score', 'Notification', 'AiChoice', ($scope, $window, $timeout, $interval, $routeParams, $rootScope, localStorageService, Config, Tetromino, Score, Notification, AiChoice) ->
     $scope.blocks = Tetromino.blocks
     $scope.upcoming = Tetromino.upcoming
     $scope.game_info = Tetromino.info
+    $scope.made_choice = false
+    $scope.use_ai = false
     $scope.score_record = new Score()
     $scope.new_high_score = {}
     game_interval = undefined
@@ -19,6 +21,9 @@ angular.module('blicblockApp')
     $scope.new_game = ->
       $scope.score_record = new Score()
       $window.location.reload()
+
+    if $routeParams.ai_count
+      $scope.use_ai = true
 
     if $routeParams.color_count
       color_count = parseInt($routeParams.color_count, 10)
@@ -124,12 +129,16 @@ angular.module('blicblockApp')
     drop_queued_block_if_no_active = ->
       active_block = Tetromino.get_active_block()
       return if active_block
+      $scope.made_choice = false # new block new choice
       drop_queued_block()
 
     game_loop = ->
       return unless $scope.game_info.in_progress
       return if $scope.game_info.plummetting_block
       return if $scope.game_info.sliding_block
+      if $scope.use_ai && !$scope.made_choice
+        AiChoice.makeChoice()
+        $scope.made_choice = true
       Tetromino.drop_blocks()
       drop_queued_block_if_no_active()
 
@@ -204,10 +213,15 @@ angular.module('blicblockApp')
         start_game_interval()
 
     $scope.$watch 'game_info.level', ->
+      if $scope.game_info.level == 1
+        if $scope.use_ai
+          $scope.game_info.tick_length = 100
       if $scope.game_info.level > 1
         $scope.game_info.tick_length -=
             $scope.game_info.tick_length *
             $scope.game_info.tick_length_decrement_pct
+        if $scope.use_ai
+          $scope.game_info.tick_length = 100
         cancel_game_interval()
       start_game_interval()
 
