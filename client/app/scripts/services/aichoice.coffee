@@ -40,7 +40,10 @@ angular.module('blicblockApp')
         return -1
 
       randChoice: (arr) ->
-        return arr[Math.floor(Math.random() * arr.length)]
+        if arr.length != 0
+          return arr[Math.floor(Math.random() * arr.length)]
+        else
+          return 2
 
       lowestColumns: ->
         # return the columns with the least block build-up
@@ -61,7 +64,6 @@ angular.module('blicblockApp')
             if highestX != Tetromino.info.rows-1
               cols = []
               highestX = Tetromino.info.rows-1
-
             cols.push col
         return cols
 
