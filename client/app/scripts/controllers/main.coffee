@@ -213,15 +213,10 @@ angular.module('blicblockApp')
         start_game_interval()
 
     $scope.$watch 'game_info.level', ->
-      if $scope.game_info.level == 1
-        if $scope.use_ai
-          $scope.game_info.tick_length = 100
       if $scope.game_info.level > 1
         $scope.game_info.tick_length -=
             $scope.game_info.tick_length *
             $scope.game_info.tick_length_decrement_pct
-        if $scope.use_ai
-          $scope.game_info.tick_length = 100
         cancel_game_interval()
       start_game_interval()
 
