@@ -13,17 +13,29 @@ angular.module('blicblockApp')
       makeMove: (move) ->
         Tetromino.get_active_block().y = move
 
+      canMove: (move) ->
+        top = @columnTopBlock(move)
+        if top && top.x == 0
+          return false
+        return true
+
       makeChoice: ->
-        move = evalColorSpace()
-        if move != -1
-          makeMove(move)
-        move = randChoice(lowestColumns)
-        makeMove(move)
+        if Tetromino.get_active_block()
+          move = @evalColorSpace()
+          if move != -1 && @canMove(move)
+            @makeMove(move)
+          else
+            move = @randChoice(@lowestColumns())
+            while !@canMove(move)
+              move = @randChoice(@lowestColumns())
+            @makeMove(move)
 
       evalColorSpace: ->
         for col in [0...Tetromino.info.cols]
-          if columnTopBlock(col).color == Tetromino.get_active_block().color
-            return col
+          topBlock = @columnTopBlock(col)
+          if topBlock
+            if topBlock.color == Tetromino.get_active_block().color
+              return col
         return -1
 
       randChoice: (arr) ->
@@ -31,38 +43,41 @@ angular.module('blicblockApp')
 
       lowestColumns: ->
         # return the columns with the least block build-up
-        lowestX = Tetromino.info.rows
+        highestX = 0
         cols = []
         for col in [0...Tetromino.info.cols]
-          top = columnTopBlock(col)
+          top = @columnTopBlock(col)
           if top
-            if lowestX > top.x
+            if highestX < top.x-1
               cols = []
+              highestX = top.x-1
               cols.push col
             else
-              if lowestX == top.x
+              if highestX == top.x-1
                 cols.push col
           else
             # This ensures that if the column is empty it is given priority
-            if lowestX != Tetromino.info.rows-1
+            if highestX != Tetromino.info.rows-1
               cols = []
+              highestX = Tetromino.info.rows-1
+
             cols.push col
         return cols
 
       columnTopBlock: (colNum) ->
         topBlock = null
         for x in [0...Tetromino.info.rows]
-          block = getSpecBlock(x, colNum)
+          block = @getSpecBlock(x, colNum)
           if block && block.locked
             if topBlock
               if block.x < topBlock.x
                 topBlock = block
             else
-              topBlock == block
+              topBlock = block
         return topBlock
 
       getSpecBlock: (x,y) ->
-        return Tetromino.blocks.filter (b) -> b.x == x && b.y == y
+        return (Tetromino.blocks.filter (b) -> b.x == x && b.y == y)[0]
 
     new AiChoice()
   ]

@@ -23,7 +23,7 @@ angular.module('blicblockApp')
       $window.location.reload()
 
     if $routeParams.ai_count
-      use_ai = true
+      $scope.use_ai = true
 
     if $routeParams.color_count
       color_count = parseInt($routeParams.color_count, 10)
@@ -136,9 +136,10 @@ angular.module('blicblockApp')
       return unless $scope.game_info.in_progress
       return if $scope.game_info.plummetting_block
       return if $scope.game_info.sliding_block
-      Tetromino.drop_blocks()
       if $scope.use_ai && !$scope.made_choice
         AiChoice.makeChoice()
+        $scope.made_choice = true
+      Tetromino.drop_blocks()
       drop_queued_block_if_no_active()
 
     start_game_interval = ->
@@ -212,10 +213,15 @@ angular.module('blicblockApp')
         start_game_interval()
 
     $scope.$watch 'game_info.level', ->
+      if $scope.game_info.level == 1
+        if $scope.use_ai
+          $scope.game_info.tick_length = 10
       if $scope.game_info.level > 1
         $scope.game_info.tick_length -=
             $scope.game_info.tick_length *
             $scope.game_info.tick_length_decrement_pct
+        if $scope.use_ai
+          $scope.game_info.tick_length = 10
         cancel_game_interval()
       start_game_interval()
 
