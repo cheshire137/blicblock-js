@@ -15,29 +15,24 @@ angular.module('blicblockApp')
 
       canMove: (move) ->
        for col in [move..2]
-          top = @columnTopBlock(col)
-          if top && top.x == 0
+          top = @getSpecBlock(0,col)
+          if top && top.locked
             return false
         return true
 
       makeChoice: ->
         if Tetromino.get_active_block()
-          centerTop = @columnTopBlock(2)
-          if centerTop && centerTop.x == 0
-            return
           move = @evalColorSpace()
           if move != -1 && @canMove(move)
             @makeMove(move)
           else
             move = @randChoice(@lowestColumns())
-            while !@canMove(move)
-              move = @randChoice(@lowestColumns())
             @makeMove(move)
 
       evalColorSpace: ->
         for col in [0...Tetromino.info.cols]
           topBlock = @columnTopBlock(col)
-          if topBlock
+          if topBlock && @canMove(col)
             if topBlock.color == Tetromino.get_active_block().color
               return col
         return -1
@@ -54,7 +49,7 @@ angular.module('blicblockApp')
         cols = []
         for col in [0...Tetromino.info.cols]
           top = @columnTopBlock(col)
-          if top
+          if top && @canMove(col)
             if highestX < top.x-1
               cols = []
               highestX = top.x-1
@@ -63,11 +58,12 @@ angular.module('blicblockApp')
               if highestX == top.x-1
                 cols.push col
           else
-            # This ensures that if the column is empty it is given priority
-            if highestX != Tetromino.info.rows-1
-              cols = []
-              highestX = Tetromino.info.rows-1
-            cols.push col
+            if @canMove(col)
+              # This ensures that if the column is empty it is given priority
+              if highestX != Tetromino.info.rows-1
+                cols = []
+                highestX = Tetromino.info.rows-1
+              cols.push col
         return cols
 
       columnTopBlock: (colNum) ->
