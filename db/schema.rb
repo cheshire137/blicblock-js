@@ -16,14 +16,14 @@ ActiveRecord::Schema.define(version: 20141011173528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "locations", force: true do |t|
+  create_table "locations", force: :cascade do |t|
     t.string   "country"
     t.string   "country_code", limit: 3
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "scores", force: true do |t|
+  create_table "scores", force: :cascade do |t|
     t.string   "initials"
     t.integer  "value",       null: false
     t.string   "ip_address"

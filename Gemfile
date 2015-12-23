@@ -7,6 +7,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'spring', group: :development
 gem 'pg', '~> 0.17.1'
+gem 'responders', '~> 2.1.1'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.1'
