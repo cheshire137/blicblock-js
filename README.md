@@ -87,14 +87,14 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 
 [Video of my Sim playing Blicblock](https://www.youtube.com/watch?v=NEiNfe6uaso)
 
-![The Sims 4 Blicblock play](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/client/app/images/blicblock-screenshot-1.png)
+![The Sims 4 Blicblock play](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/client/app/images/blicblock-screenshot-1.png)
 
-![The Sims 4 Blicblock game over](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/client/app/images/blicblock-screenshot-2.png)
+![The Sims 4 Blicblock game over](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/client/app/images/blicblock-screenshot-2.png)
 
 ## Screenshots of BlicblockJS
 
-![BlicblockJS gameplay](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblockjs-screenshot-1.png)
+![BlicblockJS gameplay](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/blicblockjs-screenshot-1.png)
 
-![BlicblockJS paused](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblockjs-screenshot-2.png)
+![BlicblockJS paused](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/blicblockjs-screenshot-2.png)
 
-![BlicblockJS game over](https://raw.githubusercontent.com/moneypenny/blicblock-js/master/blicblockjs-screenshot-3.png)
+![BlicblockJS game over](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/blicblockjs-screenshot-3.png)
