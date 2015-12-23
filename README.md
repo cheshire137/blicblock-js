@@ -51,9 +51,6 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 
 1. `cd client/`
 1. `npm install`
-1. `npm install -g bower`
-1. `bower install`
-1. `npm install -g grunt-cli`
 1. `grunt test`
 
 ## How to Deploy to Heroku
