@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.4'
 
 gem 'rails', '~> 4.2.0'
 gem 'uglifier', '>= 1.3.0'
@@ -28,5 +29,3 @@ gem 'will_paginate', '~> 3.0.7'
 gem 'geokit-rails', '~> 2.0.1'
 gem 'countries', '~> 0.9.3'
 gem 'geoip', '~> 1.4.0'
-
-ruby "2.1.1"
