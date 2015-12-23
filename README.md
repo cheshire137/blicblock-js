@@ -32,6 +32,8 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
         sarah=# ALTER USER blicblockjs WITH SUPERUSER;
         ALTER ROLE
 
+    Or via command line: `createuser -P -s -e blicblockjs`
+
 1. `bundle exec rake db:create db:migrate db:seed`
 1. `cd client/`
 1. `npm install`
@@ -67,8 +69,12 @@ You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 
 ### How to Backup Heroku PostgreSQL Database
 
-    heroku pgbackups:capture
-    curl -o latest.dump `heroku pgbackups:url`
+    heroku pg:backups capture
+    curl -o latest.dump `heroku pg:backups public-url`
+
+To load the dump file locally:
+
+    pg_restore --verbose --clean --no-acl --no-owner -h localhost -U blicblockjs -d blicblockjs_development latest.dump
 
 ## BlicblockJS Mentions
 
