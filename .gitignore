@@ -17,3 +17,5 @@
 
 # Ignore database backups
 /*.dump
+
+spec/examples.txt

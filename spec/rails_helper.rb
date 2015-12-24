@@ -28,7 +28,7 @@ end
 RSpec.configure do |config|
   config.render_views
 
-  config.fail_fast = false
+  config.fail_fast = ENV['FAIL_FAST']
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
@@ -52,6 +52,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.fixture_path = Rails.root.join('spec', 'fixtures')
+  config.example_status_persistence_file_path = 'spec/examples.txt'
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
