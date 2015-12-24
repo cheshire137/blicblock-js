@@ -34,6 +34,7 @@ class Score < ActiveRecord::Base
   }
 
   scope :in_country, ->(country_codes) {
+    country_codes = [country_codes] if country_codes.is_a?(String)
     clean_country_codes = country_codes.map {|str| str.strip.downcase }
     joins(:location).where(locations: {country_code: clean_country_codes})
   }
