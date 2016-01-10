@@ -1,6 +1,6 @@
 # BlicblockJS
 
-[![Build Status](https://semaphoreapp.com/api/v1/projects/75327b8f-13a9-49f0-9b0c-950db2a63f36/261416/shields_badge.svg)](https://semaphoreapp.com/cheshire137/blicblock-js) [![Gratipay](http://img.shields.io/badge/gratipay-SarahVessels-brightgreen.svg)](https://gratipay.com/SarahVessels)
+[![Gratipay](http://img.shields.io/badge/gratipay-SarahVessels-brightgreen.svg)](https://gratipay.com/SarahVessels)
 
 Blicblock is a game your Sims in The Sims 4 can play on the computer. I thought
 it would be fun to recreate the game. Our Sims shouldn't have all the fun!
