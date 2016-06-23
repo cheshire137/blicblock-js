@@ -1,9 +1,9 @@
 # BlicblockJS
 
-[![Gratipay](http://img.shields.io/badge/gratipay-SarahVessels-brightgreen.svg)](https://gratipay.com/SarahVessels)
-
 Blicblock is a game your Sims in The Sims 4 can play on the computer. I thought
 it would be fun to recreate the game. Our Sims shouldn't have all the fun!
+
+![BlicblockJS gameplay](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/blicblockjs-screenshot-1.png)
 
 BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 
@@ -95,8 +95,6 @@ To load the dump file locally:
 ![The Sims 4 Blicblock game over](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/client/app/images/blicblock-screenshot-2.png)
 
 ## Screenshots of BlicblockJS
-
-![BlicblockJS gameplay](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/blicblockjs-screenshot-1.png)
 
 ![BlicblockJS paused](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/blicblockjs-screenshot-2.png)
 
