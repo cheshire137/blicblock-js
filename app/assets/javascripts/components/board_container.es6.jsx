@@ -9,7 +9,93 @@ class BoardContainer extends React.Component {
       submittedScore: false,
       testMode: false,
       blocks: [],
+      upcoming: [],
+      tickLength: 1200, // ms
     }
+  }
+
+  componentDidMount() {
+    const gameInterval = setInterval(() => this.gameLoop(),
+                                     this.state.tickLength)
+    this.setState({ gameInterval })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.gameInterval)
+  }
+
+  gameLoop() {
+    if (!this.state.inProgress) {
+      return
+    }
+    if (this.state.plummettingBlock || this.state.slidingBlock) {
+      return
+    }
+    this.dropBlocks()
+    this.dropQueuedBlockIfNoActive()
+  }
+
+  dropBlocks() {
+    const cols = 5
+    const rows = 7
+    const lastRowX = rows - 1
+    const blocks = this.state.blocks.map(block => {
+      if (block.sliding) {
+        return block
+      }
+      const attrs = block.attrs()
+      if (attrs.active || !attrs.locked) {
+        if (attrs.x === lastRowX) {
+          attrs.locked = true
+          attrs.active = false
+          attrs.highlight = true
+        }
+        if (this.isBlockDirectlyBelow(attrs.x, attrs.y)) {
+          attrs.locked = true
+          attrs.active = false
+        }
+      }
+      if (!attrs.locked) {
+        attrs.x++
+      }
+      return new Block(attrs)
+    })
+    this.setState({ blocks }, () => this.onBlocksDropped())
+  }
+
+  isBlockDirectlyBelow(x, y) {
+    const matching = this.state.blocks.filter(block => {
+      return block.x === x + 1 && block.y === y
+    })
+    return matching.length > 0
+  }
+
+  onBlocksDropped() {
+    this.deHighlightBlocks()
+    this.checkForTetrominos()
+  }
+
+  checkForTetrominos() {
+
+  }
+
+  deHighlightBlocks() {
+    setTimeout(() => {
+      console.log('dehighlighting blocks')
+      const blocks = this.state.blocks.map(block => {
+        if (block.highlight) {
+          const attrs = block.attrs()
+          attrs.highlight = false
+          return new Block(attrs)
+        }
+        return block
+      })
+      this.setState({ blocks })
+    }, this.state.tickLength * 0.21)
+  }
+
+  dropQueuedBlockIfNoActive() {
+
   }
 
   containerClass() {
