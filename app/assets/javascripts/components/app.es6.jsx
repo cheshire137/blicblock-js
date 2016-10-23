@@ -6,8 +6,7 @@ class App extends React.Component {
 
   render () {
     switch (this.state.view) {
-      case 'board': return <Board />
+      default: return <Board />
     }
-    return <h1>404 Not Found</h1>
   }
 }
