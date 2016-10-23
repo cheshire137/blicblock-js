@@ -21,19 +21,6 @@ BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 
 1. `bundle`
-1. Create a `blicblockjs` role in PostgreSQL:
-
-        % psql
-        psql (9.2.1)
-        Type "help" for help.
-
-        sarah=# CREATE USER blicblockjs WITH PASSWORD 'password';
-        CREATE ROLE
-        sarah=# ALTER USER blicblockjs WITH SUPERUSER;
-        ALTER ROLE
-
-    Or via command line: `createuser -P -s -e blicblockjs`
-
 1. `bundle exec rake db:create db:migrate db:seed`
 1. `cd client/`
 1. `npm install`
