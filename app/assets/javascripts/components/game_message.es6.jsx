@@ -101,7 +101,6 @@ class GameMessage extends React.Component {
   }
 }
 
-
 GameMessage.propTypes = {
   inProgress: React.PropTypes.bool.isRequired,
   gameOver: React.PropTypes.bool.isRequired,

@@ -6,7 +6,7 @@ class App extends React.Component {
 
   render () {
     switch (this.state.view) {
-      default: return <Board />
+      default: return <BoardContainer />
     }
   }
 }
