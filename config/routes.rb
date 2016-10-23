@@ -7,5 +7,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  root to: redirect('/api/scores.json')
+  root to: 'home#index'
 end
