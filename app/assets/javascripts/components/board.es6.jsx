@@ -11,11 +11,27 @@ class Board extends React.Component {
     }
   }
 
+  containerClass() {
+    const classes = ['board-container']
+    if (this.state.testMode) {
+      classes.push('test-mode')
+    }
+    if (this.state.gameOver) {
+      classes.push('game-over')
+    }
+    if (this.state.inProgress) {
+      classes.push('in-progress')
+    } else {
+      classes.push('paused')
+    }
+    return classes.join(' ')
+  }
+
   render () {
     const { currentScore, level, inProgress, gameOver, submittedScore,
             testMode } = this.state
     return (
-      <div className="board-container">
+      <div className={this.containerClass()}>
         <div className="score">{currentScore}</div>
         <div className="level">{level}</div>
         <div className="board">
