@@ -1,10 +1,11 @@
 class GameMessage extends React.Component {
   gameOver() {
+    const { currentScore, existingHighScore } = this.props
     return (
       <div className="game-message game-over">
         <h2 className="simlish">game over</h2>
         <div className="final-score-message">
-          Final score: <span className="value"></span>
+          Final score: <span className="value">{currentScore}</span>
         </div>
         <form className="submit-score-form form-inline">
           <input
@@ -26,8 +27,8 @@ class GameMessage extends React.Component {
         </div>
         <div className="existing-high-score-message">
           Your high score:
-          <span className="value"></span>
-          <time className="date"></time>
+          <span className="value">{existingHighScore.value}</span>
+          <time className="date">{existingHighScore.date}</time>
         </div>
         <button type="button" className="new-game-button btn btn-primary">
           New Game
@@ -43,7 +44,7 @@ class GameMessage extends React.Component {
         <div className="test-mode-message">
           Test mode, score will not be saved.
         </div>
-        <button type="button" className="noPreventDefault resume-game-button btn btn-primary">
+        <button type="button" className="resume-game-button btn btn-primary">
           Resume Game
         </button>
       </div>
@@ -66,4 +67,6 @@ class GameMessage extends React.Component {
 GameMessage.propTypes = {
   inProgress: React.PropTypes.bool.isRequired,
   gameOver: React.PropTypes.bool.isRequired,
+  currentScore: React.PropTypes.number.isRequired,
+  existingHighScore: React.PropTypes.object,
 }

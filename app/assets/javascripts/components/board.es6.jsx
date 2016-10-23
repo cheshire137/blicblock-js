@@ -10,7 +10,7 @@ class Board extends React.Component {
   }
 
   render () {
-    const { currentScore, level } = this.state
+    const { currentScore, level, inProgress, gameOver } = this.state
     return (
       <div className="board-container">
         <div className="score">{currentScore}</div>
@@ -19,8 +19,9 @@ class Board extends React.Component {
         </div>
         <BlockPreview />
         <GameMessage
-          inProgress={this.state.inProgress}
-          gameOver={this.state.gameOver}
+          inProgress={inProgress}
+          gameOver={gameOver}
+          currentScore={currentScore}
         />
       </div>
     )
