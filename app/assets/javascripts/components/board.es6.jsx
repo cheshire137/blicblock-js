@@ -1,4 +1,9 @@
 class Board extends React.Component {
+  constructor() {
+    super()
+    this.state = { inProgress: true, gameOver: false }
+  }
+
   render () {
     return (
       <div className="board-container">
@@ -9,7 +14,10 @@ class Board extends React.Component {
         <div className="board">
         </div>
         <BlockPreview />
-        <GameMessage />
+        <GameMessage
+          inProgress={this.state.inProgress}
+          gameOver={this.state.gameOver}
+        />
       </div>
     )
   }

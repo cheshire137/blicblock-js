@@ -246,75 +246,71 @@ code {
 }
 
 .game-message {
-  display: none;
+  text-align: center;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  width: 100%;
+  top: 0;
+  height: $board-container-height;
+  background-color: rgba(0, 0, 0, 0.7);
 
-  &.active {
-    text-align: center;
-    display: block;
+  & > .btn {
     position: absolute;
-    z-index: 1;
-    left: 0;
-    width: 100%;
-    top: 0;
-    height: $board-container-height;
-    background-color: rgba(0, 0, 0, 0.7);
+    bottom: 50px;
+    left: 50%;
+  }
 
-    & > .btn {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
+  .submit-score-form {
+    margin: 0 40px;
+
+    input[type="text"] {
+      width: 8em;
+    }
+  }
+
+  h2 {
+    color: #A58936;
+    text-shadow: -1px -1px 2px #8A743D, 0 0 0 #000, 1px 1px 2px #634A04;
+    letter-spacing: 0.05em;
+    font-size: 700%;
+  }
+
+  .test-mode-message {
+    font-size: $font-size-large;
+    margin: 40px;
+  }
+
+  &.game-over {
+    .new-game-button {
+      width: 7em;
+      margin-left: -3.5em;
     }
 
-    .submit-score-form {
-      margin: 0 40px;
-
-      input[type="text"] {
-        width: 8em;
-      }
-    }
-
-    h2 {
-      color: #A58936;
-      text-shadow: -1px -1px 2px #8A743D, 0 0 0 #000, 1px 1px 2px #634A04;
-      letter-spacing: 0.05em;
-      font-size: 700%;
-    }
-
-    .test-mode-message {
+    .final-score-message, .new-high-score-message,
+    .existing-high-score-message {
       font-size: $font-size-large;
-      margin: 40px;
+      margin: 40px 0;
     }
 
-    &.game-over {
-      .new-game-button {
-        width: 7em;
-        margin-left: -3.5em;
-      }
-
-      .final-score-message, .new-high-score-message,
-      .existing-high-score-message {
-        font-size: $font-size-large;
-        margin: 40px 0;
-      }
-
-      .existing-high-score-message {
-        .date {
-          display: block;
-          font-size: $font-size-small;
-          margin-top: ($line-height-computed / 2);
-          color: #999;
-        }
+    .existing-high-score-message {
+      .date {
+        display: block;
+        font-size: $font-size-small;
+        margin-top: ($line-height-computed / 2);
+        color: #999;
       }
     }
+  }
 
-    &.paused {
-      background-color: #272153;
-      border-radius: 20px;
+  &.paused {
+    background-color: #272153;
+    border-radius: 20px;
 
-      .resume-game-button {
-        width: 9em;
-        margin-left: -4.5em;
-      }
+    .resume-game-button {
+      width: 9em;
+      margin-left: -4.5em;
     }
   }
 }

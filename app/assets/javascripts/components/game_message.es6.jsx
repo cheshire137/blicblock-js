@@ -51,7 +51,19 @@ class GameMessage extends React.Component {
   }
 
   render () {
-    return <div />
+    const { inProgress, gameOver } = this.props
+    if (inProgress) {
+      return null
+    }
+    if (gameOver) {
+      return this.gameOver()
+    }
+    return this.paused()
   }
 }
 
+
+GameMessage.propTypes = {
+  inProgress: React.PropTypes.bool.isRequired,
+  gameOver: React.PropTypes.bool.isRequired,
+}
