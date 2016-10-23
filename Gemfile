@@ -25,7 +25,7 @@ end
 
 gem 'spring-commands-rspec', group: :development
 gem 'thin', '~> 1.7.0'
-gem 'sass', '~> 3.4.5'
+gem 'sass-rails', '~> 5.0.6'
 gem 'compass', '~> 1.0.1'
 gem 'will_paginate', '~> 3.0.7'
 gem 'geokit-rails', '~> 2.0.1'
