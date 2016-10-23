@@ -12,7 +12,12 @@ class Board extends React.Component {
     return (
       <div className="board">
         {this.props.blocks.map(block => {
-          return <div className={this.blockClass(block)}></div>
+          return (
+            <div
+              className={this.blockClass(block)}
+              key={block.id}
+            ></div>
+          )
         })}
       </div>
     )

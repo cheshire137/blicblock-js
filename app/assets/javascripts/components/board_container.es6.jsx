@@ -1,3 +1,7 @@
+const COLS = 5
+const ROWS = 7
+const MIDDLE_COL_IDX = (COLS - 1) / 2
+
 class BoardContainer extends React.Component {
   constructor() {
     super()
@@ -9,8 +13,9 @@ class BoardContainer extends React.Component {
       submittedScore: false,
       testMode: false,
       blocks: [],
-      upcoming: [],
+      upcoming: [new Block(), new Block()],
       tickLength: 1200, // ms
+      checking: false,
     }
   }
 
@@ -21,7 +26,7 @@ class BoardContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.gameInterval)
+    this.cancelGameInterval()
   }
 
   gameLoop() {
@@ -36,9 +41,7 @@ class BoardContainer extends React.Component {
   }
 
   dropBlocks() {
-    const cols = 5
-    const rows = 7
-    const lastRowX = rows - 1
+    const lastRowX = ROWS - 1
     const blocks = this.state.blocks.map(block => {
       if (block.sliding) {
         return block
@@ -95,7 +98,55 @@ class BoardContainer extends React.Component {
   }
 
   dropQueuedBlockIfNoActive() {
+    const activeBlocks = this.state.blocks.filter(block => block.active)
+    if (activeBlocks.length > 0) {
+      return
+    }
+    this.dropQueuedBlock()
+  }
 
+  dropQueuedBlock() {
+    if (this.state.checking) {
+      return
+    }
+    const middleColBlocks = this.state.blocks.filter(block => {
+      return block.y === MIDDLE_COL_IDX
+    })
+    if (middleColBlocks.length >= ROWS) {
+      this.gameOver()
+      return
+    }
+    const x = 0
+    const y = MIDDLE_COL_IDX
+    const topMidBlock = this.state.blocks.filter(block => {
+      return block.x === x && block.y === y
+    })[0]
+    if (topMidBlock) {
+      return // Currently dropping or sliding at the top
+    }
+    const attrs = this.state.upcoming[0].attrs()
+    attrs.x = x
+    attrs.y = y
+    const block = new Block(attrs)
+    const upcoming = [this.state.upcoming[1], new Block()]
+    this.setState({ upcoming, blocks: this.state.blocks.concat([block]) })
+  }
+
+  gameOver() {
+    this.setState({ inProgress: false, gameOver: true })
+    this.cancelGameInterval()
+    this.saveHighScore()
+  }
+
+  cancelGameInterval() {
+    clearInterval(this.state.gameInterval)
+  }
+
+  saveHighScore() {
+    if (this.state.testMode) {
+      return
+    }
+    // TODO
   }
 
   containerClass() {

@@ -1,6 +1,12 @@
 class Block {
   constructor(attrs) {
-    this.color = attrs.color
+    attrs = attrs || {}
+    if (typeof attrs.color === 'string') {
+      this.color = attrs.color
+    } else {
+      const colors = ['magenta', 'orange', 'yellow', 'green', 'blue', 'white']
+      this.color = colors[Math.floor(Math.random() * colors.length)]
+    }
     this.x = attrs.x
     this.y = attrs.y
     if (typeof attrs.locked === 'undefined') {
