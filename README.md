@@ -20,14 +20,12 @@ BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 
 You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
 
-1. `bundle`
-1. `bundle exec rake db:create db:migrate db:seed`
-1. `cd client/`
-1. `npm install`
-1. `npm install -g bower`
-1. `bower install`
-1. `npm install -g grunt-cli`
-1. `grunt serve` to watch for file changes and to launch the Rails server.
+```bash
+bundle
+bundle exec rake db:create db:migrate db:seed
+bundle exec rails s
+open http://localhost:3000
+```
 
 ## How to Test
 
