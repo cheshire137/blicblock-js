@@ -31,5 +31,7 @@ module Blicblockjs
     end
 
     config.gem 'geokit'
+
+    config.sass.preferred_syntax = :scss
   end
 end

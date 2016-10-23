@@ -1,47 +1,9 @@
-$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-@import "fonts";
-@import "bootstrap";
 @import "compass";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "fonts";
 @import "flags";
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-
-$block-width: 65px;
-$block-height: $block-width;
-$preview-block-width: 22px;
-$preview-block-height: $preview-block-width;
-$block-magenta: #AF197C;
-$block-yellow: #B7A45D;
-$block-green: #6EAB34;
-$block-blue: #439CAE;
-$block-white: #B0B0B0;
-$block-orange: #AF6D19;
-$block-stripe-count: 4.5;
-$block-stripe-darken-pct: 5%;
-$rows: 7;
-$columns: 5;
-$screenshot-bg: #222;
-$board-background-color: #111;
-$board-border-width: 4px;
-$board-border-color: #3A335D;
-$board-border-radius: 20px;
-$board-score-height: 80px;
-$board-counter-width: 120px;
-$board-counter-height: $board-counter-width;
-$board-block-preview-padding: 0.4 * $block-width;
-$board-block-preview-width: $block-width + ($board-block-preview-padding * 2);
-$board-width: $columns * $block-width + ($board-border-width * 2);
-$board-height: $rows * $block-height + ($board-border-width * 2);
-$board-container-height: $board-height + $board-score-height - $board-border-width;
-$mobile-block-width: 55px;
-$mobile-block-height: $mobile-block-width;
-$mobile-block-preview-width: (10px * 3) + ($mobile-block-height * 2) + ($board-border-width * 2);
-$board-block-preview-height: ($board-block-preview-padding * 3) + ($block-height * 2) + ($board-border-width * 2);
-$mobile-block-preview-padding: 10px;
-$mobile-board-width: $columns * $mobile-block-width + ($board-border-width * 2);
-$mobile-board-height: $rows * $mobile-block-height + ($board-border-width * 2);
+@import "variables";
 
 a, .btn {
   -webkit-transition: all 0.25s ease-in-out;
@@ -55,10 +17,6 @@ a {
   &:hover, &:focus {
     text-decoration: none;
   }
-}
-
-a[ng-click], a[clip-click] {
-  cursor: pointer;
 }
 
 .animate {
