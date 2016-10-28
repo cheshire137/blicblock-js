@@ -144,10 +144,19 @@ class BoardContainer extends React.Component {
   }
 
   saveHighScore() {
-    if (this.state.testMode) {
+    if (this.state.testMode || !HAVE_LOCAL_STORAGE) {
       return
     }
-    // TODO
+    const existingHighScore = this.getExistingHighScore()
+    const { currentScore } = this.state
+    if (!existingHighScore.value || existingHighScore.value < currentScore) {
+      const score = {
+        value: currentScore,
+        initials: existingHighScore.initials,
+        date: new Date(),
+      }
+      LocalStorage.set('high_score', score)
+    }
   }
 
   containerClass() {
