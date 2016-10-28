@@ -22,9 +22,7 @@ class BoardContainer extends React.Component {
   }
 
   componentDidMount() {
-    const gameInterval = setInterval(() => this.gameLoop(),
-                                     this.state.tickLength)
-    this.setState({ gameInterval })
+    this.startGameInterval()
   }
 
   componentWillUnmount() {
@@ -139,6 +137,15 @@ class BoardContainer extends React.Component {
     this.saveHighScore()
   }
 
+  startGameInterval() {
+    if (typeof this.state.gameInterval !== 'undefined') {
+      return
+    }
+    const gameInterval = setInterval(() => this.gameLoop(),
+                                     this.state.tickLength)
+    this.setState({ gameInterval })
+  }
+
   cancelGameInterval() {
     clearInterval(this.state.gameInterval)
   }
@@ -209,6 +216,15 @@ class BoardContainer extends React.Component {
     })
   }
 
+  resumeGame() {
+    if (this.state.gameOver) {
+      return
+    }
+    this.setState({ inProgress: true }, () => {
+      this.startGameInterval()
+    })
+  }
+
   render () {
     const { currentScore, level, inProgress, gameOver, submittedScore,
             testMode, blocks } = this.state
@@ -229,6 +245,7 @@ class BoardContainer extends React.Component {
           newHighScore={newHighScore}
           existingHighScore={existingHighScore}
           startNewGame={() => this.startNewGame()}
+          resumeGame={() => this.resumeGame()}
         />
       </div>
     )

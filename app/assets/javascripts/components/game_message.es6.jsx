@@ -84,9 +84,11 @@ class GameMessage extends React.Component {
       <div className="game-message paused">
         <h2 className="simlish">paused</h2>
         {this.testMode()}
-        <button type="button" className="resume-game-button btn btn-primary">
-          Resume Game
-        </button>
+        <button
+          type="button"
+          className="resume-game-button btn btn-primary"
+          onClick={this.props.resumeGame}
+        >Resume Game</button>
       </div>
     )
   }
@@ -112,4 +114,5 @@ GameMessage.propTypes = {
   existingHighScore: React.PropTypes.object,
   newHighScore: React.PropTypes.object,
   startNewGame: React.PropTypes.func.isRequired,
+  resumeGame: React.PropTypes.func.isRequired,
 }
