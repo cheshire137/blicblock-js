@@ -84,7 +84,6 @@ class BoardContainer extends React.Component {
 
   deHighlightBlocks() {
     setTimeout(() => {
-      console.log('dehighlighting blocks')
       const blocks = this.state.blocks.map(block => {
         if (block.highlight) {
           const attrs = block.attrs()
@@ -168,6 +167,11 @@ class BoardContainer extends React.Component {
   render () {
     const { currentScore, level, inProgress, gameOver, submittedScore,
             testMode, blocks } = this.state
+    const existingHighScore = LocalStorage.get('high_score') || {}
+    const newHighScore = {}
+    if (existingHighScore.value && currentScore > existingHighScore.value) {
+      newHighScore.value = currentScore
+    }
     return (
       <div className={this.containerClass()}>
         <div className="score">{currentScore}</div>
@@ -180,6 +184,9 @@ class BoardContainer extends React.Component {
           currentScore={currentScore}
           submittedScore={submittedScore}
           testMode={testMode}
+          newHighScore={newHighScore}
+          existingHighScore={existingHighScore}
+          startNewGame={() => this.startNewGame()}
         />
       </div>
     )

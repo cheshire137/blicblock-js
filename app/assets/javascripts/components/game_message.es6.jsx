@@ -1,7 +1,7 @@
 class GameMessage extends React.Component {
   existingHighScore() {
     const { newHighScore, existingHighScore } = this.props
-    if (newHighScore.value) {
+    if (newHighScore.value || !existingHighScore.value) {
       return null
     }
     return (
@@ -70,9 +70,10 @@ class GameMessage extends React.Component {
         {this.testMode()}
         {this.newHighScore()}
         {this.existingHighScore()}
-        <button type="button" className="new-game-button btn btn-primary">
-          New Game
-        </button>
+        <button
+          type="button"
+          className="new-game-button btn btn-primary"
+        >New Game</button>
       </div>
     )
   }
@@ -109,4 +110,5 @@ GameMessage.propTypes = {
   currentScore: React.PropTypes.number.isRequired,
   existingHighScore: React.PropTypes.object,
   newHighScore: React.PropTypes.object,
+  startNewGame: React.PropTypes.func.isRequired,
 }
