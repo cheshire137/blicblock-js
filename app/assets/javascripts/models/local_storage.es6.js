@@ -12,11 +12,15 @@ class LocalStorage {
   }
 
   static set(key, value) {
-    window.localStorage.setItem(key, value)
+    window.localStorage.setItem(key, JSON.stringify(value))
   }
 
   static get(key) {
-    return window.localStorage.getItem(key)
+    const value = window.localStorage.getItem(key)
+    if (typeof value === 'string') {
+      return JSON.parse(value)
+    }
+    return value
   }
 
   static delete(key) {

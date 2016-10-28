@@ -18,15 +18,34 @@ class BoardContainer extends React.Component {
       upcoming: [new Block(), new Block()],
       tickLength: INITIAL_TICK_LENGTH, // ms
       checking: false,
+      plummettingBlock: false,
+      slidingBlock: false,
     }
+    this.onKeyUp = this.onKeyUp.bind(this)
   }
 
   componentDidMount() {
+    document.addEventListener('keyup', this.onKeyUp)
     this.startGameInterval()
   }
 
   componentWillUnmount() {
     this.cancelGameInterval()
+    document.removeEventListener('keyup', this.onKeyUp)
+  }
+
+  onKeyUp(event) {
+    if (event.which === 32) { // Space
+      this.togglePause()
+    }
+  }
+
+  togglePause() {
+    if (this.state.inProgress) {
+      this.pauseGame()
+    } else {
+      this.resumeGame()
+    }
   }
 
   gameLoop() {
@@ -148,6 +167,7 @@ class BoardContainer extends React.Component {
 
   cancelGameInterval() {
     clearInterval(this.state.gameInterval)
+    this.setState({ gameInterval: undefined })
   }
 
   saveHighScore() {
@@ -222,6 +242,15 @@ class BoardContainer extends React.Component {
     }
     this.setState({ inProgress: true }, () => {
       this.startGameInterval()
+    })
+  }
+
+  pauseGame() {
+    if (this.state.plummettingBlock) {
+      return
+    }
+    this.setState({ inProgress: false }, () => {
+      this.cancelGameInterval()
     })
   }
 
