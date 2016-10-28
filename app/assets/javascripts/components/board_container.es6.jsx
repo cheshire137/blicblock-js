@@ -171,11 +171,11 @@ class BoardContainer extends React.Component {
   }
 
   saveHighScore() {
-    if (this.state.testMode || !HAVE_LOCAL_STORAGE) {
+    const { currentScore, testMode } = this.state
+    if (testMode || !HAVE_LOCAL_STORAGE || currentScore <= 0) {
       return
     }
     const existingHighScore = this.getExistingHighScore()
-    const { currentScore } = this.state
     if (!existingHighScore.value || existingHighScore.value < currentScore) {
       const score = {
         value: currentScore,
