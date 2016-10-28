@@ -73,6 +73,7 @@ class GameMessage extends React.Component {
         <button
           type="button"
           className="new-game-button btn btn-primary"
+          onClick={this.props.startNewGame}
         >New Game</button>
       </div>
     )

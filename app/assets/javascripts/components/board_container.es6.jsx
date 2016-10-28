@@ -1,6 +1,8 @@
 const COLS = 5
 const ROWS = 7
 const MIDDLE_COL_IDX = (COLS - 1) / 2
+const INITIAL_TICK_LENGTH = 1200
+const HAVE_LOCAL_STORAGE = LocalStorage.isAvailable()
 
 class BoardContainer extends React.Component {
   constructor() {
@@ -14,7 +16,7 @@ class BoardContainer extends React.Component {
       testMode: false,
       blocks: [],
       upcoming: [new Block(), new Block()],
-      tickLength: 1200, // ms
+      tickLength: INITIAL_TICK_LENGTH, // ms
       checking: false,
     }
   }
@@ -164,14 +166,45 @@ class BoardContainer extends React.Component {
     return classes.join(' ')
   }
 
-  render () {
-    const { currentScore, level, inProgress, gameOver, submittedScore,
-            testMode, blocks } = this.state
-    const existingHighScore = LocalStorage.get('high_score') || {}
+  getExistingHighScore() {
+    if (!HAVE_LOCAL_STORAGE) {
+      return {}
+    }
+    return LocalStorage.get('high_score') || {}
+  }
+
+  getNewHighScore(existingHighScore) {
+    const { currentScore } = this.state
     const newHighScore = {}
     if (existingHighScore.value && currentScore > existingHighScore.value) {
       newHighScore.value = currentScore
     }
+    return newHighScore
+  }
+
+  startNewGame() {
+    this.cancelGameInterval()
+    const gameInterval = setInterval(() => this.gameLoop(),
+                                     INITIAL_TICK_LENGTH)
+    this.setState({
+      gameInterval,
+      inProgress: true,
+      gameOver: false,
+      currentScore: 0,
+      level: 1,
+      submittedScore: false,
+      blocks: [],
+      upcoming: [new Block(), new Block()],
+      tickLength: INITIAL_TICK_LENGTH, // ms
+      checking: false,
+    })
+  }
+
+  render () {
+    const { currentScore, level, inProgress, gameOver, submittedScore,
+            testMode, blocks } = this.state
+    const existingHighScore = this.getExistingHighScore()
+    const newHighScore = this.getNewHighScore(existingHighScore)
     return (
       <div className={this.containerClass()}>
         <div className="score">{currentScore}</div>
