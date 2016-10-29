@@ -164,9 +164,11 @@ class BoardContainer extends React.Component {
             attrs.active = false
             attrs.plummetting = false
             const newBlock = new Block(attrs)
-            this.onBlockLand(newBlock)
             const blocks = this.getUpdatedBlocks(index, newBlock)
-            this.setState({ blocks, plummettingBlock: false }, () => resolve())
+            this.setState({ blocks, plummettingBlock: false }, () => {
+              this.onBlockLand(newBlock.id)
+              resolve()
+            })
           }
         }
         dropSingleBlock(originalBlock.id)
@@ -175,13 +177,25 @@ class BoardContainer extends React.Component {
     })
   }
 
-  onBlockLand(block) {
+  deHighlightBlock(id) {
+    const block = this.getBlockByID(id)
+    const attrs = block.attrs()
+    attrs.highlight = false
+    const index = this.getBlockIndex(block)
+    const newBlock = new Block(attrs)
+    this.setState({ blocks: this.getUpdatedBlocks(index, newBlock) })
+  }
+
+  onBlockLand(id) {
+    const block = this.getBlockByID(id)
     const attrs = block.attrs()
     attrs.highlight = true
     const index = this.getBlockIndex(block)
     const newBlock = new Block(attrs)
-    const blocks = this.getUpdatedBlocks(index, newBlock)
-    this.setState({ blocks }, () => this.checkForTetrominos())
+    this.setState({ blocks: this.getUpdatedBlocks(index, newBlock) }, () => {
+      setTimeout(() => this.deHighlightBlock(id), this.state.tickLength * 0.21)
+      this.checkForTetrominos()
+    })
   }
 
   togglePause() {
@@ -237,6 +251,7 @@ class BoardContainer extends React.Component {
 
   dropBlocks() {
     const lastRowX = ROWS - 1
+    const landingBlockIDs = []
     const blocks = this.state.blocks.map(block => {
       if (block.sliding) {
         return block
@@ -247,10 +262,12 @@ class BoardContainer extends React.Component {
           attrs.locked = true
           attrs.active = false
           attrs.highlight = true
+          landingBlockIDs.push(attrs.id)
         }
         if (this.isBlockDirectlyBelow(attrs.x, attrs.y)) {
           attrs.locked = true
           attrs.active = false
+          landingBlockIDs.push(attrs.id)
         }
       }
       if (!attrs.locked) {
@@ -258,7 +275,11 @@ class BoardContainer extends React.Component {
       }
       return new Block(attrs)
     })
-    this.setState({ blocks }, () => this.onBlocksDropped())
+    this.setState({ blocks }, () => {
+      landingBlockIDs.forEach(id => {
+        this.onBlockLand(id)
+      })
+    })
   }
 
   isBlockDirectlyBelow(x, y) {
@@ -268,27 +289,8 @@ class BoardContainer extends React.Component {
     return matching.length > 0
   }
 
-  onBlocksDropped() {
-    this.deHighlightBlocks()
-    this.checkForTetrominos()
-  }
-
   checkForTetrominos() {
 
-  }
-
-  deHighlightBlocks() {
-    setTimeout(() => {
-      const blocks = this.state.blocks.map(block => {
-        if (block.highlight) {
-          const attrs = block.attrs()
-          attrs.highlight = false
-          return new Block(attrs)
-        }
-        return block
-      })
-      this.setState({ blocks })
-    }, this.state.tickLength * 0.21)
   }
 
   getActiveBlock() {
