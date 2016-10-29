@@ -4,6 +4,7 @@ const MIDDLE_COL_IDX = (COLS - 1) / 2
 const INITIAL_TICK_LENGTH = 1200
 const HAVE_LOCAL_STORAGE = LocalStorage.isAvailable()
 const SCORE_VALUE = 1000
+const POINTS_PER_LEVEL = 4000
 
 class BoardContainer extends React.Component {
   constructor() {
@@ -335,7 +336,7 @@ class BoardContainer extends React.Component {
       }
       const currentScore = this.state.currentScore + SCORE_VALUE
       let level = this.state.level
-      if (currentScore % 4000 === 0) {
+      if (currentScore % POINTS_PER_LEVEL === 0) {
         level++
       }
       const blocksOnTop = this.getBlocksOnTop(blocksToRemove).
@@ -380,10 +381,7 @@ class BoardContainer extends React.Component {
           promises.push(this.checkForTetrominoAtBlock(block.id))
         }
       })
-      Promise.all(promises).then(() => {
-        console.log('finished checking for tetrominos')
-        this.setState({ checking: false })
-      })
+      Promise.all(promises).then(() => this.setState({ checking: false }))
     })
   }
 
