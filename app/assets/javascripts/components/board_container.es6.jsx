@@ -3,6 +3,7 @@ const ROWS = 7
 const MIDDLE_COL_IDX = (COLS - 1) / 2
 const INITIAL_TICK_LENGTH = 1200
 const HAVE_LOCAL_STORAGE = LocalStorage.isAvailable()
+const SCORE_VALUE = 1000
 
 class BoardContainer extends React.Component {
   constructor() {
@@ -179,6 +180,9 @@ class BoardContainer extends React.Component {
 
   deHighlightBlock(id) {
     const block = this.getBlockByID(id)
+    if (!block) {
+      return
+    }
     const attrs = block.attrs()
     attrs.highlight = false
     const index = this.getBlockIndex(block)
@@ -188,6 +192,9 @@ class BoardContainer extends React.Component {
 
   onBlockLand(id) {
     const block = this.getBlockByID(id)
+    if (!block) {
+      return
+    }
     const attrs = block.attrs()
     attrs.highlight = true
     const index = this.getBlockIndex(block)
@@ -249,6 +256,22 @@ class BoardContainer extends React.Component {
     })
   }
 
+  getBlocksOnTop(blocks) {
+    const xCoords = blocks.map(b => b.x)
+    const yCoords = blocks.map(b => b.y)
+    const maxX = Math.max.apply(null, xCoords)
+    const blocksOnTop = this.state.blocks.filter(b =>
+      b.x < maxX && yCoords.indexOf(b.y) > -1
+    )
+    blocksOnTop.sort((a, b) => { // Closest to bottom first
+      if (a.x < b.x) {
+        return 1
+      }
+      return a.x > b.x ? -1 : 0
+    })
+    return blocksOnTop
+  }
+
   dropBlocks() {
     const lastRowX = ROWS - 1
     const landingBlockIDs = []
@@ -289,6 +312,63 @@ class BoardContainer extends React.Component {
     return matching.length > 0
   }
 
+  // Find a block at the given position with the given color.
+  lookup(x, y, color) {
+    if (x >= ROWS || y >= COLS) {
+      return
+    }
+    return this.state.blocks.filter(b =>
+      b.x === x && b.y === y && b.color === color
+    )[0]
+  }
+
+  removeBlocks(blocksToRemove) {
+    return new Promise(resolve => {
+      const idsToRemove = blocksToRemove.map(b => b.id)
+      const blocks = this.state.blocks.concat([])
+      let index = blocks.length - 1
+      while (index >= 0) {
+        if (idsToRemove.indexOf(blocks[index].id) > -1) {
+          blocks.splice(index, 1)
+        }
+        index--
+      }
+      const currentScore = this.state.currentScore + SCORE_VALUE
+      let level = this.state.level
+      if (currentScore % 4000 === 0) {
+        level++
+      }
+      const blocksOnTop = this.getBlocksOnTop(blocksToRemove).
+          filter(b => !b.active)
+      const newState = { level, currentScore, blocks }
+      if (blocksOnTop.length > 0) {
+        this.setState(newState, () => {
+          this.plummetBlocks(blocksOnTop).then(() => resolve())
+        })
+      } else {
+        this.setState(newState, () => resolve())
+      }
+    })
+  }
+
+  plummetBlocks(blocks, index) {
+    return new Promise(resolve => {
+      if (typeof index === 'undefined') {
+        index = 0
+      }
+      const block = blocks[index]
+      const blockBelow = this.getClosestBlockBelow(block.x, block.y)
+      const newX = blockBelow ? blockBelow.x - 1 : ROWS - 1
+      this.plummetBlock(block, newX).then(() => {
+        if (index < blocks.length - 1) {
+          this.plummetBlocks(blocks, index + 1).then(() => resolve())
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
   checkForTetrominos() {
     if (!this.state.inProgress || this.state.checking) {
       return
@@ -309,7 +389,6 @@ class BoardContainer extends React.Component {
 
   checkForTetrominoAtBlock(id) {
     return new Promise(resolve => {
-      console.log('checkForTetrominoAtBlock', id)
       const promises = [this.checkForStraightTetromino(id),
                         this.checkForSquareTetromino(id),
                         this.checkForLTetromino(id),
@@ -320,6 +399,37 @@ class BoardContainer extends React.Component {
   }
 
   checkForStraightTetromino(id) {
+    return new Promise(resolve => {
+      const promises = [this.checkForHorizontalTetromino(id),
+                        this.checkForVerticalTetromino(id)]
+      Promise.all(promises).then(() => resolve())
+    })
+  }
+
+  // 1***
+  checkForHorizontalTetromino(id) {
+    return new Promise(resolve => {
+      const block1 = this.getBlockByID(id)
+      const block2 = this.lookup(block1.x, block1.y + 1, block1.color)
+      if (block2) {
+        const block3 = this.lookup(block2.x, block2.y + 1, block2.color)
+        if (block3) {
+          const block4 = this.lookup(block3.x, block3.y + 1, block3.color)
+          if (block4) {
+            const blocks = [block1, block2, block3, block4]
+            return this.removeBlocks(blocks).then(() => resolve())
+          }
+        }
+      }
+      resolve()
+    })
+  }
+
+  // 1
+  // *
+  // *
+  // *
+  checkForVerticalTetromino(id) {
     return new Promise(resolve => {
       // TODO
       resolve()
