@@ -51,7 +51,8 @@ class BoardContainer extends React.Component {
     return blocks.slice(0, idx).concat([block]).concat(blocks.slice(idx + 1))
   }
 
-  stopSliding(block) {
+  stopSliding(id) {
+    const block = this.getBlockByID(id)
     const index = this.getBlockIndex(block)
     const attrs = block.attrs()
     attrs.sliding = false
@@ -83,7 +84,7 @@ class BoardContainer extends React.Component {
       attrs.sliding = false
     } else {
       attrs.y--
-      setTimeout(() => this.stopSliding(block), 100)
+      setTimeout(() => this.stopSliding(block.id), 100)
       slidingBlock = true
     }
     const newBlock = new Block(attrs)
@@ -109,7 +110,7 @@ class BoardContainer extends React.Component {
       attrs.sliding = false
     } else {
       attrs.y++
-      setTimeout(() => this.stopSliding(block), 100)
+      setTimeout(() => this.stopSliding(block.id), 100)
       slidingBlock = true
     }
     const newBlock = new Block(attrs)
