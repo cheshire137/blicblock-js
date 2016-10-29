@@ -290,7 +290,68 @@ class BoardContainer extends React.Component {
   }
 
   checkForTetrominos() {
+    if (!this.state.inProgress || this.state.checking) {
+      return
+    }
+    this.setState({ checking: true }, () => {
+      const promises = []
+      this.state.blocks.forEach(block => {
+        if (block && block.locked && !block.active) {
+          promises.push(this.checkForTetrominoAtBlock(block.id))
+        }
+      })
+      Promise.all(promises).then(() => {
+        console.log('finished checking for tetrominos')
+        this.setState({ checking: false })
+      })
+    })
+  }
 
+  checkForTetrominoAtBlock(id) {
+    return new Promise(resolve => {
+      console.log('checkForTetrominoAtBlock', id)
+      const promises = [this.checkForStraightTetromino(id),
+                        this.checkForSquareTetromino(id),
+                        this.checkForLTetromino(id),
+                        this.checkForZTetromino(id),
+                        this.checkForTTetromino(id)]
+      Promise.all(promises).then(() => resolve())
+    })
+  }
+
+  checkForStraightTetromino(id) {
+    return new Promise(resolve => {
+      // TODO
+      resolve()
+    })
+  }
+
+  checkForSquareTetromino(id) {
+    return new Promise(resolve => {
+      // TODO
+      resolve()
+    })
+  }
+
+  checkForLTetromino(id) {
+    return new Promise(resolve => {
+      // TODO
+      resolve()
+    })
+  }
+
+  checkForZTetromino(id) {
+    return new Promise(resolve => {
+      // TODO
+      resolve()
+    })
+  }
+
+  checkForTTetromino(id) {
+    return new Promise(resolve => {
+      // TODO
+      resolve()
+    })
   }
 
   getActiveBlock() {
