@@ -22,7 +22,11 @@ class Block {
     this.sliding = attrs.sliding || false
     this.plummetting = attrs.plummetting || false
     this.highlight = attrs.highlight || false
-    this.id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    this.id = attrs.id || this.generateID()
+  }
+
+  generateID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
       const r = Math.random() * 16 | 0
       const v = c === 'x' ? r : (r & 0x3 | 0x8)
       return v.toString(16)
@@ -32,6 +36,7 @@ class Block {
   attrs() {
     return { color: this.color, x: this.x, y: this.y, locked: this.locked,
              active: this.active, sliding: this.sliding,
-             plummetting: this.plummetting, highlight: this.highlight }
+             plummetting: this.plummetting, highlight: this.highlight,
+             id: this.id }
   }
 }

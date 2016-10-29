@@ -37,7 +37,150 @@ class BoardContainer extends React.Component {
   onKeyUp(event) {
     if (event.which === 32) { // Space
       this.togglePause()
+    } else if (event.which === 37) { // Left arrow
+      this.moveLeft()
+    } else if (event.which === 39) { // Right arrow
+      this.moveRight()
+    } else if (event.which === 40) { // Down arrow
+      this.moveDown()
     }
+  }
+
+  getUpdatedBlocks(idx, block) {
+    const { blocks } = this.state
+    return blocks.slice(0, idx).concat([block]).concat(blocks.slice(idx + 1))
+  }
+
+  stopSliding(block) {
+    const index = this.getBlockIndex(block)
+    const attrs = block.attrs()
+    attrs.sliding = false
+    const newBlock = new Block(attrs)
+    const blocks = this.getUpdatedBlocks(index, newBlock)
+    this.setState({ blocks, slidingBlock: false })
+  }
+
+  getBlockIndex(block) {
+    const ids = this.state.blocks.map(b => b.id)
+    return ids.indexOf(block.id)
+  }
+
+  moveLeft() {
+    if (!this.state.inProgress) {
+      return
+    }
+    const block = this.getActiveBlock()
+    if (!block || block.plummetting || block.sliding || block.y === 0) {
+      return
+    }
+    console.log(block.id, 'move left')
+    const index = this.getBlockIndex(block)
+    const attrs = block.attrs()
+    let slidingBlock = false
+    attrs.sliding = true
+    const blockToLeft = this.getClosestBlockToLeft(attrs.x, attrs.y)
+    if (blockToLeft && blockToLeft.y === attrs.y - 1) {
+      attrs.sliding = false
+    } else {
+      attrs.y--
+      setTimeout(() => this.stopSliding(block), 100)
+      slidingBlock = true
+    }
+    const newBlock = new Block(attrs)
+    const blocks = this.getUpdatedBlocks(index, newBlock)
+    this.setState({ blocks, slidingBlock })
+  }
+
+  moveRight() {
+    if (!this.state.inProgress) {
+      return
+    }
+    const block = this.getActiveBlock()
+    if (!block || block.plummetting || block.sliding || block.y === COLS - 1) {
+      return
+    }
+    console.log(block.id, 'move right')
+    const index = this.getBlockIndex(block)
+    const attrs = block.attrs()
+    let slidingBlock = false
+    attrs.sliding = true
+    const blockToRight = this.getClosestBlockToRight(attrs.x, attrs.y)
+    if (blockToRight && blockToRight.y === attrs.y + 1) {
+      attrs.sliding = false
+    } else {
+      attrs.y++
+      setTimeout(() => this.stopSliding(block), 100)
+      slidingBlock = true
+    }
+    const newBlock = new Block(attrs)
+    const blocks = this.getUpdatedBlocks(index, newBlock)
+    this.setState({ blocks, slidingBlock })
+  }
+
+  moveDown() {
+    if (!this.state.inProgress) {
+      return
+    }
+    const block = this.getActiveBlock()
+    if (!block || block.plummetting || block.sliding || block.x == ROWS - 1) {
+      return
+    }
+    console.log(block.id, 'move down')
+    const blockBelow = this.getClosestBlockBelow(block.x, block.y)
+    const newX = blockBelow ? blockBelow.x - 1 : ROWS - 1
+    this.plummetBlock(block, newX).then(() => {
+      console.log('finished plummetting block', block.id)
+      this.cancelGameInterval()
+      this.dropQueuedBlockIfNoActive()
+      this.startGameInterval()
+    })
+  }
+
+  getBlockByID(id) {
+    return this.state.blocks.filter(b => b.id === id)[0]
+  }
+
+  plummetBlock(originalBlock, x) {
+    return new Promise(resolve => {
+      if (originalBlock.x === x) {
+        resolve()
+      } else {
+        let interval = undefined
+        dropSingleBlock = (id) => {
+          const block = this.getBlockByID(id)
+          const index = this.getBlockIndex(block)
+          const attrs = block.attrs()
+          attrs.plummetting = true
+
+          if (attrs.x < x) {
+            attrs.x++
+            const newBlock = new Block(attrs)
+            const blocks = this.getUpdatedBlocks(index, newBlock)
+            this.setState({ blocks, plummettingBlock: true })
+          } else if (attrs.x === x) {
+            clearInterval(interval)
+            attrs.locked = true
+            attrs.active = false
+            attrs.plummetting = false
+            const newBlock = new Block(attrs)
+            this.onBlockLand(newBlock)
+            const blocks = this.getUpdatedBlocks(index, newBlock)
+            this.setState({ blocks, plummettingBlock: false }, () => resolve())
+          }
+        }
+        dropSingleBlock(originalBlock.id)
+        interval = setInterval(() => dropSingleBlock(originalBlock.id), 25)
+      }
+    })
+  }
+
+  onBlockLand(block) {
+    const attrs = block.attrs()
+    attrs.highlight = true
+    const index = this.getBlockIndex(block)
+    const newBlock = new Block(attrs)
+    const blocks = this.getUpdatedBlocks(index, newBlock)
+    this.setState({ blocks }, () => this.checkForTetrominos())
   }
 
   togglePause() {
@@ -57,6 +200,38 @@ class BoardContainer extends React.Component {
     }
     this.dropBlocks()
     this.dropQueuedBlockIfNoActive()
+  }
+
+  getClosestBlockBelow(x, y) {
+    const blocksBelow = this.state.blocks.filter(b => b.x > x && b.y === y)
+    blocksBelow.sort((a, b) => {
+      if (a.x < b.x) {
+        return -1
+      }
+      return a.x > b.x ? 1 : 0
+    })
+    return blocksBelow[0]
+  }
+
+  getClosestBlockToRight(x, y) {
+    const blocksToRight = this.state.blocks.filter(b => b.x === x && b.y > y)
+    blocksToRight.sort((a, b) => {
+      if (a.y < b.y) {
+        return -1
+      }
+      return a.y > b.y ? 1 : 0
+    })
+    return blocksToRight[0]
+  }
+
+  getClosestBlockToLeft(x, y) {
+    const blocksToLeft = this.state.blocks.filter(b => b.x === x && b.y < y)
+    blocksToLeft.sort((a, b) => {
+      if (a.y < b.y) {
+        return -1
+      }
+      return a.y > b.y ? 1 : 0
+    })
   }
 
   dropBlocks() {
@@ -115,9 +290,13 @@ class BoardContainer extends React.Component {
     }, this.state.tickLength * 0.21)
   }
 
+  getActiveBlock() {
+    return this.state.blocks.filter(block => block.active)[0]
+  }
+
   dropQueuedBlockIfNoActive() {
-    const activeBlocks = this.state.blocks.filter(block => block.active)
-    if (activeBlocks.length > 0) {
+    const activeBlock = this.getActiveBlock()
+    if (activeBlock) {
       return
     }
     this.dropQueuedBlock()
@@ -125,6 +304,7 @@ class BoardContainer extends React.Component {
 
   dropQueuedBlock() {
     if (this.state.checking) {
+      console.log('checking...')
       return
     }
     const middleColBlocks = this.state.blocks.filter(block => {
@@ -240,18 +420,14 @@ class BoardContainer extends React.Component {
     if (this.state.gameOver) {
       return
     }
-    this.setState({ inProgress: true }, () => {
-      this.startGameInterval()
-    })
+    this.setState({ inProgress: true }, () => this.startGameInterval())
   }
 
   pauseGame() {
     if (this.state.plummettingBlock) {
       return
     }
-    this.setState({ inProgress: false }, () => {
-      this.cancelGameInterval()
-    })
+    this.setState({ inProgress: false }, () => this.cancelGameInterval())
   }
 
   render () {
