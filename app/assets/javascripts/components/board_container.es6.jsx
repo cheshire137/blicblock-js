@@ -76,7 +76,6 @@ class BoardContainer extends React.Component {
     if (!block || block.plummetting || block.sliding || block.y === 0) {
       return
     }
-    console.log(block.id, 'move left')
     const index = this.getBlockIndex(block)
     const attrs = block.attrs()
     let slidingBlock = false
@@ -102,7 +101,6 @@ class BoardContainer extends React.Component {
     if (!block || block.plummetting || block.sliding || block.y === COLS - 1) {
       return
     }
-    console.log(block.id, 'move right')
     const index = this.getBlockIndex(block)
     const attrs = block.attrs()
     let slidingBlock = false
@@ -128,7 +126,6 @@ class BoardContainer extends React.Component {
     if (!block || block.plummetting || block.sliding || block.x == ROWS - 1) {
       return
     }
-    console.log(block.id, 'move down')
     const blockBelow = this.getClosestBlockBelow(block.x, block.y)
     const newX = blockBelow ? blockBelow.x - 1 : ROWS - 1
     this.plummetBlock(block, newX).then(() => {
@@ -150,10 +147,6 @@ class BoardContainer extends React.Component {
         let interval = undefined
         dropSingleBlock = (id) => {
           const block = this.getBlockByID(id)
-          if (!block) {
-            clearInterval(interval)
-            return resolve()
-          }
           const index = this.getBlockIndex(block)
           const attrs = block.attrs()
           attrs.plummetting = true
@@ -218,10 +211,11 @@ class BoardContainer extends React.Component {
   }
 
   gameLoop() {
-    if (!this.state.inProgress) {
+    const { inProgress, plummettingBlock, slidingBlock } = this.state
+    if (!inProgress) {
       return
     }
-    if (this.state.plummettingBlock || this.state.slidingBlock) {
+    if (plummettingBlock || slidingBlock) {
       return
     }
     this.dropBlocks()
@@ -347,7 +341,7 @@ class BoardContainer extends React.Component {
       const newState = { level, currentScore, blocks }
       if (blocksOnTop.length > 0) {
         this.setState(newState, () => {
-          this.plummetBlocks(blocksOnTop).then(() => resolve())
+          this.plummetBlocks(blocksOnTop.map(b => b.id)).then(() => resolve())
         })
       } else {
         this.setState(newState, () => resolve())
@@ -355,21 +349,23 @@ class BoardContainer extends React.Component {
     })
   }
 
-  plummetBlocks(blocks, index) {
+  plummetBlocks(blockIDs) {
     return new Promise(resolve => {
-      if (typeof index === 'undefined') {
-        index = 0
-      }
-      const block = blocks[index]
-      const blockBelow = this.getClosestBlockBelow(block.x, block.y)
-      const newX = blockBelow ? blockBelow.x - 1 : ROWS - 1
-      this.plummetBlock(block, newX).then(() => {
-        if (index < blocks.length - 1) {
-          this.plummetBlocks(blocks, index + 1).then(() => resolve())
+      const afterward = () => {
+        if (blockIDs.length > 1) {
+          this.plummetBlocks(blockIDs.slice(1)).then(() => resolve())
         } else {
           resolve()
         }
-      })
+      }
+      const block = this.getBlockByID(blockIDs[0])
+      if (block) {
+        const blockBelow = this.getClosestBlockBelow(block.x, block.y)
+        const newX = blockBelow ? blockBelow.x - 1 : ROWS - 1
+        this.plummetBlock(block, newX).then(afterward)
+      } else {
+        afterward()
+      }
     })
   }
 
