@@ -9,6 +9,18 @@ describe('TetrominoChecker', () => {
     expect(checker.check()).toEqual(false)
   })
 
+  it('filters out blocks of a different color', () => {
+    const b1 = new Block({ x: 0, y: 0, color: 'blue' })
+    const b2 = new Block({ x: 0, y: 1, color: 'magenta' })
+    const b3 = new Block({ x: 0, y: 2, color: 'white' })
+    const b4 = new Block({ x: 0, y: 3, color: 'blue' })
+    const blocks = [b1, b2, b3, b4]
+    const checker = new TetrominoChecker(blocks, 0)
+    expect(checker.blocks.length).toEqual(2)
+    expect(checker.blocks[0].id).toEqual(b1.id)
+    expect(checker.blocks[1].id).toEqual(b4.id)
+  })
+
   // 1***
   it('returns true when straight horizontal tetromino exists', () => {
     const b1 = new Block({ x: 0, y: 0, color: 'blue' })
