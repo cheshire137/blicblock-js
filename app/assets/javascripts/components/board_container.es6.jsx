@@ -388,128 +388,16 @@ class BoardContainer extends React.Component {
     })
   }
 
-  removeTetromino(block1, block2, block3, block4) {
+  checkForTetrominoAtBlock(id) {
     return new Promise(resolve => {
-      if (block4) {
-        const blocks = [block1, block2, block3, block4]
-        this.removeBlocks(blocks).then(() => resolve())
+      const block = this.getBlockByID(id)
+      const index = this.getBlockIndex(block)
+      const checker = new TetrominoChecker(this.state.blocks, index)
+      if (checker.check()) {
+        this.removeBlocks(checker.tetromino).then(() => resolve())
       } else {
         resolve()
       }
-    })
-  }
-
-  checkForTetrominoAtBlock(id) {
-    return new Promise(resolve => {
-      const promises = [this.checkForStraightTetromino(id),
-                        this.checkForSquareTetromino(id),
-                        this.checkForLTetromino(id),
-                        this.checkForZTetromino(id),
-                        this.checkForTTetromino(id)]
-      Promise.all(promises).then(() => resolve())
-    })
-  }
-
-  // 1***
-  // *
-  // *
-  // *
-  checkForStraightTetromino(id) {
-    return new Promise(resolve => {
-      const promises = [this.checkForHorizontalTetromino(id),
-                        this.checkForVerticalTetromino(id)]
-      Promise.all(promises).then(() => resolve())
-    })
-  }
-
-  // 1***
-  checkForHorizontalTetromino(id) {
-    return new Promise(resolve => {
-      const block1 = this.getBlockByID(id)
-      const block2 = this.lookup(block1.x, block1.y + 1, block1.color)
-      if (block2) {
-        const block3 = this.lookup(block2.x, block2.y + 1, block2.color)
-        if (block3) {
-          const block4 = this.lookup(block3.x, block3.y + 1, block3.color)
-          this.removeTetromino(block1, block2, block3, block4).
-               then(() => resolve())
-        }
-      }
-      resolve()
-    })
-  }
-
-  // 1
-  // *
-  // *
-  // *
-  checkForVerticalTetromino(id) {
-    return new Promise(resolve => {
-      const block1 = this.getBlockByID(id)
-      const block2 = this.lookup(block1.x + 1, block1.y, block1.color)
-      if (block2) {
-        const block3 = this.lookup(block2.x + 1, block2.y, block2.color)
-        if (block3) {
-          const block4 = this.lookup(block3.x + 1, block3.y, block3.color)
-          this.removeTetromino(block1, block2, block3, block4).
-               then(() => resolve())
-        }
-      }
-      resolve()
-    })
-  }
-
-  // 1*
-  // **
-  checkForSquareTetromino(id) {
-    return new Promise(resolve => {
-      const block1 = this.getBlockByID(id)
-      const block2 = this.lookup(block1.x, block1.y + 1, block1.color)
-      if (block2) {
-        const block3 = this.lookup(block1.x + 1, block1.y, block1.color)
-        if (block3) {
-          const block4 = this.lookup(block1.x + 1, block1.y + 1, block1.color)
-          this.removeTetromino(block1, block2, block3, block4).
-               then(() => resolve())
-        }
-      }
-      resolve()
-    })
-  }
-
-  checkForLTetromino(id) {
-    return new Promise(resolve => {
-      const promises = [this.checkForLeftLTetromino(id),
-                        this.checkForRightLTetromino(id)]
-      Promise.all(promises).then(() => resolve())
-    })
-  }
-
-  checkForLeftLTetromino(id) {
-    return new Promise(resolve => {
-      // TODO
-      resolve()
-    })
-  }
-
-  checkForRightLTetromino(id) {
-    return new Promise(resolve => {
-      // TODO
-      resolve()
-    })
-  }
-
-  checkForZTetromino(id) {
-    return new Promise(resolve => {
-      // TODO
-      resolve()
-    })
-  }
-
-  checkForTTetromino(id) {
-    return new Promise(resolve => {
-      // TODO
-      resolve()
     })
   }
 
