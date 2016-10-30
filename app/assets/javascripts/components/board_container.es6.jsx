@@ -459,6 +459,8 @@ class BoardContainer extends React.Component {
     })
   }
 
+  // 1*
+  // **
   checkForSquareTetromino(id) {
     return new Promise(resolve => {
       const block1 = this.getBlockByID(id)
@@ -476,6 +478,21 @@ class BoardContainer extends React.Component {
   }
 
   checkForLTetromino(id) {
+    return new Promise(resolve => {
+      const promises = [this.checkForLeftLTetromino(id),
+                        this.checkForRightLTetromino(id)]
+      Promise.all(promises).then(() => resolve())
+    })
+  }
+
+  checkForLeftLTetromino(id) {
+    return new Promise(resolve => {
+      // TODO
+      resolve()
+    })
+  }
+
+  checkForRightLTetromino(id) {
     return new Promise(resolve => {
       // TODO
       resolve()
