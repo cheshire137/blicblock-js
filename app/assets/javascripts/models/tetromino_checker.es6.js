@@ -14,18 +14,14 @@ class TetrominoChecker {
       return false
     }
     this.blocks.filter(b => b.id !== this.block1.id).forEach(block => {
-      if (block.x === this.block1.x) {
-        const yDiff = Math.abs(block.y - this.block1.y)
-        if (yDiff <= 3) {
-          this.tetromino.push(block)
-        }
-      } else if (block.y === this.block1.y) {
-        const xDiff = Math.abs(block.x - this.block1.x)
-        if (xDiff <= 3) {
-          this.tetromino.push(block)
-        }
-      } else {
-
+      const xDiff = Math.abs(block.x - this.block1.x)
+      const yDiff = Math.abs(block.y - this.block1.y)
+      if (block.x === this.block1.x && yDiff <= 3) {
+        this.tetromino.push(block)
+      } else if (block.y === this.block1.y && xDiff <= 3) {
+        this.tetromino.push(block)
+      } else if (xDiff <= 2 && yDiff <= 1 || xDiff <= 1 && yDiff <= 2) {
+        this.tetromino.push(block)
       }
     })
     if (this.tetromino.length === 3) {
