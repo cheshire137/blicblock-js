@@ -132,7 +132,6 @@ class BoardContainer extends React.Component {
     const blockBelow = this.getClosestBlockBelow(block.x, block.y)
     const newX = blockBelow ? blockBelow.x - 1 : ROWS - 1
     this.plummetBlock(block, newX).then(() => {
-      console.log('finished plummetting block', block.id)
       this.cancelGameInterval()
       this.dropQueuedBlockIfNoActive()
       this.startGameInterval()
@@ -389,6 +388,17 @@ class BoardContainer extends React.Component {
     })
   }
 
+  removeTetromino(block1, block2, block3, block4) {
+    return new Promise(resolve => {
+      if (block4) {
+        const blocks = [block1, block2, block3, block4]
+        this.removeBlocks(blocks).then(() => resolve())
+      } else {
+        resolve()
+      }
+    })
+  }
+
   checkForTetrominoAtBlock(id) {
     return new Promise(resolve => {
       const promises = [this.checkForStraightTetromino(id),
@@ -400,6 +410,10 @@ class BoardContainer extends React.Component {
     })
   }
 
+  // 1***
+  // *
+  // *
+  // *
   checkForStraightTetromino(id) {
     return new Promise(resolve => {
       const promises = [this.checkForHorizontalTetromino(id),
@@ -417,10 +431,8 @@ class BoardContainer extends React.Component {
         const block3 = this.lookup(block2.x, block2.y + 1, block2.color)
         if (block3) {
           const block4 = this.lookup(block3.x, block3.y + 1, block3.color)
-          if (block4) {
-            const blocks = [block1, block2, block3, block4]
-            return this.removeBlocks(blocks).then(() => resolve())
-          }
+          this.removeTetromino(block1, block2, block3, block4).
+               then(() => resolve())
         }
       }
       resolve()
@@ -439,10 +451,8 @@ class BoardContainer extends React.Component {
         const block3 = this.lookup(block2.x + 1, block2.y, block2.color)
         if (block3) {
           const block4 = this.lookup(block3.x + 1, block3.y, block3.color)
-          if (block4) {
-            const blocks = [block1, block2, block3, block4]
-            return this.removeBlocks(blocks).then(() => resolve())
-          }
+          this.removeTetromino(block1, block2, block3, block4).
+               then(() => resolve())
         }
       }
       resolve()
@@ -451,7 +461,16 @@ class BoardContainer extends React.Component {
 
   checkForSquareTetromino(id) {
     return new Promise(resolve => {
-      // TODO
+      const block1 = this.getBlockByID(id)
+      const block2 = this.lookup(block1.x, block1.y + 1, block1.color)
+      if (block2) {
+        const block3 = this.lookup(block1.x + 1, block1.y, block1.color)
+        if (block3) {
+          const block4 = this.lookup(block1.x + 1, block1.y + 1, block1.color)
+          this.removeTetromino(block1, block2, block3, block4).
+               then(() => resolve())
+        }
+      }
       resolve()
     })
   }
@@ -482,16 +501,13 @@ class BoardContainer extends React.Component {
   }
 
   dropQueuedBlockIfNoActive() {
-    const activeBlock = this.getActiveBlock()
-    if (activeBlock) {
-      return
+    if (!this.getActiveBlock()) {
+      this.dropQueuedBlock()
     }
-    this.dropQueuedBlock()
   }
 
   dropQueuedBlock() {
     if (this.state.checking) {
-      console.log('checking...')
       return
     }
     const middleColBlocks = this.state.blocks.filter(block => {
