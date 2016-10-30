@@ -13,5 +13,25 @@ class TetrominoChecker {
     if (this.blocks.length < 1) {
       return false
     }
+    this.blocks.filter(b => b.id !== this.block1.id).forEach(block => {
+      if (block.x === this.block1.x) {
+        const yDiff = Math.abs(block.y - this.block1.y)
+        if (yDiff <= 3) {
+          this.tetromino.push(block)
+        }
+      } else if (block.y === this.block1.y) {
+        const xDiff = Math.abs(block.x - this.block1.x)
+        if (xDiff <= 3) {
+          this.tetromino.push(block)
+        }
+      } else {
+
+      }
+    })
+    if (this.tetromino.length === 3) {
+      this.tetromino.push(this.block1)
+      return true
+    }
+    return false
   }
 }
