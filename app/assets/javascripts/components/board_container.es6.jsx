@@ -151,6 +151,10 @@ class BoardContainer extends React.Component {
         let interval = undefined
         dropSingleBlock = (id) => {
           const block = this.getBlockByID(id)
+          if (!block) {
+            clearInterval(interval)
+            return resolve()
+          }
           const index = this.getBlockIndex(block)
           const attrs = block.attrs()
           attrs.plummetting = true
@@ -429,7 +433,18 @@ class BoardContainer extends React.Component {
   // *
   checkForVerticalTetromino(id) {
     return new Promise(resolve => {
-      // TODO
+      const block1 = this.getBlockByID(id)
+      const block2 = this.lookup(block1.x + 1, block1.y, block1.color)
+      if (block2) {
+        const block3 = this.lookup(block2.x + 1, block2.y, block2.color)
+        if (block3) {
+          const block4 = this.lookup(block3.x + 1, block3.y, block3.color)
+          if (block4) {
+            const blocks = [block1, block2, block3, block4]
+            return this.removeBlocks(blocks).then(() => resolve())
+          }
+        }
+      }
       resolve()
     })
   }
