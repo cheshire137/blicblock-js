@@ -30,6 +30,8 @@ module Blicblockjs
         controller_specs: true
     end
 
+    config.react.addons = true
+
     config.gem 'geokit'
 
     config.sass.preferred_syntax = :scss

@@ -16,12 +16,12 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'database_cleaner', '~> 1.5.1'
   gem 'faker', '~> 1.6.1'
+  gem 'jasmine-rails', '~> 0.14.1'
 end
 
 group :test do
   gem 'vcr', '~> 2.9.3'
   gem 'webmock', '~> 1.19.0'
-  gem 'jasmine-rails', '~> 0.14.1'
 end
 
 gem 'spring-commands-rspec', group: :development

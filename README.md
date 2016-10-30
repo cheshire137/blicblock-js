@@ -29,16 +29,17 @@ open http://localhost:3000
 
 ## How to Test
 
-### Rails API
+```bash
+RAILS_ENV=test bundle exec rake db:create db:migrate
+RAILS_ENV=test bundle exec rake spec
+```
 
-1. `RAILS_ENV=test bundle exec rake db:create db:migrate`
-1. `RAILS_ENV=test bundle exec rspec`
+You can also run Jasmine JavaScript tests in the browser:
 
-### AngularJS
-
-1. `cd client/`
-1. `npm install`
-1. `grunt test`
+```bash
+bundle exec rails s
+open http://localhost:3000/specs
+```
 
 ## How to Deploy to Heroku
 
