@@ -21,6 +21,7 @@ end
 group :test do
   gem 'vcr', '~> 2.9.3'
   gem 'webmock', '~> 1.19.0'
+  gem 'jasmine-rails', '~> 0.14.1'
 end
 
 gem 'spring-commands-rspec', group: :development
