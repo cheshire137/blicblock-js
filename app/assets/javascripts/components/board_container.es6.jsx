@@ -1,7 +1,7 @@
 const COLS = 5
 const ROWS = 7
 const MIDDLE_COL_IDX = (COLS - 1) / 2
-const INITIAL_TICK_LENGTH = 1200
+const INITIAL_TICK_LENGTH = 850
 const HAVE_LOCAL_STORAGE = LocalStorage.isAvailable()
 const SCORE_VALUE = 1000
 const POINTS_PER_LEVEL = 4000
