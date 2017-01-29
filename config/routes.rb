@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   scope '/api' do
     resources :scores, defaults: {format: :json},
                        only: [:index, :show, :create] do
@@ -7,5 +8,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  root to: redirect('/api/scores.json')
+  root to: 'home#index'
 end

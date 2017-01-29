@@ -1,11 +1,13 @@
 # BlicblockJS
 
-Blicblock is a game your Sims in The Sims 4 can play on the computer. I thought
-it would be fun to recreate the game. Our Sims shouldn't have all the fun!
+[![Build Status](https://travis-ci.org/cheshire137/blicblock-js.svg?branch=master)](https://travis-ci.org/cheshire137/blicblock-js)
+
+Blicblock is a game that Sims in The Sims 4 play on their computers. I thought
+it would be fun to recreate the game; our Sims shouldn't have all the fun!
 
 ![BlicblockJS gameplay](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/blicblockjs-screenshot-1.png)
 
-BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
+BlickblockJS is built using ReactJS and Ruby on Rails.
 
 ## Blicblock Notes from The Sims 4
 
@@ -18,42 +20,28 @@ BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 
 ## How to Run
 
-You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
+You need Ruby, RubyGems, Bundler, and PostgreSQL.
 
-1. `bundle`
-1. Create a `blicblockjs` role in PostgreSQL:
-
-        % psql
-        psql (9.2.1)
-        Type "help" for help.
-
-        sarah=# CREATE USER blicblockjs WITH PASSWORD 'password';
-        CREATE ROLE
-        sarah=# ALTER USER blicblockjs WITH SUPERUSER;
-        ALTER ROLE
-
-    Or via command line: `createuser -P -s -e blicblockjs`
-
-1. `bundle exec rake db:create db:migrate db:seed`
-1. `cd client/`
-1. `npm install`
-1. `npm install -g bower`
-1. `bower install`
-1. `npm install -g grunt-cli`
-1. `grunt serve` to watch for file changes and to launch the Rails server.
+```bash
+bundle
+bundle exec rake db:create db:migrate db:seed
+bundle exec rails s
+open http://localhost:3000
+```
 
 ## How to Test
 
-### Rails API
+```bash
+RAILS_ENV=test bundle exec rake db:create db:migrate
+RAILS_ENV=test bundle exec rake spec
+```
 
-1. `RAILS_ENV=test bundle exec rake db:create db:migrate`
-1. `RAILS_ENV=test bundle exec rspec`
+You can also run Jasmine JavaScript tests in the browser:
 
-### AngularJS
-
-1. `cd client/`
-1. `npm install`
-1. `grunt test`
+```bash
+bundle exec rails s
+open http://localhost:3000/specs
+```
 
 ## How to Deploy to Heroku
 
