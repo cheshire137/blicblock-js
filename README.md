@@ -2,12 +2,12 @@
 
 [![Build Status](https://travis-ci.org/cheshire137/blicblock-js.svg?branch=master)](https://travis-ci.org/cheshire137/blicblock-js)
 
-Blicblock is a game your Sims in The Sims 4 can play on the computer. I thought
-it would be fun to recreate the game. Our Sims shouldn't have all the fun!
+Blicblock is a game that Sims in The Sims 4 play on their computers. I thought
+it would be fun to recreate the game; our Sims shouldn't have all the fun!
 
 ![BlicblockJS gameplay](https://raw.githubusercontent.com/cheshire137/blicblock-js/master/blicblockjs-screenshot-1.png)
 
-BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
+BlickblockJS is built using ReactJS and Ruby on Rails.
 
 ## Blicblock Notes from The Sims 4
 
@@ -20,7 +20,7 @@ BlickblockJS is built using AngularJS, Bower, Yeoman, and Twitter Bootstrap.
 
 ## How to Run
 
-You need Ruby, RubyGems, Bundler, Node.js, and PostgreSQL.
+You need Ruby, RubyGems, Bundler, and PostgreSQL.
 
 ```bash
 bundle
