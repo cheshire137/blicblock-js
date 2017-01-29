@@ -1,5 +1,7 @@
 # BlicblockJS
 
+[![Build Status](https://travis-ci.org/cheshire137/blicblock-js.svg?branch=master)](https://travis-ci.org/cheshire137/blicblock-js)
+
 Blicblock is a game your Sims in The Sims 4 can play on the computer. I thought
 it would be fun to recreate the game. Our Sims shouldn't have all the fun!
 
