@@ -1,6 +1,5 @@
-language: node_js
-node_js:
-  - '0.10'
+language: ruby
 before_script:
-  - 'npm install -g bower grunt-cli'
-  - 'bower install'
+  - 'RAILS_ENV=test bundle exec rake db:create db:migrate'
+script:
+  - 'RAILS_ENV=test bundle exec rake spec'
