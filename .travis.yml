@@ -3,3 +3,4 @@ before_script:
   - 'RAILS_ENV=test bundle exec rake db:create db:migrate'
 script:
   - 'RAILS_ENV=test bundle exec rake spec'
+  - 'RAILS_ENV=test bundle exec rake spec:javascript'

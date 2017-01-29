@@ -19,3 +19,5 @@
 /*.dump
 
 spec/examples.txt
+
+.rake_tasks~
