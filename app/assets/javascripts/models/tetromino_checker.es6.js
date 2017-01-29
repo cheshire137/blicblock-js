@@ -2,7 +2,9 @@ class TetrominoChecker {
   constructor(blocks, index) {
     this.index = index
     this.block1 = blocks[this.index]
-    this.blocks = blocks.filter(b => b.color === this.block1.color)
+    this.blocks = blocks.filter(b => {
+      return b.color === this.block1.color && b.id !== this.block1.id
+    })
     this.tetromino = []
   }
 
@@ -13,7 +15,7 @@ class TetrominoChecker {
     if (this.blocks.length < 1) {
       return false
     }
-    this.blocks.filter(b => b.id !== this.block1.id).forEach(block => {
+    this.blocks.forEach(block => {
       const xDiff = Math.abs(block.x - this.block1.x)
       const yDiff = Math.abs(block.y - this.block1.y)
       if (block.x === this.block1.x && yDiff <= 3) {
