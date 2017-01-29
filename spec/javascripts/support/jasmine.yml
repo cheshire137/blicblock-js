@@ -37,12 +37,12 @@ spec_dir: spec/javascripts
 # list of file expressions to include as helpers into spec runner
 # relative path from spec_dir
 helpers:
-  - "helpers/**/*.{js.coffee,js,coffee,es6.js}"
+  - "helpers/**/*.{js,es6.js}"
 
 # list of file expressions to include as specs into spec runner
 # relative path from spec_dir
 spec_files:
-  - "**/*[Ss]pec.{js.coffee,js.jsx,jsx,es6.jsx,es6.js,js,coffee}"
+  - "**/*[Ss]pec.{js.jsx,jsx,es6.jsx,es6.js,js}"
 
 # path to directory of temporary files
 # (spec runner and asset cache)
