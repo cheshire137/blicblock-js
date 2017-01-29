@@ -16,9 +16,8 @@ describe('TetrominoChecker', () => {
     const b4 = new Block({ x: 0, y: 3, color: 'blue' })
     const blocks = [b1, b2, b3, b4]
     const checker = new TetrominoChecker(blocks, 0)
-    expect(checker.blocks.length).toEqual(2)
-    expect(checker.blocks[0].id).toEqual(b1.id)
-    expect(checker.blocks[1].id).toEqual(b4.id)
+    expect(checker.blocks.length).toEqual(1)
+    expect(checker.blocks[0].id).toEqual(b4.id)
   })
 
   // 1***
