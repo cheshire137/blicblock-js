@@ -45,39 +45,12 @@ RSpec.describe Score, type: :model do
     expect(subject.reload.initials).to eq('ABC')
   end
 
-  it 'allows multiple scores from different IPs within a minute' do
-    score1 = create(:score, ip_address: '1.2.3.4')
-    score2 = build(:score, ip_address: '8.9.4.5')
-    expect(score2.save).to eq(true)
-  end
-
-  it 'allows multiple scores from the same IP at least a minute apart' do
-    score1 = create(:score, ip_address: '1.2.3.4', created_at: 90.seconds.ago)
-    score2 = build(:score, ip_address: score1.ip_address)
-    expect(score2.save).to eq(true)
-  end
-
-  describe 'not_playing_too_much' do
-    it 'disallows multiple scores from the same IP within a minute' do
-      score1 = create(:score, ip_address: '1.2.3.4')
-      score2 = build(:score, ip_address: score1.ip_address)
-      expect(score2.save).to eq(false)
-      expect(score2.errors[:base]).to_not be_empty
-    end
-
-    it 'allows updating recently created score' do
-      score = create(:score)
-      score.location = create(:location)
-      expect(score.save).to eq(true)
-    end
-  end
-
   describe 'in_country' do
     let!(:location) {
       create(:location, country_code: 'de', country: 'Germany')
     }
     let!(:good_score) { create(:score, location: location) }
-    let!(:bad_score1) { create(:score, ip_address: nil) }
+    let!(:bad_score1) { create(:score) }
     let!(:bad_score2) { create(:score) }
 
     it 'includes scores with a location matching given code' do
@@ -90,37 +63,6 @@ RSpec.describe Score, type: :model do
 
     it 'excludes scores with a location not matching given code' do
       expect(Score.in_country('de')).to_not include(bad_score2)
-    end
-  end
-
-  describe 'set_location' do
-    subject { build(:score, ip_address: '46.120.178.122') }
-    let(:save_record) {
-      ->{ VCR.use_cassette('lookup_ip_address') { subject.save } }
-    }
-
-    context 'when matching location does not already exist' do
-      it 'creates a new location record' do
-        expect(save_record).to change(Location, :count).by(1)
-      end
-
-      it 'ties new location record to score' do
-        save_record.call
-        expect(Score.last.location).to eq(Location.last)
-      end
-    end
-
-    context 'when matching location already exists' do
-      let!(:location) { create(:location, country: 'Israel') }
-
-      it 'does not create a new location record' do
-        expect(save_record).to_not change(Location, :count)
-      end
-
-      it 'ties existing location record to score' do
-        save_record.call
-        expect(Score.last.location).to eq(location)
-      end
     end
   end
 

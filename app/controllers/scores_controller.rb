@@ -1,5 +1,4 @@
 class ScoresController < ApplicationController
-  before_action :set_ip_address
   before_action :set_score, only: [:show]
   respond_to :json
 
@@ -36,7 +35,7 @@ class ScoresController < ApplicationController
   # POST /api/scores.json
   def create
     @score = Score.new(score_params)
-    @score.ip_address = @ip_address
+    @score.location = Location.for_ip_address(request.remote_ip)
     if @score.save
       @total_scores = Score.count
       render :show, status: :created, location: @score
@@ -47,10 +46,6 @@ class ScoresController < ApplicationController
   end
 
   private
-
-  def set_ip_address
-    @ip_address = request.remote_ip
-  end
 
   def set_score
     @score = Score.ranked.find(params[:id])

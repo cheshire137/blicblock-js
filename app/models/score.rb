@@ -5,12 +5,10 @@ class Score < ActiveRecord::Base
   belongs_to :location
 
   before_save :capitalize_initials
-  before_create :set_location_from_ip_address
 
   validates :value, presence: true, numericality: {greater_than: 0}
   validates :initials, presence: true, exclusion: {in: BAD_WORDS},
                        format: {with: /\A[a-zA-Z]{3}\z/}
-  validate :not_playing_too_much, on: :create
 
   scope :order_by_value, ->{
     scores = arel_table
@@ -19,7 +17,6 @@ class Score < ActiveRecord::Base
 
   scope :order_by_newest, ->{ order(created_at: :desc) }
   scope :order_by_oldest, ->{ order(:created_at) }
-  scope :by_ip_address, ->(ip_address) { where(ip_address: ip_address) }
 
   scope :last_seven_days, ->{
     week_end = Time.now.end_of_day
@@ -67,33 +64,10 @@ class Score < ActiveRecord::Base
     location.country_code
   end
 
-  def set_location_from_ip_address
-    return if ip_address.blank?
-    return if location
-    self.location = Location.for_ip_address(ip_address)
-  rescue => exception
-    err_msg = "#{exception.message}\n#{exception.backtrace.join("\n")}"
-    Rails.logger.error err_msg
-  end
-
   private
 
   def capitalize_initials
     return unless initials
     self.initials = initials.upcase
-  end
-
-  def not_playing_too_much
-    return if ip_address.blank?
-    latest_score_by_ip = self.class.by_ip_address(ip_address).
-                                    order(created_at: :desc).first
-    return unless latest_score_by_ip
-    cutoff_time = 1.minute.ago
-    if latest_score_by_ip.created_at >= cutoff_time
-      seconds_to_wait = (latest_score_by_ip.created_at - cutoff_time).round
-      errors.add(:base, 'You can only submit once a minute. ' +
-                        "Please wait another #{seconds_to_wait} " +
-                        "#{'second'.pluralize(seconds_to_wait)}.")
-    end
   end
 end
